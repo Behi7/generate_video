@@ -29,7 +29,8 @@ CPU_CORES = min(2, os.cpu_count() or 2)
 
 
 def run_command(cmd):
-    res = subprocess.run(cmd, cwd=STUDIO_DIR, capture_output=True, text=True)
+    is_win = sys.platform == "win32"
+    res = subprocess.run(cmd, cwd=STUDIO_DIR, capture_output=True, text=True, shell=is_win)
     return res
 
 
@@ -100,6 +101,10 @@ def resolve_project(name_or_comp):
         p = "crusher"
     elif "drill" in lower_name or "carbide" in lower_name:
         p = "drill"
+    elif "press" in lower_name:
+        p = "press"
+    elif "environment" in lower_name or "oildrum" in lower_name or "drum" in lower_name:
+        p = "environment"
     else:
         p = "_misc"
 
@@ -583,6 +588,8 @@ def cmd_inspect(args):
             composition,
             tmp_path,
             f"--frame={f}",
+            "--gl=angle",
+            "--timeout-in-milliseconds=60000",
             "--log=warn",
         ]
         res = run_command(cmd)
@@ -778,7 +785,7 @@ def main():
     p_col = subparsers.add_parser("check-collisions", help="Universal Automated 3D Collision Interceptor (Three.js Box3)")
     p_col.add_argument("composition", default="HammerProgression", nargs="?", help="Composition ID or project name")
     p_col.add_argument("--json", action="store_true", help="Output raw structured JSON")
-    p_col.add_argument("--max-overlap", type=float, default=10.0, help="Max allowed overlap percentage between toolhead and specimen (default: 10.0%)")
+    p_col.add_argument("--max-overlap", type=float, default=10.0, help="Max allowed overlap percentage between toolhead and specimen (default: 10.0%%)")
     p_col.add_argument("--tier", type=int, default=None, help="Specific tier to audit (1, 2, 3, or 4)")
 
     # check-sync (Universal Synchronization Interceptor)

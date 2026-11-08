@@ -1,34 +1,12 @@
 import React from "react";
 import { RoundedBox } from "@react-three/drei";
+import { DrumCluster } from "./props/IndustrialOilDrum";
+export * from "./props/IndustrialOilDrum";
 
-/** 1. 55-Gallon Industrial Steel Oil Barrels */
+/** 1. 55-Gallon Industrial Steel Oil Barrels (Upgraded to AAA DrumCluster) */
 export const OilBarrels: React.FC<{ position?: [number, number, number] }> = ({
   position = [-2.6, -2.04, -1.8],
-}) => (
-  <group position={position}>
-    {/* Blue Lubricant Drum */}
-    <group position={[0, 0.44, 0]}>
-      <mesh>
-        <cylinderGeometry args={[0.32, 0.32, 0.88, 24]} />
-        <meshStandardMaterial color="#1D4ED8" roughness={0.4} metalness={0.7} />
-      </mesh>
-      {/* Rib rings */}
-      {[-0.2, 0.2].map((y, i) => (
-        <mesh key={i} position={[0, y, 0]}>
-          <torusGeometry args={[0.325, 0.015, 8, 24]} />
-          <meshStandardMaterial color="#0F172A" roughness={0.5} />
-        </mesh>
-      ))}
-    </group>
-    {/* Red Solvent Drum (Offset) */}
-    <group position={[0.55, 0.44, -0.2]}>
-      <mesh>
-        <cylinderGeometry args={[0.32, 0.32, 0.88, 24]} />
-        <meshStandardMaterial color="#B91C1C" roughness={0.4} metalness={0.7} />
-      </mesh>
-    </group>
-  </group>
-);
+}) => <DrumCluster position={position} count={2} />;
 
 /** 2. Safety Warning Bollards (Black & Yellow Striped) */
 export const WarningPillars: React.FC<{ position?: [number, number, number] }> = ({
@@ -135,3 +113,13 @@ export const WarningSign: React.FC<{ position?: [number, number, number] }> = ({
     </mesh>
   </group>
 );
+
+/** 7. Coiled Industrial Hose / Wire Rope Re-export */
+export * from "./props/CoiledHose";
+
+
+// High-detail industrial timber & fastener props
+export * from "./props/WoodenPallet";
+export * from "./props/ScatteredHardware";
+export * from "./props/MetalBucket";
+

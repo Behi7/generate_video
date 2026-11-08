@@ -2,7 +2,7 @@ import { Config } from "@remotion/cli/config";
 import path from "path";
 
 Config.setVideoImageFormat("jpeg");
-Config.setChromiumOpenGlRenderer("swangle");
+Config.setChromiumOpenGlRenderer("angle");
 Config.setChromiumDisableWebSecurity(true);
 Config.setChromiumHeadlessMode(true);
 Config.setBrowserExecutable(null);

@@ -31,19 +31,33 @@ export interface RigidShowcaseCameraProps {
    * Set to 0 or undefined for flat non-tiered sequences.
    */
   tierDuration?: number;
+  /**
+   * Whether to accumulate kinetic step-back across progression tiers upon each overload fracture.
+   * Masks camera re-framing behind explosive fracture events (Act 4: 265..289f).
+   * Default: true.
+   */
+  enableTierStepback?: boolean;
+  /**
+   * Cumulative stepback factors per tier (relative to line of sight distance).
+   * Negative values = camera pulled further back away from target.
+   * Defaults to [0.0, -0.09, -0.19, -0.30] for Tiers 1, 2, 3, 4.
+   */
+  tierStepbacks?: number[];
 }
 
 /**
  * RigidShowcaseCamera:
- * Enforces the 2.5D Isometric 3/4 Perspective Law and the Dead-Locked Tripod Law.
- * BANS all procedural sinus drift / sway. Moves strictly on physical impact impulses
- * and dynamic Act 3 Climax Push & Recoil:
+ * Enforces the 2.5D Isometric 3/4 Perspective Law, the Dead-Locked Tripod Law,
+ * and the Kinetic Recoil Reframe Law:
  *
- * - Frames 0..149: Base camera position (dead-locked).
- * - Frames 150..224 (Act 3 Peak Operating): Camera smoothly interpolates 3.5% closer
- *   along the line of sight towards `target` (pos + (target - pos) * 0.035 * easeInOut(p)).
- * - Frames 225..264: Holds close tension during stall/micro-shudder.
- * - Frame 265 (Fracture): Explosive recoil step back to base with a 6-frame elastic bounce.
+ * - BANS all procedural sinus drift / sway.
+ * - During Act 1 (0..149f): Dead-locked at the tier's calibrated baseline distance.
+ * - During Act 3 (150..224f): Climax Push - smoothly moves 3.5% closer along line of sight.
+ * - During Act 4A/B (225..264f): Holds close tension during stall / micro-shudder.
+ * - During Act 4C (265..289f): Catastrophic fracture impulse triggers an explosive recoil
+ *   that masks the camera step-back, smoothly settling into the next tier's wider baseline.
+ * - Cumulatively steps back across Tiers 1 -> 2 -> 3 -> 4, framing giant late-game machines
+ *   magnificently without edge-clipping.
  */
 export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
   basePosition = [2.3, 1.8, 3.6],
@@ -51,6 +65,8 @@ export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
   impacts = [],
   enableClimaxPush = true,
   tierDuration = 290,
+  enableTierStepback = true,
+  tierStepbacks = [0.0, -0.09, -0.19, -0.30],
 }) => {
   const { camera } = useThree();
   const frame = useCurrentFrame();
@@ -71,32 +87,75 @@ export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
     }
   }
 
-  // 2. Dynamic Climax Push & Recoil along line of sight
+  // 2. Dynamic Climax Push & Kinetic Recoil Stepback along line of sight
   let pushFactor = 0;
-  if (enableClimaxPush) {
-    const localFrame = tierDuration && tierDuration > 0 ? frame % tierDuration : frame;
 
-    if (localFrame >= 150 && localFrame <= 224) {
-      // Smooth S-curve interpolation 3.5% closer along line of sight
-      const progress = (localFrame - 150) / (224 - 150);
-      const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
-      pushFactor = 0.035 * easeInOut;
-    } else if (localFrame >= 225 && localFrame <= 264) {
-      // Hold maximum close tension during machine stall / micro-shudder
-      pushFactor = 0.035;
-    } else if (localFrame >= 265 && localFrame <= 271) {
-      // Frame 265 Fracture: Explosive recoil step back to base with a 6-frame elastic bounce
-      const recoilDiff = localFrame - 265;
-      const decay = Math.exp(-recoilDiff * 0.65);
-      const bounce = Math.cos(recoilDiff * 1.2) * decay;
-      pushFactor = -0.015 * bounce;
+  if (tierDuration && tierDuration > 0) {
+    const tierIndex = Math.max(0, Math.floor(frame / tierDuration));
+    const localFrame = Math.min(tierDuration - 1, Math.max(0, frame % tierDuration));
+
+    const currentBaseline = enableTierStepback
+      ? (tierStepbacks[Math.min(tierIndex, tierStepbacks.length - 1)] ?? 0)
+      : 0;
+
+    const nextBaseline = enableTierStepback
+      ? (tierStepbacks[Math.min(tierIndex + 1, tierStepbacks.length - 1)] ?? currentBaseline)
+      : currentBaseline;
+
+    if (enableClimaxPush) {
+      if (localFrame < 150) {
+        // Acts 1 & 2: Steady dead-locked tripod at current tier baseline
+        pushFactor = currentBaseline;
+      } else if (localFrame >= 150 && localFrame <= 224) {
+        // Act 3 Peak Operating: Smooth S-curve push 3.5% closer along line of sight
+        const progress = (localFrame - 150) / (224 - 150);
+        const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
+        pushFactor = currentBaseline + 0.035 * easeInOut;
+      } else if (localFrame >= 225 && localFrame <= 264) {
+        // Act 4A/B: Hold maximum close tension during machine stall & micro-shudder
+        pushFactor = currentBaseline + 0.035;
+      } else {
+        // Act 4C (Frames 265..289): Catastrophic fracture recoil!
+        // Masked by debris explosion and sparks, camera recoils backward into next tier's wider baseline.
+        const recoilDiff = localFrame - 265;
+        const startVal = currentBaseline + 0.035;
+        const targetVal = nextBaseline;
+        const delta = targetVal - startVal; // Negative delta (moving further away)
+
+        // Damped elastic spring settling curve (alpha = 0.22, beta = 0.45):
+        // At t=0: exactly startVal (delta=0 continuity).
+        // At t=6: peak recoil overshoot backward.
+        // At t=24: smoothly settles into targetVal for seamless transition to next tier.
+        const decay = Math.exp(-0.22 * recoilDiff);
+        const oscCos = Math.cos(0.45 * recoilDiff);
+        const oscSin = Math.sin(0.45 * recoilDiff);
+
+        pushFactor = targetVal - delta * decay * oscCos - 0.025 * decay * oscSin;
+      }
     } else {
-      // Frames 0..149 and 272..289: Exact base position
-      pushFactor = 0;
+      pushFactor = currentBaseline;
+    }
+  } else {
+    // Flat non-tiered sequence fallback
+    if (enableClimaxPush) {
+      if (frame >= 150 && frame <= 224) {
+        const progress = (frame - 150) / (224 - 150);
+        const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
+        pushFactor = 0.035 * easeInOut;
+      } else if (frame >= 225 && frame <= 264) {
+        pushFactor = 0.035;
+      } else if (frame >= 265 && frame <= 271) {
+        const recoilDiff = frame - 265;
+        const decay = Math.exp(-recoilDiff * 0.65);
+        const bounce = Math.cos(recoilDiff * 1.2) * decay;
+        pushFactor = -0.015 * bounce;
+      } else {
+        pushFactor = 0;
+      }
     }
   }
 
-  // Line of sight vector towards target
+  // 3. Line of sight vector towards target (Target - BasePosition)
   const dirX = target[0] - basePosition[0];
   const dirY = target[1] - basePosition[1];
   const dirZ = target[2] - basePosition[2];
@@ -105,7 +164,7 @@ export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
   const pushY = dirY * pushFactor;
   const pushZ = dirZ * pushFactor;
 
-  // Base position + line-of-sight climax push + physical impact shake
+  // 4. Base position + line-of-sight climax push & recoil + physical impact micro-shakes
   const posX = basePosition[0] + pushX + shakeX;
   const posY = basePosition[1] + pushY + shakeY;
   const posZ = basePosition[2] + pushZ;

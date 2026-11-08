@@ -18,6 +18,12 @@ export * from "./environment/Backdrops";
 export * from "./environment/Floors";
 export * from "./environment/LightingRigs";
 export * from "./environment/Props";
+export * from "./environment/props/WoodenPallet";
+export * from "./environment/props/ScatteredHardware";
+export * from "./environment/props/MetalBucket";
+export * from "./environment/props/IndustrialOilDrum";
+export * from "./environment/props/CoiledHose";
+export * from "./environment/props/PropCollisionValidator";
 
 // VFX
 export * from "./vfx/MagneticSnap";

@@ -54,7 +54,13 @@ Production MUST run through structured subagent invocations (`invoke_subagent`):
    - Compositor wires verified tiers, `<DynamicEnvironment />`, and Foley ASMR audio via `<ProceduralAssemblyRig />` in `src/projects/<project>/components/<ThemeBase>Stage.tsx`.
    - Critic #2 runs `python3 remotion_cli.py qc <project_slug>` (8-keyframe audit across all 4 tiers in `output/<project>/qc/`).
    - Evaluates as a human spectator: Heroic Framing (60%–65% vertical occupancy, no top-edge clipping), lighting, material contrast, ASMR synchronization.
-6. **Phase 6 — PC-First Smart Render & Export:** When QC #2 passes, package files for the user's powerful PC (`python3 remotion_cli.py export-pc <project_slug>`) for instant 20–30s rendering on local GPU (`render.bat` / `npx remotion render ... --gl=angle`), or route to Colab Tesla T4 GPU. Cloud 2-core CPU render takes 1–2h and is strictly opt-in (`--cpu`). Output saved to `output/<project>/pc_bundle/`.
+6. **Phase 6 — Smart Master Render & Hardware-Aware Law (GPU Auto-Detection):**
+   - **ЕСЛИ В МАШИНЕ ЕСТЬ ВИДЕОКАРТА (NVIDIA / AMD GPU, например RTX 4060):** Агент обязан **СРАЗУ начинать рендеринг** мастер-видео прямо на машине с аппаратным ускорением:
+     ```bash
+     npx remotion render src/index.ts <Composition> output/<project>/<Composition>.mp4 --gl=angle --concurrency=6
+     ```
+     Рендеринг занимает всего 1–2 минуты, готовое видео отдаётся пользователю сразу.
+   - **ЕСЛИ ВИДЕОКАРТЫ НЕТ (только слабый CPU):** Запрещено запускать многочасовой CPU-рендер! Агент автоматически упаковывает проект в zip-архив (`python remotion_cli.py export-pc <project_slug>` в `output/<project>/pc_bundle/`), выдаёт архив и **ждет команды пользователя** (например, подтверждения рендера на CPU или команды запуска на Google Colab).
 
 ---
 

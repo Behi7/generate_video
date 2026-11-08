@@ -10,6 +10,10 @@ export interface ModelInspectorProps {
   subtitle?: string;
   children: React.ReactNode;
   modelCenter?: [number, number, number];
+  cameraDistanceMultiplier?: number;
+  cameraTarget?: [number, number, number];
+  gridY?: number;
+  shadowY?: number;
 }
 
 interface CameraViewConfig {
@@ -68,7 +72,11 @@ const InspectorCameraController: React.FC<{
   const { camera } = useThree();
 
   camera.position.set(position[0], position[1], position[2]);
-  if (position[0] === 0 && position[2] < 0.01 && position[1] > 0) {
+  const dx = position[0] - target[0];
+  const dy = position[1] - target[1];
+  const dz = position[2] - target[2];
+  const horizontalDist = Math.hypot(dx, dz);
+  if (dy > 0 && dy > horizontalDist * 2.0) {
     camera.up.set(0, 0, -1);
   } else {
     camera.up.set(0, 1, 0);
@@ -86,6 +94,10 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
   title = "3D Asset Quality Inspection",
   children,
   modelCenter = [0, 0, 0],
+  cameraDistanceMultiplier = 1.0,
+  cameraTarget,
+  gridY = -1.04,
+  shadowY = -1.05,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -93,6 +105,13 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
   // Map frames 1..4 (or clamp if outside)
   const viewIndex = Math.min(4, Math.max(1, frame || 1));
   const currentView = VIEW_CONFIGS[viewIndex];
+
+  const target = cameraTarget ?? currentView.target;
+  const effectivePosition: [number, number, number] = [
+    target[0] + (currentView.position[0] - currentView.target[0]) * cameraDistanceMultiplier,
+    target[1] + (currentView.position[1] - currentView.target[1]) * cameraDistanceMultiplier,
+    target[2] + (currentView.position[2] - currentView.target[2]) * cameraDistanceMultiplier,
+  ];
 
   return (
     <div
@@ -110,20 +129,20 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
         width={width}
         height={height}
         camera={{
-          position: currentView.position,
+          position: effectivePosition,
           fov: currentView.fov,
           near: 0.1,
           far: 50,
         }}
       >
         <InspectorCameraController
-          position={currentView.position}
-          target={currentView.target}
+          position={effectivePosition}
+          target={target}
           fov={currentView.fov}
         />
         <TestingBayEnvironment />
-        <ContactShadows position={[0, -1.05, 0]} opacity={0.85} scale={5.5} blur={1.8} far={3.0} />
-        <Grid position={[0, -1.04, 0]} args={[8, 8]} cellColor="#334155" sectionColor="#64748B" />
+        <ContactShadows position={[0, shadowY, 0]} opacity={0.85} scale={5.5} blur={1.8} far={3.0} />
+        <Grid position={[0, gridY, 0]} args={[8, 8]} cellColor="#334155" sectionColor="#64748B" />
         <group position={modelCenter}>{children}</group>
       </ThreeCanvas>
 
@@ -164,7 +183,7 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
             borderRadius: 6,
           }}
         >
-          {currentView.badge} | Camera [{currentView.position.join(", ")}]
+          {currentView.badge} | Camera [{effectivePosition.map((v) => v.toFixed(2)).join(", ")}]
         </span>
       </div>
 

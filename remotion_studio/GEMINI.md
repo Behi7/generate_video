@@ -47,10 +47,13 @@ Any direct authoring of `src/projects/<project>/components/*.tsx`, `src/projects
    - Critic #2 runs `python3 remotion_cli.py qc <project_slug>` (8-keyframe audit across all 4 tiers in `output/<project>/qc/`).
    - Evaluates as a human spectator: Heroic Framing (60%–65% vertical occupancy, no top-edge clipping), lighting, material contrast, ASMR synchronization.
    - If **PASS** $\to$ Authorized for final master render.
-6. **Phase 6 — PC-First Smart Master Render & Export (`remotion_cli.py export-pc` or `render`):**
-   - **Local PC GPU (Fastest, 20–30s):** When QC #2 returns `[PASS]`, run `python3 remotion_cli.py export-pc <project_slug>` to create `output/<project>/pc_bundle/<Composition>_pc_bundle.zip` with `render.bat` and `preview.bat` for the user's powerful PC.
-   - **Colab Tesla T4 GPU (25s):** If Colab is online, routes to remote GPU.
-   - **Cloud Server CPU (2-hour lock):** NEVER run by default! Strictly opt-in via `--cpu`.
+6. **Phase 6 — Smart Master Render & Hardware-Aware Law (GPU Auto-Detection):**
+   - **ЕСЛИ В МАШИНЕ ЕСТЬ ВИДЕОКАРТА (NVIDIA / AMD GPU, например RTX 4060):** Агент обязан **СРАЗУ начинать рендеринг** мастер-видео прямо на машине с аппаратным ускорением:
+     ```bash
+     npx remotion render src/index.ts <Composition> output/<project>/<Composition>.mp4 --gl=angle --concurrency=6
+     ```
+     Рендеринг завершается за 1–2 минуты, готовый MP4 сразу передаётся пользователю без необходимости ручных подтверждений.
+   - **ЕСЛИ ВИДЕОКАРТЫ НЕТ (только слабый CPU):** Запрещено блокировать систему многочасовым рендером на CPU! Агент автоматически упаковывает проект в zip-архив (`python remotion_cli.py export-pc <project_slug>` в `output/<project>/pc_bundle/`), выдаёт пользователю готовый zip и **ждет команды пользователя** (например, команды запустить рендер в Google Colab или подтверждения на CPU-рендер).
 
 ---
 
