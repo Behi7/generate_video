@@ -1,0 +1,10 @@
+{
+  "id": "drill",
+  "name": "Drill Progression (Modular Auger to Plasma Shield)",
+  "compositionId": "DrillProgression",
+  "fps": 30,
+  "durationInFrames": 1160,
+  "width": 1080,
+  "height": 1920,
+  "audioTrack": "audio/asmr_drill_progression.wav"
+}

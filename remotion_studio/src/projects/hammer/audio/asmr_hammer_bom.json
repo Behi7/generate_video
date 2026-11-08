@@ -1,0 +1,1575 @@
+{
+  "total_frames": 1160,
+  "sample_rate": 44100,
+  "event_count": 196,
+  "events": [
+    {
+      "frame": 0,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_000.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Anvil Timber Bed Drop"
+    },
+    {
+      "frame": 0,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_plank_medium_000.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Timber Bed Settle Resonance"
+    },
+    {
+      "frame": 0,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/drop_001.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Heavy Mass Dock Thud"
+    },
+    {
+      "frame": 20,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_001.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ash Shaft Socket Click"
+    },
+    {
+      "frame": 20,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_plank_medium_001.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ash Shaft Seat Thud"
+    },
+    {
+      "frame": 40,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_001.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Collar Clamp Latch"
+    },
+    {
+      "frame": 40,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_light_000.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Collar Metallic Seat"
+    },
+    {
+      "frame": 60,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_002.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Fixing Wedge Clack"
+    },
+    {
+      "frame": 60,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_001.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Wedge Steel Friction Seat"
+    },
+    {
+      "frame": 75,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/toggle_001.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Trigger Mechanism Toggle"
+    },
+    {
+      "frame": 75,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_medium_000.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 High-Carbon Sledge Head Lock"
+    },
+    {
+      "frame": 85,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_000.wav",
+      "gain_db": -1.0,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 1 Manual Crank Creak 1"
+    },
+    {
+      "frame": 85,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/tick_001.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ratchet Tick 1"
+    },
+    {
+      "frame": 96,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_plank_medium_002.wav",
+      "gain_db": -2.0,
+      "pitch_semitones": 0.5,
+      "desc": "Tier 1 Manual Crank Creak 2"
+    },
+    {
+      "frame": 96,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/tick_002.wav",
+      "gain_db": -2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ratchet Tick 2"
+    },
+    {
+      "frame": 107,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_001.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": -0.5,
+      "desc": "Tier 1 Manual Crank Creak 3"
+    },
+    {
+      "frame": 107,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/tick_004.wav",
+      "gain_db": -2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ratchet Tick 3"
+    },
+    {
+      "frame": 118,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_plank_medium_003.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 1 Manual Crank Creak 4"
+    },
+    {
+      "frame": 118,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/tick_001.wav",
+      "gain_db": -2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ratchet Tick 4"
+    },
+    {
+      "frame": 128,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_002.wav",
+      "gain_db": -1.0,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 1 Manual Crank Creak 5"
+    },
+    {
+      "frame": 128,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/tick_002.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ratchet Tick 5"
+    },
+    {
+      "frame": 138,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_plank_medium_004.wav",
+      "gain_db": -0.5,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Manual Crank Creak 6"
+    },
+    {
+      "frame": 138,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_002.wav",
+      "gain_db": -1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Ratchet Tick 6"
+    },
+    {
+      "frame": 160,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_000.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 1 Hammer Strike 1 (Wooden Thud)"
+    },
+    {
+      "frame": 160,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_000.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Hammer Strike 1 (Metal Ring)"
+    },
+    {
+      "frame": 161,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_000.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Hammer Strike 1 (Debris Chip)"
+    },
+    {
+      "frame": 172,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_001.wav",
+      "gain_db": 2.75,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Hammer Strike 2 (Wooden Thud)"
+    },
+    {
+      "frame": 172,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_001.wav",
+      "gain_db": 1.25,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 1 Hammer Strike 2 (Metal Ring)"
+    },
+    {
+      "frame": 173,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_001.wav",
+      "gain_db": -1.25,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Hammer Strike 2 (Debris Chip)"
+    },
+    {
+      "frame": 184,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_002.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 1 Hammer Strike 3 (Wooden Thud)"
+    },
+    {
+      "frame": 184,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_002.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Hammer Strike 3 (Metal Ring)"
+    },
+    {
+      "frame": 185,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_002.wav",
+      "gain_db": -1.0,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Hammer Strike 3 (Debris Chip)"
+    },
+    {
+      "frame": 196,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_003.wav",
+      "gain_db": 3.25,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 1 Hammer Strike 4 (Wooden Thud)"
+    },
+    {
+      "frame": 196,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_003.wav",
+      "gain_db": 1.75,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 1 Hammer Strike 4 (Metal Ring)"
+    },
+    {
+      "frame": 197,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_003.wav",
+      "gain_db": -0.75,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Hammer Strike 4 (Debris Chip)"
+    },
+    {
+      "frame": 208,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_004.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Hammer Strike 5 (Wooden Thud)"
+    },
+    {
+      "frame": 208,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_004.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Hammer Strike 5 (Metal Ring)"
+    },
+    {
+      "frame": 209,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_004.wav",
+      "gain_db": -0.5,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Hammer Strike 5 (Debris Chip)"
+    },
+    {
+      "frame": 220,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_000.wav",
+      "gain_db": 3.75,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 1 Hammer Strike 6 (Wooden Thud)"
+    },
+    {
+      "frame": 220,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_000.wav",
+      "gain_db": 2.25,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 1 Hammer Strike 6 (Metal Ring)"
+    },
+    {
+      "frame": 221,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_light_000.wav",
+      "gain_db": -0.25,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Hammer Strike 6 (Debris Chip)"
+    },
+    {
+      "frame": 265,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_wood_heavy_003.wav",
+      "gain_db": 5.5,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 1 Wooden Arm Fracture Snap"
+    },
+    {
+      "frame": 265,
+      "category": "materials/wood",
+      "sample": "materials/wood/impact_plank_medium_004.wav",
+      "gain_db": 4.5,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 1 Hardwood Splinter Burst"
+    },
+    {
+      "frame": 266,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_002.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": -2.0,
+      "desc": "Tier 1 Gear Shear Clatter"
+    },
+    {
+      "frame": 268,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/drop_002.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 1 Broken Head Anvil Bounce"
+    },
+    {
+      "frame": 290,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_000.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Stamping Base Drop"
+    },
+    {
+      "frame": 290,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/door_close_000.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Heavy Metal Dock Thud"
+    },
+    {
+      "frame": 290,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_000.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Cast Bed Resonance"
+    },
+    {
+      "frame": 310,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_003.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Armature Rotor Click"
+    },
+    {
+      "frame": 310,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_medium_000.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Rotor Stator Magnetic Settle"
+    },
+    {
+      "frame": 330,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/door_close_001.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Gear Casing Heavy Latch"
+    },
+    {
+      "frame": 330,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_002.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Aluminum Casing Clamp Snap"
+    },
+    {
+      "frame": 350,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_003.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Crank Piston Latch"
+    },
+    {
+      "frame": 350,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_001.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Striker Piston Mechanical Seat"
+    },
+    {
+      "frame": 365,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_004.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 SDS-Max Chisel Ball-Detent Lock"
+    },
+    {
+      "frame": 365,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_light_002.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Chisel High-Tensile Steel Ping"
+    },
+    {
+      "frame": 370,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_004.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Industrial Power Switch Clack"
+    },
+    {
+      "frame": 375,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_000.wav",
+      "gain_db": -3.0,
+      "pitch_semitones": -4.0,
+      "desc": "Tier 2 Electric Motor Spool 1"
+    },
+    {
+      "frame": 383,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_001.wav",
+      "gain_db": -2.5,
+      "pitch_semitones": -2.875,
+      "desc": "Tier 2 Electric Motor Spool 2"
+    },
+    {
+      "frame": 391,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_002.wav",
+      "gain_db": -2.0,
+      "pitch_semitones": -1.75,
+      "desc": "Tier 2 Electric Motor Spool 3"
+    },
+    {
+      "frame": 399,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_003.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": -0.625,
+      "desc": "Tier 2 Electric Motor Spool 4"
+    },
+    {
+      "frame": 407,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_004.wav",
+      "gain_db": -1.0,
+      "pitch_semitones": 0.5,
+      "desc": "Tier 2 Electric Motor Spool 5"
+    },
+    {
+      "frame": 415,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_000.wav",
+      "gain_db": -0.5,
+      "pitch_semitones": 1.625,
+      "desc": "Tier 2 Electric Motor Spool 6"
+    },
+    {
+      "frame": 423,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_001.wav",
+      "gain_db": 0.0,
+      "pitch_semitones": 2.75,
+      "desc": "Tier 2 Electric Motor Spool 7"
+    },
+    {
+      "frame": 431,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_002.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 3.875,
+      "desc": "Tier 2 Electric Motor Spool 8"
+    },
+    {
+      "frame": 439,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_003.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 5.0,
+      "desc": "Tier 2 Electric Motor Spool 9"
+    },
+    {
+      "frame": 446,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_000.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 2 Jackhammer Strike 1 (Heavy Clang)"
+    },
+    {
+      "frame": 446,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_000.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 2 Jackhammer Strike 1 (Chisel Ring)"
+    },
+    {
+      "frame": 446,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_000.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 1 (Piston Slap)"
+    },
+    {
+      "frame": 447,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_000.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 1 (Workpiece Chip)"
+    },
+    {
+      "frame": 454,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_001.wav",
+      "gain_db": 3.1666666666666665,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 2 (Heavy Clang)"
+    },
+    {
+      "frame": 454,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_001.wav",
+      "gain_db": 1.6666666666666667,
+      "pitch_semitones": 2.5,
+      "desc": "Tier 2 Jackhammer Strike 2 (Chisel Ring)"
+    },
+    {
+      "frame": 454,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_001.wav",
+      "gain_db": 1.1666666666666667,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 2 (Piston Slap)"
+    },
+    {
+      "frame": 455,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_001.wav",
+      "gain_db": 0.6666666666666666,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 2 (Workpiece Chip)"
+    },
+    {
+      "frame": 462,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_002.wav",
+      "gain_db": 3.3333333333333335,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 3 (Heavy Clang)"
+    },
+    {
+      "frame": 462,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_002.wav",
+      "gain_db": 1.8333333333333333,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 2 Jackhammer Strike 3 (Chisel Ring)"
+    },
+    {
+      "frame": 462,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_002.wav",
+      "gain_db": 1.3333333333333333,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 3 (Piston Slap)"
+    },
+    {
+      "frame": 463,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_002.wav",
+      "gain_db": 0.8333333333333333,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 3 (Workpiece Chip)"
+    },
+    {
+      "frame": 470,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_003.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 2 Jackhammer Strike 4 (Heavy Clang)"
+    },
+    {
+      "frame": 470,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_003.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 2.5,
+      "desc": "Tier 2 Jackhammer Strike 4 (Chisel Ring)"
+    },
+    {
+      "frame": 470,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_003.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 4 (Piston Slap)"
+    },
+    {
+      "frame": 471,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_003.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 4 (Workpiece Chip)"
+    },
+    {
+      "frame": 478,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_004.wav",
+      "gain_db": 3.6666666666666665,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 5 (Heavy Clang)"
+    },
+    {
+      "frame": 478,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_004.wav",
+      "gain_db": 2.1666666666666665,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 2 Jackhammer Strike 5 (Chisel Ring)"
+    },
+    {
+      "frame": 478,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_004.wav",
+      "gain_db": 1.6666666666666665,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 5 (Piston Slap)"
+    },
+    {
+      "frame": 479,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_004.wav",
+      "gain_db": 1.1666666666666665,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 5 (Workpiece Chip)"
+    },
+    {
+      "frame": 486,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_000.wav",
+      "gain_db": 3.8333333333333335,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 6 (Heavy Clang)"
+    },
+    {
+      "frame": 486,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_000.wav",
+      "gain_db": 2.3333333333333335,
+      "pitch_semitones": 2.5,
+      "desc": "Tier 2 Jackhammer Strike 6 (Chisel Ring)"
+    },
+    {
+      "frame": 486,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_000.wav",
+      "gain_db": 1.8333333333333335,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 6 (Piston Slap)"
+    },
+    {
+      "frame": 487,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_000.wav",
+      "gain_db": 1.3333333333333335,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 6 (Workpiece Chip)"
+    },
+    {
+      "frame": 494,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_001.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 2 Jackhammer Strike 7 (Heavy Clang)"
+    },
+    {
+      "frame": 494,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_001.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 2 Jackhammer Strike 7 (Chisel Ring)"
+    },
+    {
+      "frame": 494,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_001.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 7 (Piston Slap)"
+    },
+    {
+      "frame": 495,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_001.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 7 (Workpiece Chip)"
+    },
+    {
+      "frame": 502,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_002.wav",
+      "gain_db": 4.166666666666667,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 8 (Heavy Clang)"
+    },
+    {
+      "frame": 502,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_002.wav",
+      "gain_db": 2.666666666666667,
+      "pitch_semitones": 2.5,
+      "desc": "Tier 2 Jackhammer Strike 8 (Chisel Ring)"
+    },
+    {
+      "frame": 502,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_002.wav",
+      "gain_db": 2.166666666666667,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 8 (Piston Slap)"
+    },
+    {
+      "frame": 503,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_002.wav",
+      "gain_db": 1.6666666666666667,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 8 (Workpiece Chip)"
+    },
+    {
+      "frame": 510,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_003.wav",
+      "gain_db": 4.333333333333333,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 9 (Heavy Clang)"
+    },
+    {
+      "frame": 510,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_003.wav",
+      "gain_db": 2.833333333333333,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 2 Jackhammer Strike 9 (Chisel Ring)"
+    },
+    {
+      "frame": 510,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_003.wav",
+      "gain_db": 2.333333333333333,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 2 Jackhammer Strike 9 (Piston Slap)"
+    },
+    {
+      "frame": 511,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_003.wav",
+      "gain_db": 1.8333333333333333,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Jackhammer Strike 9 (Workpiece Chip)"
+    },
+    {
+      "frame": 555,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_002.wav",
+      "gain_db": 6.0,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 2 Drive Belt Rupture Snap"
+    },
+    {
+      "frame": 555,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/explosion_crunch_000.wav",
+      "gain_db": 5.0,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 2 Armature Electrical Blowout"
+    },
+    {
+      "frame": 556,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_light_004.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 3.0,
+      "desc": "Tier 2 High-Velocity Shrapnel Ping"
+    },
+    {
+      "frame": 557,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/engine_circular_003.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": -6.0,
+      "desc": "Tier 2 Motor Stalling Groan"
+    },
+    {
+      "frame": 580,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_001.wav",
+      "gain_db": 5.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 H-Frame Bed Seismic Landing"
+    },
+    {
+      "frame": 580,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_003.wav",
+      "gain_db": 4.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Massive Anvil Base Shock"
+    },
+    {
+      "frame": 580,
+      "category": "materials/stone",
+      "sample": "materials/stone/footstep_concrete_000.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Foundation Concrete Thud"
+    },
+    {
+      "frame": 600,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_001.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Chrome Cylinder Dock"
+    },
+    {
+      "frame": 600,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/door_close_002.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Hydraulic Seal Lock"
+    },
+    {
+      "frame": 620,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_002.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Press Gantry Heavy Settle"
+    },
+    {
+      "frame": 620,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_005.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Gantry Column Clamp Latch"
+    },
+    {
+      "frame": 640,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_006.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Valve Manifold Coupler Lock"
+    },
+    {
+      "frame": 640,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_light_003.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Braided Hose Metal Fitting Snap"
+    },
+    {
+      "frame": 655,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_003.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Tool Steel Forging Die Seat"
+    },
+    {
+      "frame": 655,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_005.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Die Keyway Lock Snap"
+    },
+    {
+      "frame": 660,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/switch_001.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Heavy Hydraulic Valve Clack"
+    },
+    {
+      "frame": 660,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_medium_001.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Valve Detent Ring"
+    },
+    {
+      "frame": 665,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_000.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 0.5,
+      "desc": "Tier 3 Hydraulic Pump Hum 1"
+    },
+    {
+      "frame": 675,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_001.wav",
+      "gain_db": 0.9166666666666666,
+      "pitch_semitones": 1.1666666666666665,
+      "desc": "Tier 3 Hydraulic Pump Hum 2"
+    },
+    {
+      "frame": 685,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_002.wav",
+      "gain_db": 1.3333333333333333,
+      "pitch_semitones": 1.8333333333333333,
+      "desc": "Tier 3 Hydraulic Pump Hum 3"
+    },
+    {
+      "frame": 695,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_003.wav",
+      "gain_db": 1.75,
+      "pitch_semitones": 2.5,
+      "desc": "Tier 3 Hydraulic Pump Hum 4"
+    },
+    {
+      "frame": 705,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_004.wav",
+      "gain_db": 2.1666666666666665,
+      "pitch_semitones": 3.1666666666666665,
+      "desc": "Tier 3 Hydraulic Pump Hum 5"
+    },
+    {
+      "frame": 715,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_000.wav",
+      "gain_db": 2.5833333333333335,
+      "pitch_semitones": 3.8333333333333335,
+      "desc": "Tier 3 Hydraulic Pump Hum 6"
+    },
+    {
+      "frame": 725,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_low_001.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 4.5,
+      "desc": "Tier 3 Hydraulic Pump Hum 7"
+    },
+    {
+      "frame": 748,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_000.wav",
+      "gain_db": 5.5,
+      "pitch_semitones": -2.0,
+      "desc": "Tier 3 Drop Hammer Boom 1 (Seismic Sub)"
+    },
+    {
+      "frame": 748,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_000.wav",
+      "gain_db": 4.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Drop Hammer Boom 1 (Plate Ring)"
+    },
+    {
+      "frame": 749,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_000.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Drop Hammer Boom 1 (Billet Deformation)"
+    },
+    {
+      "frame": 748,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/explosion_crunch_000.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 3 Drop Hammer Boom 1 (Impulse Transient)"
+    },
+    {
+      "frame": 770,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_001.wav",
+      "gain_db": 6.0,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 3 Drop Hammer Boom 2 (Seismic Sub)"
+    },
+    {
+      "frame": 770,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_001.wav",
+      "gain_db": 5.0,
+      "pitch_semitones": 0.5,
+      "desc": "Tier 3 Drop Hammer Boom 2 (Plate Ring)"
+    },
+    {
+      "frame": 771,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_001.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Drop Hammer Boom 2 (Billet Deformation)"
+    },
+    {
+      "frame": 770,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/explosion_crunch_001.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 3 Drop Hammer Boom 2 (Impulse Transient)"
+    },
+    {
+      "frame": 792,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_metal_heavy_002.wav",
+      "gain_db": 6.5,
+      "pitch_semitones": -2.0,
+      "desc": "Tier 3 Drop Hammer Boom 3 (Seismic Sub)"
+    },
+    {
+      "frame": 792,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_002.wav",
+      "gain_db": 5.5,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 3 Drop Hammer Boom 3 (Plate Ring)"
+    },
+    {
+      "frame": 793,
+      "category": "materials/stone",
+      "sample": "materials/stone/impact_mining_002.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 Drop Hammer Boom 3 (Billet Deformation)"
+    },
+    {
+      "frame": 792,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/explosion_crunch_002.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 3 Drop Hammer Boom 3 (Impulse Transient)"
+    },
+    {
+      "frame": 845,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/explosion_crunch_001.wav",
+      "gain_db": 7.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 3 600-Bar Hydraulic Hose Blowout"
+    },
+    {
+      "frame": 845,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_000.wav",
+      "gain_db": 5.0,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 3 High-Pressure Fluid Jet Hiss"
+    },
+    {
+      "frame": 846,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_plate_heavy_002.wav",
+      "gain_db": 5.0,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 3 Sheared Forging Die Ricochet"
+    },
+    {
+      "frame": 847,
+      "category": "materials/metal",
+      "sample": "materials/metal/impact_tin_medium_004.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": -1.0,
+      "desc": "Tier 3 Machine Frame Shock Ring"
+    },
+    {
+      "frame": 870,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_000.wav",
+      "gain_db": 4.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Zero-G Maglev Base Force Field Dock"
+    },
+    {
+      "frame": 870,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_001.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Superconducting Flux Settle"
+    },
+    {
+      "frame": 870,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/door_close_000.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Sub-Spatial Bed Plinth Dock"
+    },
+    {
+      "frame": 890,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_000.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Rail Cores Alignment Beam"
+    },
+    {
+      "frame": 890,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/toggle_002.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Linear Rail Magnetic Latch"
+    },
+    {
+      "frame": 910,
+      "category": "impacts/locks",
+      "sample": "impacts/locks/door_close_002.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Cryo Jacket Hermetic Lock"
+    },
+    {
+      "frame": 910,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_002.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Cryo Containment Field Engage"
+    },
+    {
+      "frame": 930,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_003.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Toroidal Capacitor Lock Pulse"
+    },
+    {
+      "frame": 930,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_002.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Superconductor Bus Snap"
+    },
+    {
+      "frame": 945,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_000.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Tachyon Slug Crystalline Seal"
+    },
+    {
+      "frame": 945,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/toggle_003.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Magnetic Breech Lock"
+    },
+    {
+      "frame": 950,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches/click_001.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Quantum Trigger Engage Click"
+    },
+    {
+      "frame": 955,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_000.wav",
+      "gain_db": -1.0,
+      "pitch_semitones": -2.0,
+      "desc": "Tier 4 Particle Accelerator Spool 1"
+    },
+    {
+      "frame": 955,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_000.wav",
+      "gain_db": -2.5,
+      "pitch_semitones": -1.4,
+      "desc": "Tier 4 Plasma Arc Whine 1"
+    },
+    {
+      "frame": 963,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_001.wav",
+      "gain_db": -0.4375,
+      "pitch_semitones": -0.625,
+      "desc": "Tier 4 Particle Accelerator Spool 2"
+    },
+    {
+      "frame": 971,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_002.wav",
+      "gain_db": 0.125,
+      "pitch_semitones": 0.75,
+      "desc": "Tier 4 Particle Accelerator Spool 3"
+    },
+    {
+      "frame": 971,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_002.wav",
+      "gain_db": -1.375,
+      "pitch_semitones": 0.5249999999999999,
+      "desc": "Tier 4 Plasma Arc Whine 3"
+    },
+    {
+      "frame": 979,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_003.wav",
+      "gain_db": 0.6875,
+      "pitch_semitones": 2.125,
+      "desc": "Tier 4 Particle Accelerator Spool 4"
+    },
+    {
+      "frame": 987,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_004.wav",
+      "gain_db": 1.25,
+      "pitch_semitones": 3.5,
+      "desc": "Tier 4 Particle Accelerator Spool 5"
+    },
+    {
+      "frame": 987,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_004.wav",
+      "gain_db": -0.25,
+      "pitch_semitones": 2.4499999999999997,
+      "desc": "Tier 4 Plasma Arc Whine 5"
+    },
+    {
+      "frame": 995,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_000.wav",
+      "gain_db": 1.8125,
+      "pitch_semitones": 4.875,
+      "desc": "Tier 4 Particle Accelerator Spool 6"
+    },
+    {
+      "frame": 1003,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_001.wav",
+      "gain_db": 2.375,
+      "pitch_semitones": 6.25,
+      "desc": "Tier 4 Particle Accelerator Spool 7"
+    },
+    {
+      "frame": 1003,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_001.wav",
+      "gain_db": 0.875,
+      "pitch_semitones": 4.375,
+      "desc": "Tier 4 Plasma Arc Whine 7"
+    },
+    {
+      "frame": 1011,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_002.wav",
+      "gain_db": 2.9375,
+      "pitch_semitones": 7.625,
+      "desc": "Tier 4 Particle Accelerator Spool 8"
+    },
+    {
+      "frame": 1019,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/space_engine_large_003.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 9.0,
+      "desc": "Tier 4 Particle Accelerator Spool 9"
+    },
+    {
+      "frame": 1019,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_003.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 6.3,
+      "desc": "Tier 4 Plasma Arc Whine 9"
+    },
+    {
+      "frame": 1030,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_000.wav",
+      "gain_db": 5.0,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 4 Rail Pulse 1 (Supersonic Sub Thump)"
+    },
+    {
+      "frame": 1030,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_000.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Rail Pulse 1 (Laser Transient)"
+    },
+    {
+      "frame": 1030,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_000.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 1 (Plasma Arc)"
+    },
+    {
+      "frame": 1031,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_000.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 4 Rail Pulse 1 (Crystalline Shatter)"
+    },
+    {
+      "frame": 1042,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_000.wav",
+      "gain_db": 5.333333333333333,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 2 (Supersonic Sub Thump)"
+    },
+    {
+      "frame": 1042,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_001.wav",
+      "gain_db": 4.333333333333333,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 4 Rail Pulse 2 (Laser Transient)"
+    },
+    {
+      "frame": 1042,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_001.wav",
+      "gain_db": 2.8333333333333335,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 2 (Plasma Arc)"
+    },
+    {
+      "frame": 1043,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_001.wav",
+      "gain_db": 3.3333333333333335,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 2 (Crystalline Shatter)"
+    },
+    {
+      "frame": 1054,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_000.wav",
+      "gain_db": 5.666666666666667,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 4 Rail Pulse 3 (Supersonic Sub Thump)"
+    },
+    {
+      "frame": 1054,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_002.wav",
+      "gain_db": 4.666666666666667,
+      "pitch_semitones": 3.0,
+      "desc": "Tier 4 Rail Pulse 3 (Laser Transient)"
+    },
+    {
+      "frame": 1054,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_002.wav",
+      "gain_db": 3.1666666666666665,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 3 (Plasma Arc)"
+    },
+    {
+      "frame": 1055,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_002.wav",
+      "gain_db": 3.6666666666666665,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 4 Rail Pulse 3 (Crystalline Shatter)"
+    },
+    {
+      "frame": 1066,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_000.wav",
+      "gain_db": 6.0,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 4 (Supersonic Sub Thump)"
+    },
+    {
+      "frame": 1066,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_003.wav",
+      "gain_db": 5.0,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Rail Pulse 4 (Laser Transient)"
+    },
+    {
+      "frame": 1066,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_003.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 4 (Plasma Arc)"
+    },
+    {
+      "frame": 1067,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_003.wav",
+      "gain_db": 4.0,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 4 (Crystalline Shatter)"
+    },
+    {
+      "frame": 1078,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_000.wav",
+      "gain_db": 6.333333333333333,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 4 Rail Pulse 5 (Supersonic Sub Thump)"
+    },
+    {
+      "frame": 1078,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_004.wav",
+      "gain_db": 5.333333333333333,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 4 Rail Pulse 5 (Laser Transient)"
+    },
+    {
+      "frame": 1078,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_004.wav",
+      "gain_db": 3.833333333333333,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 5 (Plasma Arc)"
+    },
+    {
+      "frame": 1079,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_004.wav",
+      "gain_db": 4.333333333333333,
+      "pitch_semitones": 1.0,
+      "desc": "Tier 4 Rail Pulse 5 (Crystalline Shatter)"
+    },
+    {
+      "frame": 1090,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_000.wav",
+      "gain_db": 6.666666666666667,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 6 (Supersonic Sub Thump)"
+    },
+    {
+      "frame": 1090,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_000.wav",
+      "gain_db": 5.666666666666667,
+      "pitch_semitones": 3.0,
+      "desc": "Tier 4 Rail Pulse 6 (Laser Transient)"
+    },
+    {
+      "frame": 1090,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/force_field_000.wav",
+      "gain_db": 4.166666666666667,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 6 (Plasma Arc)"
+    },
+    {
+      "frame": 1091,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_000.wav",
+      "gain_db": 4.666666666666667,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Rail Pulse 6 (Crystalline Shatter)"
+    },
+    {
+      "frame": 1135,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions/low_frequency_explosion_001.wav",
+      "gain_db": 8.5,
+      "pitch_semitones": 0.0,
+      "desc": "Tier 4 Singularity Pinch Shockwave Blast"
+    },
+    {
+      "frame": 1135,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser/laser_large_004.wav",
+      "gain_db": 6.0,
+      "pitch_semitones": 2.0,
+      "desc": "Tier 4 Singularity Laser Annihilation Burst"
+    },
+    {
+      "frame": 1136,
+      "category": "materials/glass",
+      "sample": "materials/glass/impact_glass_heavy_002.wav",
+      "gain_db": 5.5,
+      "pitch_semitones": 1.5,
+      "desc": "Tier 4 Cryo Quartz Viewport Shatter"
+    },
+    {
+      "frame": 1137,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors/thruster_fire_004.wav",
+      "gain_db": 4.5,
+      "pitch_semitones": -2.0,
+      "desc": "Tier 4 Spacetime Expansion Shockwave Tail"
+    }
+  ]
+}

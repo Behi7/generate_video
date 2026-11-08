@@ -1,0 +1,32 @@
+{
+  "id": "press",
+  "name": "Press Progression",
+  "compositionId": "PressProgression",
+  "fps": 30,
+  "durationInFrames": 1160,
+  "width": 1080,
+  "height": 1920,
+  "tiers": [
+    {
+      "tier": 1,
+      "name": "Manual Flywheel Screw Press",
+      "cost": "$10"
+    },
+    {
+      "tier": 2,
+      "name": "Motorized Eccentric Punch Press",
+      "cost": "$100"
+    },
+    {
+      "tier": 3,
+      "name": "Quad-Piston Hydraulic Forging Press",
+      "cost": "$1,000"
+    },
+    {
+      "tier": 4,
+      "name": "Superconducting Quantum Pinch Press",
+      "cost": "$100,000+"
+    }
+  ],
+  "audioTrack": "audio/asmr_press_progression.wav"
+}

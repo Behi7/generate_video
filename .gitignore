@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+package-lock.json.bak
+
+# Build artifacts & bundles
+build/
+dist/
+*.bundle.js
+*.bundle.js.map
+
+# Render outputs & temporary files
+output/
+remotion_studio/output/
+remotion_studio/src/projects/*/output
+renders/
+checkpoints/
+*.zip
+remotion_studio/out.png
+remotion_studio/.colab_url
+
+# Root symlinks to avoid cross-platform checkout issues
+/daemon
+/output
+/public
+/scripts
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.venv/
+venv/
+
+# Workspace & IDE
+.vscode/
+.continue/
+.DS_Store
+*.log
+
+# Other sub-engines in workspace
+/3d_blender/
+/2d_studio/
+/media/
+/blender_cli.py
+/blender_bridge.py
+/2d_cli.py
+/.agents/skills/blender-operator/
+/.agents/skills/studio-2d-operator/

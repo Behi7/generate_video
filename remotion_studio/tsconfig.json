@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "@shared/*": ["src/shared/*"],
+      "@projects/*": ["src/projects/*"]
+    }
+  },
+  "include": ["src/**/*", "remotion.config.ts", "scripts/**/*"],
+  "exclude": ["src/_legacy/**/*", "_legacy/**/*", "node_modules", "output", "build"]
+}

@@ -1,0 +1,10 @@
+{
+  "id": "crusher",
+  "name": "Crusher Progression (Hydraulic & Magnetic Crushing)",
+  "compositionId": "CrusherProgression",
+  "fps": 30,
+  "durationInFrames": 1160,
+  "width": 1080,
+  "height": 1920,
+  "audioTrack": "audio/asmr_crusher_progression.wav"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "shredder",
+  "name": "Shredder Progression (Mechanical Shear & Fracturing)",
+  "compositionId": "ShredderProgression",
+  "fps": 30,
+  "durationInFrames": 1160,
+  "width": 1080,
+  "height": 1920,
+  "tiers": [
+    { "tier": 1, "name": "Manual Desk Shredder", "cost": "$10" },
+    { "tier": 2, "name": "Electric Twin Shredder", "cost": "$100" },
+    { "tier": 3, "name": "Heavy Industrial Shredder", "cost": "$1,000" },
+    { "tier": 4, "name": "Quantum Singularity Shredder", "cost": "$100,000+" }
+  ],
+  "audioTrack": "audio/asmr_shredder_progression.wav"
+}

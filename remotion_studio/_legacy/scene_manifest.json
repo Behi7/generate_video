@@ -1,0 +1,38 @@
+{
+  "title": "Hyperbolic Leverage: Micro-Pump vs Quantum Reactor",
+  "aspectRatio": "9:16",
+  "resolution": [1080, 1920],
+  "fps": 60,
+  "durationFrames": 240,
+  "concept": {
+    "hook": "ПОЧЕМУ 99% УПИРАЮТСЯ В ПОТОЛОК?",
+    "subHook": "РУЧНОЙ ТРУД VS КВАНТОВЫЙ РЫЧАГ",
+    "theme": "Extreme Mechanical Contrast (Hyperbole)"
+  },
+  "leftMachine": {
+    "name": "Rusty Linear Hand-Pump",
+    "colorPalette": ["#334155", "#475569", "#78350F"],
+    "action": "Slow, strained mechanical lever stroke (1 cycle / 2 sec)",
+    "output": "1 pathetic glowing droplet dripping into huge empty container",
+    "dial": "Dead Analog Gauge at 0.1 BAR",
+    "badgeTitle": "РУЧНОЙ ТРУД",
+    "badgeValue": "500 ₽ / СМЕНА",
+    "badgeStatus": "ЛИМИТ 24 ЧАСА"
+  },
+  "rightMachine": {
+    "name": "Quantum Centrifugal Plasma Turbine",
+    "colorPalette": ["#0F172A", "#00E5FF", "#38BDF8", "#F59E0B"],
+    "action": "Concentric turbine blades rotating at hyper-speed, pulsing glowing plasma core",
+    "output": "Torrential electric cyan plasma jet pouring through quartz conduit into overflowing vault",
+    "dial": "Industrial Pressure Gauge pegged into red (OVERDRIVE: ∞)",
+    "badgeTitle": "СИСТЕМА (ЛЕВЕРЕДЖ)",
+    "badgeValue": "+1 480 000 ₽ / СЕК",
+    "badgeStatus": "БЕСКОНЕЧНЫЙ МАСШТАБ"
+  },
+  "camera": {
+    "type": "Low-angle cinematic upward push",
+    "fov": 45,
+    "startZ": 6.8,
+    "endZ": 6.2
+  }
+}

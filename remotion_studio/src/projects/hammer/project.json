@@ -1,0 +1,16 @@
+{
+  "id": "hammer",
+  "name": "Hammer Progression (AAA Mechanical Destruction)",
+  "compositionId": "HammerProgression",
+  "fps": 30,
+  "durationInFrames": 1160,
+  "width": 1080,
+  "height": 1920,
+  "tiers": [
+    { "tier": 1, "name": "Manual Forge Drop Hammer", "cost": "$10" },
+    { "tier": 2, "name": "Electric Motor Cam Hammer", "cost": "$100" },
+    { "tier": 3, "name": "Hydraulic Ram Steam Hammer", "cost": "$1,000" },
+    { "tier": 4, "name": "Maglev Kinetic Rail Hammer", "cost": "$100,000+" }
+  ],
+  "audioTrack": "audio/asmr_hammer_progression.wav"
+}
