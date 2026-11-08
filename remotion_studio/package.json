@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "High-end viral video studio powered by Remotion, React, Three.js and Spring physics",
   "scripts": {
+    "start": "remotion preview src/index.ts",
     "build": "remotion bundle",
-    "render": "remotion render",
+    "render": "remotion render src/index.ts",
     "preview": "remotion still"
   },
   "dependencies": {
