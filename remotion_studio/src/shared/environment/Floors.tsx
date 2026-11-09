@@ -1,44 +1,22 @@
 import React from "react";
 import { MeshReflectorMaterial, RoundedBox } from "@react-three/drei";
+import { FactoryHeavyConcreteFloor } from "./floors/FactoryHeavyConcreteFloor";
+import { ModularDiamondSteelDeck } from "./floors/ModularDiamondSteelDeck";
+
+export { FactoryHeavyConcreteFloor, ModularDiamondSteelDeck };
 
 export interface FloorProps {
   position?: [number, number, number];
 }
 
-/** 1. Rough Industrial Concrete with expansion seams */
+/** 1. AAA Heavy Factory Concrete Slab with expansion seams, trench drain, anchor plates, and hazard markings */
 export const ConcreteFactorySlab: React.FC<FloorProps> = ({ position = [0, -2.04, 0] }) => (
-  <group position={position}>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]}>
-      <planeGeometry args={[14, 14]} />
-      <meshStandardMaterial color="#334155" roughness={0.92} metalness={0.15} />
-    </mesh>
-    {/* Concrete expansion joints */}
-    {[-2.5, 0, 2.5].map((x, i) => (
-      <mesh key={i} rotation={[-Math.PI / 2, 0, 0]} position={[x, -0.048, 0]}>
-        <planeGeometry args={[0.025, 14]} />
-        <meshStandardMaterial color="#0F172A" roughness={1.0} />
-      </mesh>
-    ))}
-    {/* Yellow/Black hazard warning boundary perimeter */}
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.047, 3.2]}>
-      <planeGeometry args={[7, 0.2]} />
-      <meshStandardMaterial color="#F59E0B" roughness={0.6} />
-    </mesh>
-  </group>
+  <FactoryHeavyConcreteFloor position={position} />
 );
 
-/** 2. Heavy Diamond Tread Steel Plate */
+/** 2. AAA Heavy Modular Diamond Tread Steel Plate Deck with Flush Utility Hatch */
 export const DiamondPlateSteel: React.FC<FloorProps> = ({ position = [0, -2.04, 0] }) => (
-  <group position={position}>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]}>
-      <planeGeometry args={[14, 14]} />
-      <meshStandardMaterial color="#475569" roughness={0.35} metalness={0.88} />
-    </mesh>
-    {/* Welded steel perimeter frame */}
-    <RoundedBox args={[7.2, 0.06, 7.2]} radius={0.02} smoothness={4} position={[0, -0.03, 0]}>
-      <meshStandardMaterial color="#1E293B" roughness={0.7} metalness={0.5} />
-    </RoundedBox>
-  </group>
+  <ModularDiamondSteelDeck position={position} />
 );
 
 /** 3. Heavy Laminated Oak Woodworking Bench */

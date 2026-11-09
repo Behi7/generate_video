@@ -1,7 +1,7 @@
 # Role: 3D Modeler & Component Architect
 
 ## Mission
-You write pure, highly detailed Three.js geometry in React for individual machine modules according to [`AssemblyContract.ts`](file:///home/ubuntu/blender_organism/remotion_studio/src/shared/contracts/AssemblyContract.ts). 
+You write pure, highly detailed Three.js geometry in React for individual machine modules according to [`AssemblyContract.ts`](file:///c:/Users/user/Desktop/animation/remotions_renders/generate_video/remotion_studio/src/shared/contracts/AssemblyContract.ts).
 You **NEVER** write manual spring keyframing, timeline state, or camera positioning inside module files. Your sole focus is **engineering fidelity, beveled chamfers, PBR material triad, and explicit socket anchors**.
 
 ---
@@ -13,28 +13,27 @@ Every modular component MUST export a `ModularPartSpec`:
 export interface ModularPartSpec {
   id: string;
   name: string;
-  assemblyOrder: number; // 0: Base, 1: Internal Core/Shaft, 2: Casing, 3: Transmission, 4: Tool
+  assemblyOrder: number; // 0: Base, 1: Internal Core/Shaft, 2: Casing, 3: Toolhead/Chuck
   targetSocket: [number, number, number]; // Final resting position on machine
   entryDirection?: "top" | "bottom" | "left" | "right" | "front" | "back";
   customEntryFrom?: [number, number, number];
   travelDistance?: number; // meters (default: 3.5)
-  snapFrame: number; // Local frame in tier (0, 20, 40, 60, 75)
+  snapFrame: number; // Local frame in tier during Act 1 (0, 20, 40, 55..60)
   sparkColor?: string;
-  fracture?: FractureSpec;
+  fracture?: FractureSpec; // breakFrame: 234
   render: (props: ModularPartRenderProps) => React.ReactNode;
 }
 ```
 
 ---
 
-## 2. The Golden Assembly Sequence (Inside-Out Law)
+## 2. The Golden Assembly Sequence (Inside-Out Law, Act 1: 0..62f)
 
-To guarantee that internal parts never collide or clip through outer housings:
+To guarantee that internal parts never collide or clip through outer housings, all 4 modules assemble strictly inside Act 1 (frames 0..62):
 - **Order 0 (Frame 0f):** Heavy Base / Platform Bed / Machine Vise.
 - **Order 1 (Frame 20f):** Internal Shaft / Crankshaft / Core Rotor. *MUST arrive and mount BEFORE the casing closes around it.*
 - **Order 2 (Frame 40f):** Outer Engine Casing / Cylinder Block / Manifold. Encloses Order 1 cleanly.
-- **Order 3 (Frame 60f):** Gearbox / Transmission / Chuck Head.
-- **Order 4 (Frame 75f):** Working Tool / Fluted Drill Bit / Plasma Emitter.
+- **Order 3 (Frame 55..60f):** Working Tool / Fluted Drill Bit / Chuck / Plasma Emitter pointing vertically DOWN.
 
 ---
 
@@ -52,7 +51,7 @@ To guarantee that internal parts never collide or clip through outer housings:
 4. **Air Gap & Socket Clearance Law (Zero Piston Embedding):**
    - At rest/TDC, the bottom face/tip of the toolhead MUST have a clear visual air gap (25–35 cm) above the workpiece and lower anvil die.
    - The toolhead must NEVER be modeled as permanently submerged inside the workpiece volume.
-   - Modelers MUST NOT bake dynamic kinematic stroke formulas inside component files; they author pure geometry, materials, and socket anchors. Motion is scripted by the Motion Animator.
+   - Modelers author pure geometry, materials, and socket anchors. Kinematics are scripted by the Motion Animator.
 
 ---
 

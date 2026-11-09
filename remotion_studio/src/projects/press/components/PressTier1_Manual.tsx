@@ -74,11 +74,11 @@ export function getPressTier1Kinematics(
   isRunning: boolean,
   isBroken: boolean
 ): PressTier1Kinematics {
-  const broken = isBroken || localFrame >= 265;
-  const isStall = isRunning && localFrame >= 245 && localFrame < 265;
-  const isDecel = isRunning && localFrame >= 225 && localFrame < 245;
-  const isOperating = isRunning && localFrame >= 100 && localFrame < 225;
-  const isSpinUp = isRunning && localFrame >= 70 && localFrame < 100;
+  const broken = isBroken || localFrame >= 234;
+  const isStall = isRunning && localFrame >= 225 && localFrame < 234;
+  const isDecel = isRunning && localFrame >= 213 && localFrame < 225;
+  const isOperating = isRunning && localFrame >= 123 && localFrame < 213;
+  const isSpinUp = isRunning && localFrame >= 63 && localFrame < 123;
 
   let flywheelAngle = 0;
   let strokeDeltaY = 0; // relative to TDC (Y = 1.050)
@@ -87,7 +87,7 @@ export function getPressTier1Kinematics(
   let stallProgress = 0;
 
   if (broken) {
-    // Phase 4 Catastrophic Rupture (265..289)
+    // Phase 4 Catastrophic Rupture (234..319)
     // Screw threads sheared, handle snapped, die rests at stall contact Y = 0.730
     flywheelAngle = Math.PI * 4.5;
     strokeDeltaY = -0.320; // At Y = 0.730
@@ -95,9 +95,9 @@ export function getPressTier1Kinematics(
     impactShake = 0;
     stallProgress = 1;
   } else if (isStall) {
-    // Phase 3 Contact Stall (245..264)
+    // Phase 3 Resonant Contact Stall (225..233)
     // Contact stall at Y = 0.730 with micro-shudder (0.5mm to 3mm high-frequency shudder, NO motionless pause!)
-    stallProgress = (localFrame - 245) / 19;
+    stallProgress = (localFrame - 225) / 8;
     const amp = 0.0005 + stallProgress * 0.0025; // 0.5mm to 3.0mm
     const shudder = Math.sin(localFrame * 45) * amp;
     dieY = 0.730 + shudder;
@@ -106,48 +106,55 @@ export function getPressTier1Kinematics(
     // Flywheel is torqued to maximum mechanical strain against obstacle
     flywheelAngle = Math.PI * 4.0 + Math.sin(localFrame * 45) * 0.02;
   } else if (isDecel) {
-    // Phase 2 Deceleration / Torque Bog-Down (225..244)
+    // Phase 2 Deceleration / Torque Bog-Down (213..224)
     // RPM bogs down from 100% to 0% as hard obstacle is struck
-    const pDecel = (localFrame - 225) / 19;
+    const pDecel = (localFrame - 213) / 11;
     const t = Math.min(1, Math.pow(pDecel, 0.8));
     dieY = 1.050 - 0.320 * t;
     strokeDeltaY = dieY - 1.050;
     flywheelAngle = pDecel * Math.PI * 4.0;
   } else if (isOperating) {
-    // Phase 1 Full-power rhythmic pressing cycle (100..224)
-    // 5 pressing strokes of 25 frames each:
-    // 100..124, 125..149, 150..174, 175..199, 200..224
-    const cycleFrame = (localFrame - 100) % 25;
-    if (cycleFrame < 11) {
-      // Downward stroke: flywheel spins 720 deg (4*PI), screw descends to Y=0.730
-      const t = cycleFrame / 10;
-      const easeDown = t * t; // quadratic plunge
-      strokeDeltaY = -0.320 * easeDown;
-      dieY = 1.050 + strokeDeltaY;
-      flywheelAngle = easeDown * (Math.PI * 4); // 720 deg rotation
-    } else if (cycleFrame < 14) {
-      // Strike contact & dwell at Y = 0.730 (impact frames: 111, 136, 161, 186, 211)
-      strokeDeltaY = -0.320;
-      dieY = 0.730;
-      flywheelAngle = Math.PI * 4;
-      impactShake = 0.003;
+    // Phase 1 Full-power rhythmic pressing cycle (123..212)
+    // 4 pressing strokes of 22 frames each (123..144, 145..166, 167..188, 189..210)
+    // Strikes at frames: [134, 156, 178, 200]
+    // At frames 211..212, parked at TDC Y = 1.050 (0 discontinuity into frame 213 decel!)
+    if (localFrame >= 211) {
+      dieY = 1.050;
+      strokeDeltaY = 0;
+      flywheelAngle = 0;
     } else {
-      // Recoil stroke: flywheel reverses 720 deg, screw lifts back to TDC Y = 1.050
-      const t = (cycleFrame - 14) / 10;
-      const easeUp = 1 - Math.pow(1 - t, 2);
-      strokeDeltaY = -0.320 * (1 - easeUp);
-      dieY = 1.050 + strokeDeltaY;
-      flywheelAngle = (1 - easeUp) * (Math.PI * 4);
+      const cycleFrame = (localFrame - 123) % 22;
+      if (cycleFrame < 10) {
+        // Downward stroke: flywheel spins 720 deg (4*PI), screw descends to Y=0.730
+        const t = cycleFrame / 9;
+        const easeDown = t * t; // quadratic plunge
+        strokeDeltaY = -0.320 * easeDown;
+        dieY = 1.050 + strokeDeltaY;
+        flywheelAngle = easeDown * (Math.PI * 4); // 720 deg rotation
+      } else if (cycleFrame < 13) {
+        // Strike contact & dwell at Y = 0.730 (impact frames: 134, 156, 178, 200)
+        strokeDeltaY = -0.320;
+        dieY = 0.730;
+        flywheelAngle = Math.PI * 4;
+        impactShake = 0.003;
+      } else {
+        // Recoil stroke: flywheel reverses 720 deg, screw lifts back to TDC Y = 1.050
+        const t = (cycleFrame - 13) / 8;
+        const easeUp = 1 - Math.pow(1 - t, 2);
+        strokeDeltaY = -0.320 * (1 - easeUp);
+        dieY = 1.050 + strokeDeltaY;
+        flywheelAngle = (1 - easeUp) * (Math.PI * 4);
+      }
     }
   } else if (isSpinUp) {
-    // Manual spin-up / handle rotation (70..99f)
+    // Manual spin-up / handle rotation (63..122f)
     // Flywheel spins up, toolhead parked safely at TDC Y = 1.050
     dieY = 1.050;
     strokeDeltaY = 0;
-    const pSpin = (localFrame - 70) / 29;
-    flywheelAngle = Math.sin(pSpin * Math.PI * 2) * (Math.PI * 0.8);
+    const pSpin = (localFrame - 63) / 59;
+    flywheelAngle = Math.sin(pSpin * Math.PI * 2) * (Math.PI * 2);
   } else {
-    // Staggered assembly snap (0..69)
+    // Staggered assembly snap (0..62)
     dieY = 1.050;
     strokeDeltaY = 0;
     flywheelAngle = 0;
@@ -323,14 +330,14 @@ const ModuleLeadScrew: ModularPartSpec = {
   id: "press_t1_lead_screw",
   name: "Internal Solid Bronze Lead Screw Shaft with Acme Threads",
   assemblyOrder: 1,
-  snapFrame: 20,
+  snapFrame: 15,
   entryDirection: "top",
   travelDistance: 3.5,
   targetSocket: [0, 1.25, 0],
   sparkColor: "#D97706",
   sparkCount: 16,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [1.8, 3.2, -1.2],
     rotationImpulse: [1.5, 0.8, -1.2],
@@ -446,14 +453,14 @@ const ModuleGantry: ModularPartSpec = {
   id: "press_t1_gantry",
   name: "Outer Arched Cast-Iron Gantry & Precision Guide Bushing",
   assemblyOrder: 2,
-  snapFrame: 40,
+  snapFrame: 30,
   entryDirection: "top",
   travelDistance: 3.5,
   targetSocket: [0, 0.90, 0],
   sparkColor: "#334155",
   sparkCount: 18,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "shudder_and_crack",
     impulse: [0, 0, 0],
     rotationImpulse: [0, 0, 0],
@@ -461,7 +468,7 @@ const ModuleGantry: ModularPartSpec = {
     sparkColor: "#EF4444",
   },
   render: ({ localFrame, isBroken }: ModularPartRenderProps) => {
-    const broken = isBroken || localFrame >= 265;
+    const broken = isBroken || localFrame >= 234;
 
     return (
       <group position={[0, 0, 0]}>
@@ -652,14 +659,14 @@ const ModuleFlywheel: ModularPartSpec = {
   id: "press_t1_flywheel",
   name: "Top Dual-Ball Balanced Flywheel Handle with Turned Ash Knobs",
   assemblyOrder: 3,
-  snapFrame: 60,
+  snapFrame: 45,
   entryDirection: "top",
   travelDistance: 3.0,
   targetSocket: [0, 1.70, 0],
   sparkColor: "#D97706",
   sparkCount: 20,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [-2.2, 4.8, 1.8],
     rotationImpulse: [2.8, 4.5, -2.0],
@@ -812,14 +819,14 @@ const ModuleToolhead: ModularPartSpec = {
   id: "press_t1_toolhead",
   name: "Hardened Tool-Steel Punch Die & Thrust Bearing Guide",
   assemblyOrder: 4,
-  snapFrame: 75,
+  snapFrame: 60,
   entryDirection: "bottom",
   travelDistance: 2.5,
   targetSocket: [0, 1.050, 0],
   sparkColor: "#CBD5E1",
   sparkCount: 16,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "shear_and_tilt",
     impulse: [0.6, 1.2, 0.4],
     rotationImpulse: [0.8, 0.3, -0.6],
@@ -943,7 +950,7 @@ export const PressTier1Spec: MachineAssemblySpec = {
   id: "press_tier1_manual",
   name: "Tier 1: $10 Manual Flywheel Screw Press",
   tier: 1,
-  strikeFrames: [111, 136, 161, 186, 211],
+  strikeFrames: [134, 156, 178, 200],
   strikeIntensity: 0.038,
   modules: [
     ModuleBase,

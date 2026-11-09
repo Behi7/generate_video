@@ -76,11 +76,11 @@ export function getPressHydraulicStroke(
   isRunning: boolean,
   isBroken: boolean
 ): PressKinematics {
-  const isBlowout = isBroken || localFrame >= 265;
-  const isStall = isRunning && localFrame >= 245 && localFrame < 265;
-  const isDecel = isRunning && localFrame >= 225 && localFrame < 245;
-  const isOperating = isRunning && localFrame >= 100 && localFrame < 225;
-  const isSpooling = isRunning && localFrame >= 70 && localFrame < 100;
+  const isBlowout = isBroken || localFrame >= 234;
+  const isStall = isRunning && localFrame >= 225 && localFrame < 234;
+  const isDecel = isRunning && localFrame >= 213 && localFrame < 225;
+  const isOperating = isRunning && localFrame >= 123 && localFrame < 213;
+  const isSpooling = isRunning && localFrame >= 63 && localFrame < 123;
 
   let dieY = 1.050; // TDC resting position (Y = 1.050)
   let shudder = 0;
@@ -94,8 +94,8 @@ export function getPressHydraulicStroke(
     pressureBar = 40; // Pressure collapsed
     needleAngle = -1.5;
   } else if (isStall) {
-    // Stall & Shudder (245..264f): Stalled against uncrushable object at Y = 0.750
-    const pStall = (localFrame - 245) / 19;
+    // Stall & Shudder (225..233f): Stalled against uncrushable object at Y = 0.750
+    const pStall = (localFrame - 225) / 8;
     const amp = 0.0010 + pStall * 0.0015; // 1.0mm to 2.5mm cavitation amplitude
     shudder = Math.sin(localFrame * 45) * amp;
     gantryShudder = Math.sin(localFrame * 45 + 1.2) * (amp * 0.65);
@@ -103,9 +103,9 @@ export function getPressHydraulicStroke(
     pressureBar = 700; // 10,000 PSI max pressure spike
     needleAngle = 2.05 + Math.sin(localFrame * 55) * 0.06; // Pegged into redline with needle flutter
   } else if (isDecel) {
-    // Deceleration (225..244f): Ram meets immense resistance, slows to crawl
-    // Starts continuously at TDC Y = 1.050 at frame 225 (matching frame 224 TDC)
-    const p = (localFrame - 225) / 19;
+    // Deceleration (213..224f): Ram meets immense resistance, slows to crawl
+    // Starts continuously at TDC Y = 1.050 at frame 213 (matching frame 212 TDC)
+    const p = (localFrame - 213) / 11;
     const ease = 1 - Math.pow(1 - p, 3); // Slowing down to stall
     dieY = 1.050 - (1.050 - 0.750) * ease;
     pressureBar = 450 + p * 180; // Climbing rapidly from 450 to 630 bar
@@ -114,37 +114,40 @@ export function getPressHydraulicStroke(
       extrapolateRight: "clamp",
     });
   } else if (isOperating) {
-    // Operating Strokes (100..224f): 5 full 25-frame hydraulic forging cycles
-    // Stroke 0: 100..124 (strike at 110)
-    // Stroke 1: 125..149 (strike at 135)
-    // Stroke 2: 150..174 (strike at 160)
-    // Stroke 3: 175..199 (strike at 185)
-    // Stroke 4: 200..224 (strike at 210, completes at TDC 1.050 on frame 224!)
-    const cycle = (localFrame - 100) % 25;
-    if (cycle < 10) {
-      // 0..9: Smooth hydraulic descent 1.050 -> 0.730
-      const p = cycle / 10;
-      const ease = p * p * (3 - 2 * p); // Smoothstep
-      dieY = 1.050 - (1.050 - 0.730) * ease;
-      pressureBar = 250 + ease * 150; // 250 -> 400 bar
-    } else if (cycle < 14) {
-      // 10..13: Full pressure dwell at bottom 0.730 (crushing workpiece)
-      dieY = 0.730;
-      pressureBar = 420; // Full forging bite
+    // Operating Strokes (123..212f): 4 high-tonnage hydraulic forging cycles across 88 frames
+    // Strokes at exact frames: [134, 156, 178, 200]
+    // At frames 211..212: Rest strictly at TDC Y = 1.050 (0 discontinuity into frame 213 decel!)
+    if (localFrame >= 211) {
+      dieY = 1.050;
+      pressureBar = 160;
     } else {
-      // 14..24: Smooth retraction 0.730 -> 1.050 (at cycle=24, dieY = 1.050!)
-      const p = (cycle - 14) / 10;
-      const ease = p * p * (3 - 2 * p);
-      dieY = 0.730 + (1.050 - 0.730) * ease;
-      pressureBar = 160; // Retract pressure
+      const cycle = (localFrame - 123) % 22;
+      if (cycle < 10) {
+        // 0..9: Smooth hydraulic descent 1.050 -> 0.730
+        const p = cycle / 9;
+        const ease = p * p * (3 - 2 * p); // Smoothstep
+        dieY = 1.050 - (1.050 - 0.730) * ease;
+        pressureBar = 250 + ease * 150; // 250 -> 400 bar
+      } else if (cycle < 13) {
+        // 10..12: Full pressure dwell at bottom 0.730 (crushing workpiece, impact at 134, 156, 178, 200)
+        dieY = 0.730;
+        pressureBar = 420; // Full forging bite
+      } else {
+        // 13..21: Smooth retraction 0.730 -> 1.050 (at cycle=21, dieY = 1.050!)
+        const p = (cycle - 13) / 8;
+        const ease = p * p * (3 - 2 * p);
+        dieY = 0.730 + (1.050 - 0.730) * ease;
+        pressureBar = 160; // Retract pressure
+      }
     }
     needleAngle = interpolate(pressureBar, [0, 700], [-1.8, 2.0], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
   } else if (isSpooling) {
-    // Spool-up (70..99f): Pump spools up, pre-fills cylinder, needle climbs to 250 bar
-    const p = (localFrame - 70) / 29;
+    // Spool-up (63..122f): Pump spools up, pre-fills cylinder, needle climbs to 250 bar
+    // Toolhead parked strictly at TDC Y = 1.050 (ZERO collision with uncompressed specimen!)
+    const p = (localFrame - 63) / 59;
     pressureBar = p * 250;
     needleAngle = interpolate(pressureBar, [0, 700], [-1.8, 2.0], {
       extrapolateLeft: "clamp",
@@ -408,7 +411,7 @@ const ModuleColumnsAndPiston: ModularPartSpec = {
   id: "press_t3_columns_piston",
   name: "Quad Mirror-Chrome Tie Columns & Central Hydraulic Ram Piston",
   assemblyOrder: 1,
-  snapFrame: 20,
+  snapFrame: 15,
   entryDirection: "top",
   travelDistance: 3.5,
   targetSocket: [0, 0, 0],
@@ -543,14 +546,14 @@ const ModuleCrownGantry: ModularPartSpec = {
   id: "press_t3_crown_gantry",
   name: "Top Crown Gantry with Integrated 500-Bar Hydraulic Cylinder & Reservoir",
   assemblyOrder: 2,
-  snapFrame: 40,
+  snapFrame: 30,
   entryDirection: "top",
   travelDistance: 3.6,
   targetSocket: [0, 1.90, 0],
   sparkColor: "#F59E0B",
   sparkCount: 20,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [0.8, 4.2, -1.5],
     rotationImpulse: [1.2, 0.6, -1.8],
@@ -719,7 +722,7 @@ const ModuleCrownGantry: ModularPartSpec = {
           </mesh>
         </group>
 
-        {/* 7. Phase 4 Blowout: High-Pressure Vapor Jet Plume (frames >= 265) */}
+        {/* 7. Phase 4 Blowout: High-Pressure Vapor Jet Plume (frames >= 275) */}
         {isBlowout && (
           <group position={[0, 0.32, 0]}>
             {/* Catastrophic high-pressure vapor jet erupting from blown cylinder seal */}
@@ -777,14 +780,14 @@ const ModuleHydraulicDrive: ModularPartSpec = {
   id: "press_t3_hydraulic_power_unit",
   name: "Hydraulic Power Unit, Directional Spool Valve Block, Braided Lines & Dual Gauges",
   assemblyOrder: 3,
-  snapFrame: 60,
+  snapFrame: 45,
   entryDirection: "right",
   travelDistance: 3.4,
   targetSocket: [0, 1.90, 0],
   sparkColor: "#F59E0B",
   sparkCount: 22,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [3.5, 4.0, 2.5],
     rotationImpulse: [2.5, 1.8, 3.2],
@@ -946,7 +949,7 @@ const ModuleHydraulicDrive: ModularPartSpec = {
               </mesh>
             </group>
           ) : (
-            /* Ruptured Hose Fitting at Blowout (localFrame >= 265) */
+            /* Ruptured Hose Fitting at Blowout (localFrame >= 275) */
             <group position={[-0.05, -0.04, 0]}>
               <mesh rotation={[0.5, 0.2, -0.8]}>
                 <cylinderGeometry args={[0.028, 0.024, 0.14, 16]} />
@@ -983,14 +986,14 @@ const ModuleCrossheadDie: ModularPartSpec = {
   id: "press_t3_crosshead_die",
   name: "High-Tonnage Movable Crosshead Platen & Upper Forging Die",
   assemblyOrder: 4,
-  snapFrame: 75,
+  snapFrame: 60,
   entryDirection: "bottom",
   travelDistance: 2.6,
   targetSocket: [0, 1.050, 0], // Sits with bottom die face resting at EXACTLY Y = 1.050
   sparkColor: "#10B981",
   sparkCount: 26,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "shear_and_tilt",
     impulse: [-0.6, 1.2, 0.5],
     rotationImpulse: [0.4, 0.15, 0.5],
@@ -1128,7 +1131,7 @@ export const PressTier3Spec: MachineAssemblySpec = {
   id: "press_tier3_hydraulic",
   name: "Tier 3: $1,000 Quad-Piston Hydraulic Forging Press",
   tier: 3,
-  strikeFrames: [110, 135, 160, 185, 210],
+  strikeFrames: [134, 156, 178, 200],
   strikeIntensity: 0.055,
   modules: [
     ModuleBolsterBase,

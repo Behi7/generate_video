@@ -103,7 +103,19 @@ def resolve_project(name_or_comp):
         p = "drill"
     elif "press" in lower_name:
         p = "press"
-    elif "environment" in lower_name or "oildrum" in lower_name or "drum" in lower_name:
+    elif (
+        "environment" in lower_name
+        or "oildrum" in lower_name
+        or "drum" in lower_name
+        or "floor" in lower_name
+        or "concrete" in lower_name
+        or "bucket" in lower_name
+        or "pallet" in lower_name
+        or "hose" in lower_name
+        or "brick" in lower_name
+        or "wall" in lower_name
+        or "blast" in lower_name
+    ):
         p = "environment"
     else:
         p = "_misc"
@@ -589,7 +601,7 @@ def cmd_inspect(args):
             tmp_path,
             f"--frame={f}",
             "--gl=angle",
-            "--timeout-in-milliseconds=60000",
+            "--timeout=90000",
             "--log=warn",
         ]
         res = run_command(cmd)

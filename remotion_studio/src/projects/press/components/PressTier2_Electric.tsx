@@ -77,35 +77,35 @@ export function getPressTier2Kinematics(
   rpm: number,
   isBroken: boolean
 ): PressTier2Kinematics {
-  const isBurst = isBroken || localFrame >= 265;
-  const isStall = isRunning && localFrame >= 245 && localFrame < 265;
-  const isBog = isRunning && localFrame >= 225 && localFrame < 245;
-  const isOperating = isRunning && localFrame >= 100 && localFrame < 225;
-  const isSpooling = isRunning && localFrame >= 70 && localFrame < 100;
+  const isBurst = isBroken || localFrame >= 234;
+  const isStall = isRunning && localFrame >= 225 && localFrame < 234;
+  const isBog = isRunning && localFrame >= 213 && localFrame < 225;
+  const isOperating = isRunning && localFrame >= 123 && localFrame < 213;
+  const isSpooling = isRunning && localFrame >= 63 && localFrame < 123;
 
   // 1. Flywheel and Motor Spooling / Rotation
   let flywheelAngle = 0;
-  if (isRunning && localFrame >= 70) {
+  if (isRunning && localFrame >= 63) {
     if (isSpooling) {
-      // Smooth acceleration curve 70..99f
-      const p = (localFrame - 70) / 30;
+      // Smooth acceleration curve 63..122f
+      const p = (localFrame - 63) / 59;
       flywheelAngle = Math.pow(p, 1.8) * 10 * Math.PI * 2;
     } else if (isOperating) {
-      // Operating high-speed rotation: 14 revolutions across 124 frames (100..224f)
+      // Operating high-speed rotation: 10 revolutions across 88 frames (123..210f)
       const spoolTotal = 10 * Math.PI * 2;
-      const opAngle = ((localFrame - 100) / 124) * 14 * Math.PI * 2;
+      const opAngle = ((localFrame - 123) / 88) * 10 * Math.PI * 2;
       flywheelAngle = spoolTotal + opAngle;
     } else if (isBog) {
-      // Rapid torque bog-down deceleration 225..244f
-      const p = (localFrame - 225) / 20;
+      // Rapid torque bog-down deceleration 213..224f
+      const p = (localFrame - 213) / 11;
       const decel = 1 - Math.pow(p, 1.5);
       const spoolTotal = 10 * Math.PI * 2;
-      const opTotal = 14 * Math.PI * 2;
-      flywheelAngle = spoolTotal + opTotal + (localFrame - 225) * ((Math.PI * 2) / 8.857) * decel;
+      const opTotal = 10 * Math.PI * 2;
+      flywheelAngle = spoolTotal + opTotal + (localFrame - 213) * ((Math.PI * 2) / 8.8) * decel;
     } else {
       // Stalled / frozen
       const spoolTotal = 10 * Math.PI * 2;
-      const opTotal = 14 * Math.PI * 2;
+      const opTotal = 10 * Math.PI * 2;
       flywheelAngle = spoolTotal + opTotal + 2.5 * Math.PI;
     }
   }
@@ -121,38 +121,42 @@ export function getPressTier2Kinematics(
 
   if (isBurst) {
     strokeY = 0.730;
-    conrodBuckle = Math.min(1, (localFrame - 265) / 5);
+    conrodBuckle = Math.min(1, (localFrame - 234) / 5);
     crankAngle = Math.PI; // Frozen at BDC
   } else if (isStall) {
-    // 245..264f: Contact stall at Y=0.730 with high-frequency micro-shudder (1mm to 3mm)
-    const pStall = (localFrame - 245) / 19;
+    // 225..233f: Contact stall at Y=0.730 with resonant micro-shudder (1mm to 3.5mm)
+    const pStall = (localFrame - 225) / 8;
     const shudderAmp = 0.001 + pStall * 0.0025; // 1mm -> 3.5mm
     shudderY = Math.sin(localFrame * 42) * shudderAmp;
     strokeY = 0.730 + shudderY;
     crankAngle = Math.PI + (shudderY / 0.160);
   } else if (isBog) {
-    // 225..244f: Torque bog-down from 100% to 0% as clutch binds
-    // Starts smoothly at TDC Y = 1.050 (matching frame 224 TDC position)
-    const pBog = (localFrame - 225) / 20;
+    // 213..224f: Torque bog-down from 100% to 0% as clutch binds
+    // Starts smoothly at TDC Y = 1.050 (matching frame 212 TDC position)
+    const pBog = (localFrame - 213) / 11;
     const easedBog = interpolate(pBog, [0, 1], [0, 1], {
       easing: Easing.bezier(0.2, 0.8, 0.4, 1),
     });
     strokeY = 1.050 - (1.050 - 0.730) * easedBog;
     crankAngle = easedBog * Math.PI;
   } else if (isOperating) {
-    // 100..224f: Continuous rapid mechanical punching cycles (14 full revolutions)
-    // At frame 100: crankAngle = 0, strokeY = 1.050 (TDC)
-    // At frame 224: crankAngle = 14 * 2*pi, strokeY = 1.050 (TDC, zero jump to 225!)
-    crankAngle = ((localFrame - 100) / 124) * 14 * Math.PI * 2;
-    // Harmonic eccentric plunge: r = 0.160m
-    // angle = 0: strokeY = 0.890 + 0.160 = 1.050 (TDC)
-    // angle = pi: strokeY = 0.890 - 0.160 = 0.730 (BDC)
-    strokeY = 0.890 + 0.160 * Math.cos(crankAngle);
-    if (Math.cos(crankAngle) < -0.96) {
-      shudderY = 0.003; // Impact snap shock at bottom dead center
+    // 123..212f: Continuous rapid mechanical punching cycles (10 full revolutions across 88 frames)
+    // At frames 211..212: Ram rests at TDC Y = 1.050 (zero jump to 213!)
+    if (localFrame >= 211) {
+      crankAngle = 0;
+      strokeY = 1.050;
+    } else {
+      crankAngle = ((localFrame - 123) / 88) * 10 * Math.PI * 2;
+      // Harmonic eccentric plunge: r = 0.160m
+      // angle = 0: strokeY = 0.890 + 0.160 = 1.050 (TDC)
+      // angle = pi: strokeY = 0.890 - 0.160 = 0.730 (BDC)
+      strokeY = 0.890 + 0.160 * Math.cos(crankAngle);
+      if (Math.cos(crankAngle) < -0.96) {
+        shudderY = 0.003; // Impact snap shock at bottom dead center
+      }
     }
   } else {
-    // 0..99f: Ram rests at TDC Y = 1.050
+    // 0..122f: Ram rests safely at TDC Y = 1.050
     strokeY = 1.050;
     crankAngle = 0;
   }
@@ -363,14 +367,14 @@ const ModuleInternalCrank: ModularPartSpec = {
   id: "press_t2_crankshaft_conrod",
   name: "Hardened Eccentric Crankshaft, Bronze Conrod & Needle Bearings",
   assemblyOrder: 1,
-  snapFrame: 20,
+  snapFrame: 15,
   targetSocket: [0, 1.85, 0],
   entryDirection: "top",
   travelDistance: 2.8,
   sparkColor: "#38BDF8",
   sparkCount: 18,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [-1.8, 3.8, 2.2],
     rotationImpulse: [3.2, 1.5, -2.4],
@@ -536,7 +540,7 @@ const ModuleUprightFrame: ModularPartSpec = {
   id: "press_t2_upright_frame",
   name: "Cast Iron Upright Frame Housing with Prismatic Slide Ways",
   assemblyOrder: 2,
-  snapFrame: 40,
+  snapFrame: 30,
   targetSocket: [0, 1.25, 0],
   entryDirection: "left",
   travelDistance: 3.2,
@@ -714,14 +718,14 @@ const ModuleFlywheelMotor: ModularPartSpec = {
   id: "press_t2_flywheel_motor",
   name: "Counterweighted Flywheel, Dual V-Belt Pulleys & Induction Motor",
   assemblyOrder: 3,
-  snapFrame: 60,
+  snapFrame: 45,
   targetSocket: [0.48, 1.85, 0], // Mounts on the right shaft extension
   entryDirection: "right",
   travelDistance: 2.8,
   sparkColor: "#F59E0B",
   sparkCount: 18,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [3.2, 4.5, -2.4],
     rotationImpulse: [4.2, 2.8, 3.5],
@@ -933,14 +937,14 @@ const ModuleRamToolhead: ModularPartSpec = {
   id: "press_t2_ram_punch",
   name: "Reciprocating Ram Slide Block & Solid Tungsten Carbide Punch Die",
   assemblyOrder: 4,
-  snapFrame: 75,
+  snapFrame: 60,
   targetSocket: [0, 1.050, 0], // At TDC (frame 150), bottom face of punch die is at world Y = 1.050!
   entryDirection: "top",
   travelDistance: 2.6,
   sparkColor: "#10B981",
   sparkCount: 20,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "shear_and_tilt",
     impulse: [0.8, 1.5, -0.5],
     rotationImpulse: [0.6, 0.2, -0.8],
@@ -1068,7 +1072,7 @@ export const PressTier2Spec: MachineAssemblySpec = {
   id: "press_tier2_electric",
   name: "Tier 2: $100 Motorized Eccentric Flywheel Punch Press",
   tier: 2,
-  strikeFrames: [104, 113, 122, 131, 140, 149, 158, 166, 175, 184, 193, 202, 211, 220],
+  strikeFrames: [127, 136, 145, 154, 163, 171, 180, 189, 198, 207],
   strikeIntensity: 0.045,
   modules: [
     ModuleBase,

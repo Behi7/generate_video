@@ -75,21 +75,37 @@ def inspect_audio(wav_path, bom_path=None, out_png=None):
         rms_curve.append(rms)
     rms_curve = np.array(rms_curve)
 
-    # Keyframe impact points across 4 tiers
-    key_impacts = [
-        # Tier 1
-        (0, "T1 Base", "#10B981"), (20, "T1 Core", "#10B981"), (40, "T1 Casing", "#10B981"), 
-        (60, "T1 Drive", "#10B981"), (75, "T1 Cutters", "#10B981"), (265, "T1 Fracture", "#EF4444"),
-        # Tier 2
-        (290, "T2 Base", "#06B6D4"), (310, "T2 Core", "#06B6D4"), (330, "T2 Casing", "#06B6D4"), 
-        (350, "T2 Drive", "#06B6D4"), (365, "T2 Cutters", "#06B6D4"), (555, "T2 Fracture", "#EF4444"),
-        # Tier 3
-        (580, "T3 Bed", "#F59E0B"), (600, "T3 Shafts", "#F59E0B"), (620, "T3 Casing", "#F59E0B"), 
-        (640, "T3 Manifold", "#F59E0B"), (655, "T3 Bin", "#F59E0B"), (845, "T3 Fracture", "#EF4444"),
-        # Tier 4
-        (870, "T4 Plinth", "#8B5CF6"), (890, "T4 Vortex", "#8B5CF6"), (910, "T4 Ring", "#8B5CF6"), 
-        (930, "T4 Coils", "#8B5CF6"), (945, "T4 Lens", "#8B5CF6"), (1135, "T4 Collapse", "#EF4444"),
-    ]
+    # Keyframe impact points across 4 tiers (dynamically calibrated to 1280f or 1160f timeline)
+    if total_video_frames >= 1200:
+        key_impacts = [
+            # Tier 1 (0..319) - Rupture at 234
+            (0, "T1 Base", "#10B981"), (20, "T1 Core", "#10B981"), (40, "T1 Casing", "#10B981"), 
+            (60, "T1 Drive", "#10B981"), (234, "T1 Fracture", "#EF4444"),
+            # Tier 2 (320..639) - Rupture at 554
+            (320, "T2 Base", "#06B6D4"), (340, "T2 Core", "#06B6D4"), (360, "T2 Casing", "#06B6D4"), 
+            (380, "T2 Drive", "#06B6D4"), (554, "T2 Fracture", "#EF4444"),
+            # Tier 3 (640..959) - Rupture at 874
+            (640, "T3 Bed", "#F59E0B"), (660, "T3 Shafts", "#F59E0B"), (685, "T3 Manifold", "#F59E0B"), 
+            (874, "T3 Fracture", "#EF4444"),
+            # Tier 4 (960..1279) - Rupture at 1194
+            (960, "T4 Plinth", "#8B5CF6"), (985, "T4 Vortex", "#8B5CF6"), (1010, "T4 Ring", "#8B5CF6"), 
+            (1194, "T4 Collapse", "#EF4444"),
+        ]
+    else:
+        key_impacts = [
+            # Tier 1
+            (0, "T1 Base", "#10B981"), (20, "T1 Core", "#10B981"), (40, "T1 Casing", "#10B981"), 
+            (60, "T1 Drive", "#10B981"), (75, "T1 Cutters", "#10B981"), (265, "T1 Fracture", "#EF4444"),
+            # Tier 2
+            (290, "T2 Base", "#06B6D4"), (310, "T2 Core", "#06B6D4"), (330, "T2 Casing", "#06B6D4"), 
+            (350, "T2 Drive", "#06B6D4"), (365, "T2 Cutters", "#06B6D4"), (555, "T2 Fracture", "#EF4444"),
+            # Tier 3
+            (580, "T3 Bed", "#F59E0B"), (600, "T3 Shafts", "#F59E0B"), (620, "T3 Casing", "#F59E0B"), 
+            (640, "T3 Manifold", "#F59E0B"), (655, "T3 Bin", "#F59E0B"), (845, "T3 Fracture", "#EF4444"),
+            # Tier 4
+            (870, "T4 Plinth", "#8B5CF6"), (890, "T4 Vortex", "#8B5CF6"), (910, "T4 Ring", "#8B5CF6"), 
+            (930, "T4 Coils", "#8B5CF6"), (945, "T4 Lens", "#8B5CF6"), (1135, "T4 Collapse", "#EF4444"),
+        ]
 
     # Create figure
     fig = plt.figure(figsize=(16, 11), facecolor="#0B0F19")

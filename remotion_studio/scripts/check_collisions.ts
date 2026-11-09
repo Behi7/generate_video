@@ -28,6 +28,7 @@ import * as r3f from "@react-three/fiber";
 import { createRequire } from "module";
 import path from "path";
 import fs from "fs";
+import { TIER_DURATION_FRAMES, getTierAct } from "../src/shared/contracts/StageTimeline";
 
 // Initialize Three.js namespace in Fiber
 r3f.extend(THREE);
@@ -212,10 +213,7 @@ export function extractMeshes(rootObj: THREE.Object3D | null | undefined): THREE
 }
 
 export function getActName(localFrame: number): "assembly" | "startup" | "operating" | "destruction" {
-  if (localFrame < 70) return "assembly";
-  if (localFrame < 150) return "startup";
-  if (localFrame < 250) return "operating";
-  return "destruction";
+  return getTierAct(localFrame);
 }
 
 /**
@@ -303,14 +301,16 @@ export async function auditCollisions(
     frameloop: "never",
   });
 
-  // Keyframe Checkpoints across all 4 Acts
+  // Keyframe Checkpoints across pre-fracture operational lifecycle (0..233)
   const LOCAL_KEYFRAMES = [
-    // Act 1: Assembly snap frames
-    10, 25, 45, 65, 75,
-    // Act 3: Operating steady-state & strike frames
-    160, 180, 200, 220, 240,
-    // Act 4: Overload & fracture frames
-    250, 260, 265,
+    // Act 1: Assembly snap frames (0..62)
+    10, 25, 45, 60,
+    // Act 2: Startup chain reaction (63..122)
+    75, 95, 115,
+    // Act 3: Operating steady-state & strike frames (123..212)
+    135, 160, 185, 210,
+    // Act 4: Overload strain & resonant pre-fracture shudder (213..233)
+    215, 225, 230,
   ];
 
   const violations: CollisionViolation[] = [];
@@ -323,7 +323,7 @@ export async function auditCollisions(
   const tiersToAudit = options.targetTier ? [options.targetTier] : [1, 2, 3, 4];
 
   for (const tier of tiersToAudit) {
-    const baseGlobalFrame = (tier - 1) * 290;
+    const baseGlobalFrame = (tier - 1) * TIER_DURATION_FRAMES;
     tierSummaries[tier] = {
       status: "PASS",
       maxToolVsSpecimen: 0,

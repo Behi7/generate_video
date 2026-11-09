@@ -13,6 +13,9 @@ import {
   PipeAndCableRack,
   CyberpunkVoid,
   CleanroomWhite,
+  RivetedSteelWall,
+  IndustrialBlastDoorWall,
+  TexturedFactoryBrickWall,
 } from "./Backdrops";
 import {
   IndustrialWarmRig,
@@ -62,11 +65,11 @@ export const DynamicEnvironment: React.FC<DynamicEnvironmentProps> = ({
       {theme === "dark_studio" && <IndustrialWarmRig />}
 
       {/* 2. BACKDROP ARCHITECTURE */}
-      {theme === "factory" && <FactoryTrusses />}
+      {theme === "factory" && <RivetedSteelWall />}
       {theme === "garage" && <BrickWall />}
       {theme === "cyberpunk" && <CyberpunkVoid />}
       {theme === "cleanroom" && <CleanroomWhite />}
-      {theme === "dark_studio" && <PipeAndCableRack />}
+      {theme === "dark_studio" && <IndustrialBlastDoorWall />}
 
       {/* 3. GROUND FLOOR */}
       {theme === "factory" && <ConcreteFactorySlab />}

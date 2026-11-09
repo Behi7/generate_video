@@ -7,6 +7,7 @@ Config.setChromiumDisableWebSecurity(true);
 Config.setChromiumHeadlessMode(true);
 Config.setBrowserExecutable(null);
 Config.setChromiumMultiProcessOnLinux(true);
+Config.setDelayRenderTimeoutInMilliseconds(90000);
 
 Config.overrideWebpackConfig((currentConfiguration) => {
   const rootDir = process.cwd();

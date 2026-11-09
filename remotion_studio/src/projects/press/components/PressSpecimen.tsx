@@ -1,10 +1,17 @@
 import React from "react";
 import { useCurrentFrame } from "remotion";
 import { RoundedBox } from "@react-three/drei";
-import { getCurrentTier, getTierLocalFrame } from "@shared/contracts/StageTimeline";
+import {
+  getCurrentTier,
+  getTierLocalFrame,
+  getCleanserProgress,
+  isStageCleansed,
+} from "@shared/contracts/StageTimeline";
 import { SparkBurst } from "@shared/vfx/SparkBurst";
 import { getPressTier1Kinematics } from "./PressTier1_Manual";
 import { getPressTier2Kinematics } from "./PressTier2_Electric";
+import { getPressHydraulicStroke } from "./PressTier3_Hydraulic";
+import { getPressTier4Kinematics } from "./PressTier4_Futuristic";
 
 export interface PressSpecimenProps {
   localFrame?: number;
@@ -37,8 +44,17 @@ export const PressSpecimen: React.FC<PressSpecimenProps> = ({ localFrame: overri
   const tier = getCurrentTier(frame);
   const local = overrideLocal !== undefined ? overrideLocal : getTierLocalFrame(frame);
 
+  // Clean stage guarantee: by frame 310..319, table is completely clean
+  if (isStageCleansed(local)) {
+    return null;
+  }
+
+  // Smooth cleanser dissolve during active cleanser phase (275..309)
+  const cleanserP = getCleanserProgress(local);
+  const dissolveScale = Math.max(0, 1 - Math.pow(cleanserP, 2));
+
   return (
-    <group name="press_specimens_root">
+    <group name="press_specimens_root" scale={[dissolveScale, dissolveScale, dissolveScale]}>
       {tier === 1 && <Tier1CopperBillet localFrame={local} />}
       {tier === 2 && <Tier2AluminumIngot localFrame={local} />}
       {tier === 3 && <Tier3TitaniumCube localFrame={local} />}
@@ -62,15 +78,15 @@ const TARGET_SQUASH = STALL_HEIGHT / INITIAL_HEIGHT; // 0.7142857
 // Squashes progressively from H=0.14 to H=0.10, micro-shudders on stall, emits small copper dust chips.
 // ============================================================================
 const Tier1CopperBillet: React.FC<{ localFrame: number }> = ({ localFrame }) => {
-  const isOperating = localFrame >= 100 && localFrame < 225;
-  const isDecel = localFrame >= 225 && localFrame < 245;
-  const isStall = localFrame >= 245 && localFrame < 265;
-  const isFractured = localFrame >= 265;
+  const isOperating = localFrame >= 123 && localFrame < 213;
+  const isDecel = localFrame >= 213 && localFrame < 225;
+  const isStall = localFrame >= 225 && localFrame < 234;
+  const isFractured = localFrame >= 234;
 
   // Progressive deformation across the 4 phases
   let p = 0;
   if (isOperating) {
-    p = (localFrame - 100) / 124;
+    p = (localFrame - 123) / 89;
   } else if (isDecel || isStall || isFractured) {
     p = 1.0;
   }
@@ -96,7 +112,7 @@ const Tier1CopperBillet: React.FC<{ localFrame: number }> = ({ localFrame }) => 
 
   // Small copper dust chips emitted during operating compression (100..224f)
   const isChipActive = isOperating || isDecel || isStall || isFractured;
-  const chipProgress = Math.min(1.0, Math.max(0, (localFrame - 100) / 124));
+  const chipProgress = Math.min(1.0, Math.max(0, (localFrame - 123) / 89));
 
   const chipPositions: [number, number, number][] = [
     [0.10, 0.005, 0.06],
@@ -206,20 +222,20 @@ const Tier1CopperBillet: React.FC<{ localFrame: number }> = ({ localFrame }) => 
 // Punched rhythmically with spark bursts on contact, deforms from H=0.14 to H=0.10.
 // ============================================================================
 const Tier2AluminumIngot: React.FC<{ localFrame: number }> = ({ localFrame }) => {
-  const isOperating = localFrame >= 100 && localFrame < 225;
-  const isDecel = localFrame >= 225 && localFrame < 245;
-  const isStall = localFrame >= 245 && localFrame < 265;
-  const isFractured = localFrame >= 265;
+  const isOperating = localFrame >= 123 && localFrame < 213;
+  const isDecel = localFrame >= 213 && localFrame < 225;
+  const isStall = localFrame >= 225 && localFrame < 234;
+  const isFractured = localFrame >= 234;
 
-  // Crank angle matching PressTier2_Electric (14 full revolutions across 124 frames)
-  const crankAngle = isOperating ? ((localFrame - 100) / 124) * 14 * Math.PI * 2 : 0;
+  // Crank angle matching PressTier2_Electric (10 full revolutions across 88 frames)
+  const crankAngle = isOperating ? ((localFrame - 123) / 88) * 10 * Math.PI * 2 : 0;
   // Punch strike occurs at bottom dead center contact (cos(crankAngle) < -0.92)
   const isImpact = isOperating && Math.cos(crankAngle) < -0.92;
 
   // Progressive deformation across the 4 phases
   let p = 0;
   if (isOperating) {
-    p = (localFrame - 100) / 124;
+    p = (localFrame - 123) / 88;
   } else if (isDecel || isStall || isFractured) {
     p = 1.0;
   }
@@ -227,10 +243,16 @@ const Tier2AluminumIngot: React.FC<{ localFrame: number }> = ({ localFrame }) =>
   // Dynamic punch strike pulse
   const punchPulse = isImpact ? 0.015 : 0;
   const baseSquashY = 1.0 - p * (1.0 - TARGET_SQUASH);
-  const squashY = Math.max(TARGET_SQUASH - punchPulse, baseSquashY - punchPulse);
+  const targetSquashY = Math.max(TARGET_SQUASH - punchPulse, baseSquashY - punchPulse);
+
+  // Enforce zero rigid toolhead interpenetration by tracking actual tool strokeY
+  const { strokeY } = getPressTier2Kinematics(localFrame, true, 180, false);
+  const maxAllowedH = Math.max(STALL_HEIGHT, strokeY - BOLSTER_SURFACE_Y);
+  const uncompressedH = INITIAL_HEIGHT * targetSquashY;
+  const currentH = Math.min(uncompressedH, maxAllowedH);
+  const squashY = currentH / INITIAL_HEIGHT;
   const spreadXZ = Math.sqrt(1.0 / Math.max(0.2, squashY));
 
-  const currentH = INITIAL_HEIGHT * squashY;
   const posY = BOLSTER_SURFACE_Y + currentH / 2;
 
   // Flying aluminum shear chips on rhythmic punch strokes
@@ -337,43 +359,21 @@ const Tier2AluminumIngot: React.FC<{ localFrame: number }> = ({ localFrame }) =>
 // Compresses smoothly under hydraulic force from H=0.14 to H=0.10, steam/vapor bursts, intense orange thermal glow.
 // ============================================================================
 const Tier3TitaniumCube: React.FC<{ localFrame: number }> = ({ localFrame }) => {
-  const isOperating = localFrame >= 100 && localFrame < 225;
-  const isDecel = localFrame >= 225 && localFrame < 245;
-  const isStall = localFrame >= 245 && localFrame < 265;
-  const isFractured = localFrame >= 265;
+  const isOperating = localFrame >= 123 && localFrame < 213;
+  const isDecel = localFrame >= 213 && localFrame < 225;
+  const isStall = localFrame >= 225 && localFrame < 234;
+  const isFractured = localFrame >= 234;
 
   // Smooth hydraulic compression progress across phases
   let p = 0;
   if (isOperating) {
-    p = (localFrame - 100) / 124;
+    p = (localFrame - 123) / 88;
   } else if (isDecel || isStall || isFractured) {
     p = 1.0;
   }
 
   // Hydraulic press die stroke height tracking matching PressTier3_Hydraulic exactly
-  let dieY = 1.050;
-  if (isFractured) {
-    dieY = 0.745;
-  } else if (isStall) {
-    dieY = 0.750;
-  } else if (isDecel) {
-    const pDecel = (localFrame - 225) / 19;
-    const ease = 1 - Math.pow(1 - pDecel, 3);
-    dieY = 1.050 - (1.050 - 0.750) * ease;
-  } else if (isOperating) {
-    const cycle = (localFrame - 100) % 25;
-    if (cycle < 10) {
-      const pC = cycle / 10;
-      const ease = pC * pC * (3 - 2 * pC);
-      dieY = 1.050 - (1.050 - 0.730) * ease;
-    } else if (cycle < 14) {
-      dieY = 0.730;
-    } else {
-      const pC = (cycle - 14) / 10;
-      const ease = pC * pC * (3 - 2 * pC);
-      dieY = 0.730 + (1.050 - 0.730) * ease;
-    }
-  }
+  const { dieY } = getPressHydraulicStroke(localFrame, true, false);
 
   // Maximum allowed height to prevent rigid toolhead interpenetration (<= 0% overlap)
   const maxAllowedH = Math.max(STALL_HEIGHT, dieY - BOLSTER_SURFACE_Y);
@@ -529,11 +529,11 @@ const Tier3TitaniumCube: React.FC<{ localFrame: number }> = ({ localFrame }) => 
 // Anti-Ghosting Law: Fragments and dense singularity remnant stay on bolster bed throughout 265..289f!
 // ============================================================================
 const Tier4QuantumCrystal: React.FC<{ localFrame: number }> = ({ localFrame }) => {
-  const isPreOp = localFrame < 100;
-  const isOperating = localFrame >= 100 && localFrame < 225;
-  const isDecel = localFrame >= 225 && localFrame < 245;
-  const isStall = localFrame >= 245 && localFrame < 265;
-  const isShattered = localFrame >= 265;
+  const isPreOp = localFrame < 63;
+  const isOperating = localFrame >= 123 && localFrame < 213;
+  const isDecel = localFrame >= 213 && localFrame < 225;
+  const isStall = localFrame >= 225 && localFrame < 234;
+  const isShattered = localFrame >= 234;
 
   // Gentle zero-point levitation hover before operation (0..99f)
   // Ensure hover never lifts specimen top above initial ceiling
@@ -543,36 +543,16 @@ const Tier4QuantumCrystal: React.FC<{ localFrame: number }> = ({ localFrame }) =
   // Smooth magnetic pinch compression progress across phases
   let p = 0;
   if (isOperating) {
-    p = (localFrame - 100) / 124;
+    p = (localFrame - 123) / 84;
   } else if (isDecel || isStall || isShattered) {
     p = 1.0;
   }
 
   // Magnetic pinch die stroke tracking matching PressTier4_Futuristic exactly
-  let dieY = 1.050;
-  if (isShattered) {
-    dieY = 0.735;
-  } else if (isStall) {
-    dieY = 0.730;
-  } else if (isDecel) {
-    const pDecel = (localFrame - 225) / 19;
-    dieY = 1.050 - (1.050 - 0.730) * Math.min(1, Math.pow(pDecel, 0.85));
-  } else if (isOperating) {
-    const cyclePhase = (localFrame - 100) % 12;
-    if (cyclePhase < 8) {
-      dieY = 1.050;
-    } else if (cyclePhase < 10) {
-      const t = (cyclePhase - 8) / 2;
-      dieY = 1.050 - (1.050 - 0.730) * (t * t * t);
-    } else if (cyclePhase === 10) {
-      dieY = 0.730;
-    } else {
-      dieY = 1.050;
-    }
-  }
+  const { dieY } = getPressTier4Kinematics(localFrame, true, false);
 
   // Magnetic constriction pulses create intense prismatic flares
-  const pinchCycle = (localFrame - 100) % 12;
+  const pinchCycle = (localFrame - 123) % 12;
   const isPinchPulse = isOperating && (pinchCycle === 10 || pinchCycle === 11);
 
   // Maximum allowed height to prevent rigid toolhead interpenetration (<= 0% overlap)
@@ -590,9 +570,9 @@ const Tier4QuantumCrystal: React.FC<{ localFrame: number }> = ({ localFrame }) =
   const shockRadius = 0.12 + shockProgress * 0.55;
   const shockOpacity = Math.max(0, 0.85 * (1.0 - shockProgress * 1.2));
 
-  // Shatter dynamics on frame 265 (Anti-Ghosting Law: shards explode outward, core remnant stays on bolster)
-  const shatterProgress = isShattered ? Math.min(1.0, (localFrame - 265) / 24) : 0;
-  const isFractureSpark = localFrame >= 265 && localFrame <= 269;
+  // Shatter dynamics on frame 234 (Anti-Ghosting Law: shards explode outward, core remnant stays on bolster)
+  const shatterProgress = isShattered ? Math.min(1.0, (localFrame - 234) / 24) : 0;
+  const isFractureSpark = localFrame >= 234 && localFrame <= 238;
 
   // 14 deterministic shard trajectories for crystal shatter
   const shardTrajectories: [number, number, number, number, number, number][] = [
@@ -776,10 +756,10 @@ const Tier4QuantumCrystal: React.FC<{ localFrame: number }> = ({ localFrame }) =
         </group>
       )}
 
-      {/* 5. Prismatic Shatter Spark Bursts at Frame 265 */}
+      {/* 5. Prismatic Shatter Spark Bursts at Frame 234 */}
       <SparkBurst
         active={isFractureSpark}
-        frameOffset={localFrame - 265}
+        frameOffset={localFrame - 234}
         position={[0, BOLSTER_SURFACE_Y + 0.05, 0]}
         color="#06B6D4"
         scale={1.6}
@@ -788,7 +768,7 @@ const Tier4QuantumCrystal: React.FC<{ localFrame: number }> = ({ localFrame }) =
       />
       <SparkBurst
         active={isFractureSpark}
-        frameOffset={localFrame - 265}
+        frameOffset={localFrame - 234}
         position={[0, BOLSTER_SURFACE_Y + 0.05, 0]}
         color="#8B5CF6"
         scale={1.2}

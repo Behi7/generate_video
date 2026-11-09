@@ -35,25 +35,10 @@ export const FactoryTrusses: React.FC<BackdropProps> = ({ position = [0, 1.5, -6
   </group>
 );
 
+
 /** 2. Heavy Industrial Brick Wall with Mortar */
-export const BrickWall: React.FC<BackdropProps> = ({ position = [0, 1.5, -6.5] }) => (
-  <group position={position}>
-    <mesh position={[0, 0, 0]}>
-      <planeGeometry args={[20, 14]} />
-      <meshStandardMaterial color="#3E2723" roughness={0.95} />
-    </mesh>
-    {/* Embossed concrete pillar pilasters */}
-    {[-5, -2.5, 2.5, 5].map((x, i) => (
-      <RoundedBox key={i} args={[0.42, 12, 0.18]} radius={0.03} smoothness={4} position={[x, 0, 0.08]}>
-        <meshStandardMaterial color="#475569" roughness={0.9} />
-      </RoundedBox>
-    ))}
-    {/* Lower concrete wainscot curb */}
-    <RoundedBox args={[18, 0.6, 0.22]} radius={0.03} smoothness={4} position={[0, -3.2, 0.1]}>
-      <meshStandardMaterial color="#334155" roughness={0.85} />
-    </RoundedBox>
-  </group>
-);
+export { TexturedFactoryBrickWall, TexturedFactoryBrickWall as BrickWall } from "./backdrops/TexturedFactoryBrickWall";
+
 
 /** 3. Industrial Pipe and Cable Tray Rack */
 export const PipeAndCableRack: React.FC<BackdropProps> = ({ position = [0, 1.5, -6.5] }) => (
@@ -120,3 +105,12 @@ export const CleanroomWhite: React.FC<BackdropProps> = ({ position = [0, 1.5, -6
     </RoundedBox>
   </group>
 );
+
+
+/** 6. Reinforced Industrial Blast Door Wall */
+export * from "./backdrops/IndustrialBlastDoorWall";
+
+/** 7. Heavy Industrial Riveted Steel Bulkhead Wall */
+export * from "./backdrops/RivetedSteelWall";
+
+

@@ -5,6 +5,16 @@ import {
   ModularPartSpec,
   validateAssemblySequence,
 } from "../contracts/AssemblyContract";
+import {
+  getFluidStrainProgress,
+  getResonanceShudder,
+  getCleanserProgress,
+  isStageCleansed,
+} from "../contracts/StageTimeline";
+import {
+  TransitionEffectType,
+  getTierTransition,
+} from "../vfx/transitions/TransitionRegistry";
 import { SparkBurst } from "../vfx/SparkBurst";
 
 /**
@@ -120,10 +130,12 @@ function computeBallisticTrajectory(
 
 export interface ProceduralAssemblyRigProps {
   spec: MachineAssemblySpec;
-  localFrame: number; // 0..289 local tier frame
+  localFrame: number; // 0..319 local tier frame
   isRunning?: boolean;
   rpm?: number;
   isBroken?: boolean;
+  seed?: string;
+  transitionEffect?: TransitionEffectType;
 }
 
 export const ProceduralAssemblyRig: React.FC<ProceduralAssemblyRigProps> = ({
@@ -132,8 +144,21 @@ export const ProceduralAssemblyRig: React.FC<ProceduralAssemblyRigProps> = ({
   isRunning = false,
   rpm = 0,
   isBroken = false,
+  seed,
+  transitionEffect,
 }) => {
-  // 1. Sort modules strictly by assemblyOrder
+  // 1. Clean stage guarantee: at frame 310..319, everything is clean, zero ghost meshes remain
+  if (isStageCleansed(localFrame)) {
+    return null;
+  }
+
+  // 2. Determine active transition effect for this tier
+  const activeEffect = useMemo<TransitionEffectType>(() => {
+    if (transitionEffect) return transitionEffect;
+    return getTierTransition(seed || spec.id || `tier_${spec.tier}`, spec.tier);
+  }, [transitionEffect, seed, spec.id, spec.tier]);
+
+  // 3. Sort modules strictly by assemblyOrder
   const sortedModules = useMemo(() => {
     const val = validateAssemblySequence(spec.modules);
     if (!val.valid) {
@@ -141,6 +166,8 @@ export const ProceduralAssemblyRig: React.FC<ProceduralAssemblyRigProps> = ({
     }
     return [...spec.modules].sort((a, b) => a.assemblyOrder - b.assemblyOrder);
   }, [spec]);
+
+  const cleanserProgress = getCleanserProgress(localFrame);
 
   return (
     <group name={`assembly_${spec.id}`} userData={{ specId: spec.id, specName: spec.name, tier: spec.tier }}>
@@ -153,6 +180,8 @@ export const ProceduralAssemblyRig: React.FC<ProceduralAssemblyRigProps> = ({
             isRunning={isRunning}
             rpm={rpm}
             isBroken={isBroken}
+            cleanserEffect={activeEffect}
+            cleanserProgress={cleanserProgress}
           />
         );
       })}
@@ -166,6 +195,8 @@ interface ModularPartInstanceProps {
   isRunning: boolean;
   rpm: number;
   isBroken: boolean;
+  cleanserEffect: TransitionEffectType;
+  cleanserProgress: number;
 }
 
 const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
@@ -174,12 +205,19 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
   isRunning,
   rpm,
   isBroken,
+  cleanserEffect,
+  cleanserProgress,
 }) => {
   const duration = part.travelDurationFrames || 5;
   const startFrame = part.snapFrame - duration;
 
-  // Rule: Do not render module until its entry frame window opens
+  // Rule 1: Do not render module until its entry frame window opens
   if (localFrame < startFrame) {
+    return null;
+  }
+
+  // Rule 2: Clean stage guarantee by frame 308
+  if (localFrame >= 308) {
     return null;
   }
 
@@ -241,10 +279,32 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
     scale = 1 + bounceAmp;
   }
 
-  // True Newtonian Ballistic Physics during overload catastrophe (Act 4: 265..289f)
-  if (isBroken && part.fracture && localFrame >= part.fracture.breakFrame) {
+  // ---------------------------------------------------------------------------
+  // FLUID 4-STAGE ESCALATION (Act 4: 213..319f)
+  // ---------------------------------------------------------------------------
+
+  // Stage 1 (213..224f): Organic strain & RPM deceleration with torque bog-down and heat/shudder build-up
+  if (localFrame >= 213 && localFrame < 225) {
+    const strainProgress = getFluidStrainProgress(localFrame);
+    const strainJitter = Math.sin(localFrame * 14.0) * 0.002 * strainProgress;
+    curX += strainJitter;
+    curZ += strainJitter * 0.6;
+  }
+
+  // Stage 2 (225..233f): Resonant pre-fracture shudder wave (increasing frequency & amplitude)
+  if (localFrame >= 225 && localFrame < 234) {
+    const { shudderX, shudderZ } = getResonanceShudder(localFrame);
+    curX += shudderX;
+    curZ += shudderZ;
+  }
+
+  // Stage 3 (234..307f): Fracture rupture & active Cleanser Transition Effect
+  // Fracture occurs at frame 234
+  const breakFrame = 234;
+
+  if (isBroken && part.fracture && localFrame >= breakFrame) {
     const f = part.fracture;
-    const dt = (localFrame - f.breakFrame) / 30.0;
+    const dt = (localFrame - breakFrame) / 30.0;
 
     if (f.mode === "fling_parabolic" || f.mode === "shear_and_tilt") {
       const ballistic = computeBallisticTrajectory(
@@ -264,9 +324,9 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
       curRz = ballistic.rotation[2];
     } else if (f.mode === "shudder_and_crack") {
       const shudder =
-        Math.sin((localFrame - f.breakFrame) * 6) *
+        Math.sin((localFrame - breakFrame) * 6) *
         0.03 *
-        Math.exp(-(localFrame - f.breakFrame) * 0.2);
+        Math.exp(-(localFrame - breakFrame) * 0.2);
       curX += shudder;
       curRz += shudder * 0.6;
     }
@@ -276,12 +336,13 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
   const isImpactActive = localFrame >= part.snapFrame && localFrame <= part.snapFrame + 4;
   const impactOffset = localFrame - part.snapFrame;
 
-  // Fracture shear spark burst
-  const isFractureActive =
-    Boolean(part.fracture &&
-    localFrame >= part.fracture.breakFrame &&
-    localFrame <= part.fracture.breakFrame + 4);
-  const fractureOffset = part.fracture ? localFrame - part.fracture.breakFrame : 0;
+  // Fracture shear spark burst at rupture (275..279f)
+  const isFractureActive = Boolean(
+    part.fracture &&
+    localFrame >= breakFrame &&
+    localFrame <= breakFrame + 4
+  );
+  const fractureOffset = Math.max(0, localFrame - breakFrame);
 
   return (
     <group
@@ -305,7 +366,14 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
           name: part.name,
         }}
       >
-        {part.render({ localFrame, isRunning, rpm, isBroken })}
+        {part.render({
+          localFrame,
+          isRunning,
+          rpm,
+          isBroken,
+          cleanserEffect,
+          cleanserProgress,
+        })}
       </group>
 
       {/* Assembly lock contact sparks */}

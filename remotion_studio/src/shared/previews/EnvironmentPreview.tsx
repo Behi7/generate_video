@@ -10,12 +10,11 @@ const SceneReady: React.FC<{ onReady: () => void }> = ({ onReady }) => {
   const { gl, scene, camera } = useThree();
 
   useEffect(() => {
-    // Render synchronous frame once all children are mounted in scene
     gl.render(scene, camera);
     const timer = setTimeout(() => {
       gl.render(scene, camera);
       onReady();
-    }, 150);
+    }, 400);
     return () => clearTimeout(timer);
   }, [gl, scene, camera, onReady]);
 
@@ -25,7 +24,7 @@ const SceneReady: React.FC<{ onReady: () => void }> = ({ onReady }) => {
 export const EnvironmentPreview: React.FC = () => {
   const { width, height } = useVideoConfig();
   const [handle] = useState(() =>
-    delayRender("Waiting for Initial Environment Draw", { timeoutInMilliseconds: 10000 })
+    delayRender("Waiting for Initial Environment Draw", { timeoutInMilliseconds: 60000 })
   );
 
   const handleReady = useCallback(() => {
@@ -44,7 +43,6 @@ export const EnvironmentPreview: React.FC = () => {
       <ThreeCanvas
         width={width}
         height={height}
-        advanceOnCreated
         camera={{
           position: [2.3, 1.8, 3.6],
           fov: 42,
@@ -54,12 +52,14 @@ export const EnvironmentPreview: React.FC = () => {
       >
         <Suspense fallback={null}>
           <RigidShowcaseCamera
-            basePosition={[2.3, 1.8, 3.6]}
-            target={[0, -0.35, 0]}
+            basePosition={[2.4, 1.2, 3.8]}
+            target={[0, -0.9, 0]}
           />
           {/* Testing the new Factory LEGO Environment */}
           <DynamicEnvironment theme="factory" />
-          <HeavyIndustrialShredder localFrame={70} />
+          <group position={[0, -2.04, 0]}>
+            <HeavyIndustrialShredder localFrame={70} />
+          </group>
           <SceneReady onReady={handleReady} />
         </Suspense>
       </ThreeCanvas>

@@ -14,9 +14,16 @@ export interface ModelInspectorProps {
   cameraTarget?: [number, number, number];
   gridY?: number;
   shadowY?: number;
+  cameraFar?: number;
+  customEnvironment?: React.ReactNode;
+  gridArgs?: [number, number];
+  showGrid?: boolean;
+  showContactShadows?: boolean;
+  shadowScale?: number;
+  viewConfigs?: Record<number, Partial<CameraViewConfig>>;
 }
 
-interface CameraViewConfig {
+export interface CameraViewConfig {
   name: string;
   badge: string;
   badgeColor: string;
@@ -98,16 +105,28 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
   cameraTarget,
   gridY = -1.04,
   shadowY = -1.05,
+  cameraFar = 60,
+  customEnvironment,
+  gridArgs = [8, 8],
+  showGrid = true,
+  showContactShadows = true,
+  shadowScale = 5.5,
+  viewConfigs,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
   // Map frames 1..4 (or clamp if outside)
   const viewIndex = Math.min(4, Math.max(1, frame || 1));
-  const currentView = VIEW_CONFIGS[viewIndex];
+  const baseView = VIEW_CONFIGS[viewIndex];
+  const overrideView = viewConfigs?.[viewIndex];
+  const currentView: CameraViewConfig = {
+    ...baseView,
+    ...overrideView,
+  };
 
-  const target = cameraTarget ?? currentView.target;
-  const effectivePosition: [number, number, number] = [
+  const target = overrideView?.target ?? cameraTarget ?? currentView.target;
+  const effectivePosition: [number, number, number] = overrideView?.position ?? [
     target[0] + (currentView.position[0] - currentView.target[0]) * cameraDistanceMultiplier,
     target[1] + (currentView.position[1] - currentView.target[1]) * cameraDistanceMultiplier,
     target[2] + (currentView.position[2] - currentView.target[2]) * cameraDistanceMultiplier,
@@ -132,7 +151,7 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
           position: effectivePosition,
           fov: currentView.fov,
           near: 0.1,
-          far: 50,
+          far: cameraFar,
         }}
       >
         <InspectorCameraController
@@ -140,9 +159,13 @@ export const ModelInspector: React.FC<ModelInspectorProps> = ({
           target={target}
           fov={currentView.fov}
         />
-        <TestingBayEnvironment />
-        <ContactShadows position={[0, shadowY, 0]} opacity={0.85} scale={5.5} blur={1.8} far={3.0} />
-        <Grid position={[0, gridY, 0]} args={[8, 8]} cellColor="#334155" sectionColor="#64748B" />
+        {customEnvironment ?? <TestingBayEnvironment />}
+        {showContactShadows && (
+          <ContactShadows position={[0, shadowY, 0]} opacity={0.85} scale={shadowScale} blur={1.8} far={3.0} />
+        )}
+        {showGrid && (
+          <Grid position={[0, gridY, 0]} args={gridArgs} cellColor="#334155" sectionColor="#64748B" />
+        )}
         <group position={modelCenter}>{children}</group>
       </ThreeCanvas>
 

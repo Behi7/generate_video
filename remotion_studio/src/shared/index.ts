@@ -15,7 +15,9 @@ export * from "./components/ModelInspector";
 export * from "./environment/DynamicEnvironment";
 export * from "./environment/AtmosphericDust";
 export * from "./environment/Backdrops";
+export * from "./environment/backdrops/IndustrialBlastDoorWall";
 export * from "./environment/Floors";
+export * from "./environment/floors/ModularDiamondSteelDeck";
 export * from "./environment/LightingRigs";
 export * from "./environment/Props";
 export * from "./environment/props/WoodenPallet";
@@ -30,6 +32,7 @@ export * from "./vfx/MagneticSnap";
 export * from "./vfx/PhysicalFracture";
 export * from "./vfx/SparkBurst";
 export * from "./vfx/ModularContactVFX";
+export * from "./vfx/transitions";
 
 // Materials
 export * from "./materials/PBRMaterials";

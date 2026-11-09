@@ -2,6 +2,7 @@ import React from "react";
 import { useThree } from "@react-three/fiber";
 import { useCurrentFrame } from "remotion";
 import { ImpactShake } from "../contracts/AssemblyContract";
+import { TIER_DURATION_FRAMES } from "../contracts/StageTimeline";
 
 export { ImpactShake };
 
@@ -27,7 +28,7 @@ export interface RigidShowcaseCameraProps {
   enableClimaxPush?: boolean;
   /**
    * Duration of each progression tier in frames.
-   * Default: 290 (canonical StageTimeline duration).
+   * Default: TIER_DURATION_FRAMES (canonical StageTimeline duration, 320 frames).
    * Set to 0 or undefined for flat non-tiered sequences.
    */
   tierDuration?: number;
@@ -64,7 +65,7 @@ export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
   target = [0, -0.35, 0],
   impacts = [],
   enableClimaxPush = true,
-  tierDuration = 290,
+  tierDuration = TIER_DURATION_FRAMES,
   enableTierStepback = true,
   tierStepbacks = [0.0, -0.09, -0.19, -0.30],
 }) => {
@@ -103,34 +104,55 @@ export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
       : currentBaseline;
 
     if (enableClimaxPush) {
-      if (localFrame < 150) {
-        // Acts 1 & 2: Steady dead-locked tripod at current tier baseline
-        pushFactor = currentBaseline;
-      } else if (localFrame >= 150 && localFrame <= 224) {
-        // Act 3 Peak Operating: Smooth S-curve push 3.5% closer along line of sight
-        const progress = (localFrame - 150) / (224 - 150);
-        const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
-        pushFactor = currentBaseline + 0.035 * easeInOut;
-      } else if (localFrame >= 225 && localFrame <= 264) {
-        // Act 4A/B: Hold maximum close tension during machine stall & micro-shudder
-        pushFactor = currentBaseline + 0.035;
+      if (tierDuration >= 320) {
+        // Canonical 320-frame timeline with fluid 4-stage escalation
+        if (localFrame < 140) {
+          // Acts 1 & 2 (0..139f): Steady dead-locked tripod at current tier baseline
+          pushFactor = currentBaseline;
+        } else if (localFrame >= 140 && localFrame <= 249) {
+          // Act 3 Peak Operating (140..249f): Smooth S-curve push 3.5% closer along line of sight
+          const progress = (localFrame - 140) / (249 - 140);
+          const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
+          pushFactor = currentBaseline + 0.035 * easeInOut;
+        } else if (localFrame >= 250 && localFrame <= 274) {
+          // Act 4 Strain & Resonance (250..274f): Hold maximum close tension during torque bog-down and pre-fracture shudder
+          pushFactor = currentBaseline + 0.035;
+        } else {
+          // Act 4 Fracture & Cleanser Recoil (Frames 275..319): Catastrophic fracture recoil!
+          // Masked by debris explosion and cleanser sweep, camera recoils backward into next tier's wider baseline.
+          const recoilDiff = localFrame - 275;
+          const startVal = currentBaseline + 0.035;
+          const targetVal = nextBaseline;
+          const delta = targetVal - startVal; // Negative delta (moving further away)
+
+          // Damped elastic spring settling curve (alpha = 0.18, beta = 0.40):
+          // Seamlessly settles into targetVal by frame 310..319
+          const decay = Math.exp(-0.18 * recoilDiff);
+          const oscCos = Math.cos(0.40 * recoilDiff);
+          const oscSin = Math.sin(0.40 * recoilDiff);
+
+          pushFactor = targetVal - delta * decay * oscCos - 0.025 * decay * oscSin;
+        }
       } else {
-        // Act 4C (Frames 265..289): Catastrophic fracture recoil!
-        // Masked by debris explosion and sparks, camera recoils backward into next tier's wider baseline.
-        const recoilDiff = localFrame - 265;
-        const startVal = currentBaseline + 0.035;
-        const targetVal = nextBaseline;
-        const delta = targetVal - startVal; // Negative delta (moving further away)
-
-        // Damped elastic spring settling curve (alpha = 0.22, beta = 0.45):
-        // At t=0: exactly startVal (delta=0 continuity).
-        // At t=6: peak recoil overshoot backward.
-        // At t=24: smoothly settles into targetVal for seamless transition to next tier.
-        const decay = Math.exp(-0.22 * recoilDiff);
-        const oscCos = Math.cos(0.45 * recoilDiff);
-        const oscSin = Math.sin(0.45 * recoilDiff);
-
-        pushFactor = targetVal - delta * decay * oscCos - 0.025 * decay * oscSin;
+        // Legacy fallback for < 320 frames
+        if (localFrame < 150) {
+          pushFactor = currentBaseline;
+        } else if (localFrame >= 150 && localFrame <= 224) {
+          const progress = (localFrame - 150) / (224 - 150);
+          const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
+          pushFactor = currentBaseline + 0.035 * easeInOut;
+        } else if (localFrame >= 225 && localFrame <= 264) {
+          pushFactor = currentBaseline + 0.035;
+        } else {
+          const recoilDiff = localFrame - 265;
+          const startVal = currentBaseline + 0.035;
+          const targetVal = nextBaseline;
+          const delta = targetVal - startVal;
+          const decay = Math.exp(-0.22 * recoilDiff);
+          const oscCos = Math.cos(0.45 * recoilDiff);
+          const oscSin = Math.sin(0.45 * recoilDiff);
+          pushFactor = targetVal - delta * decay * oscCos - 0.025 * decay * oscSin;
+        }
       }
     } else {
       pushFactor = currentBaseline;

@@ -61,7 +61,7 @@ export const ModuleBase: ModularPartSpec = {
   sparkColor: COLOR_EMISSIVE_CYAN,
   sparkCount: 22,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "shudder_and_crack",
     impulse: [0, 0, 0],
     rotationImpulse: [0.012, 0, -0.012],
@@ -77,7 +77,7 @@ export const ModuleBase: ModularPartSpec = {
       { x: 0.78, z: 0.56, idx: 3 },
     ];
 
-    const isTremor = localFrame >= 245 && localFrame < 265;
+    const isTremor = localFrame >= 225 && localFrame < 234;
     const shudderOffset = isTremor ? Math.sin(localFrame * 42) * 0.001 : 0;
 
     return (
@@ -343,7 +343,7 @@ export const ModuleToroidalCoils: ModularPartSpec = {
   id: "press_t4_toroidal_coils",
   name: "Dual Superconducting Toroidal Magnetic Accelerator Coils",
   assemblyOrder: 1,
-  snapFrame: 20,
+  snapFrame: 15,
   entryDirection: "top",
   travelDistance: 3.5,
   travelDurationFrames: 5,
@@ -351,7 +351,7 @@ export const ModuleToroidalCoils: ModularPartSpec = {
   sparkColor: COLOR_EMISSIVE_CYAN,
   sparkCount: 24,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [2.2, 3.8, -1.8],
     rotationImpulse: [2.4, 1.5, -1.8],
@@ -360,34 +360,34 @@ export const ModuleToroidalCoils: ModularPartSpec = {
   },
   render: ({ localFrame, isRunning, isBroken }: ModularPartRenderProps) => {
     // Kinematic light pulse and filament rotation
-    const isSpooling = isRunning && localFrame >= 70 && localFrame < 100;
-    const isOperating = isRunning && localFrame >= 100 && localFrame < 225;
-    const isDecel = localFrame >= 225 && localFrame < 245;
-    const isStall = localFrame >= 245 && localFrame < 265;
+    const isSpooling = isRunning && localFrame >= 63 && localFrame < 123;
+    const isOperating = isRunning && localFrame >= 123 && localFrame < 213;
+    const isDecel = localFrame >= 213 && localFrame < 225;
+    const isStall = localFrame >= 225 && localFrame < 234;
 
     let rotAngle = 0;
     let cyanIntensity = 1.6;
     let magIntensity = 1.4;
 
-    if (isBroken) {
+    if (isBroken || localFrame >= 234) {
       cyanIntensity = 0.4;
       magIntensity = 0.2;
-      rotAngle = 265 * 0.04;
+      rotAngle = 234 * 0.04;
     } else if (isStall) {
       cyanIntensity = 3.8 + Math.sin(localFrame * 35) * 1.5;
       magIntensity = 3.2 + Math.cos(localFrame * 35) * 1.2;
-      rotAngle = 245 * 0.04 + Math.sin(localFrame * 40) * 0.01;
+      rotAngle = 225 * 0.04 + Math.sin(localFrame * 40) * 0.01;
     } else if (isDecel) {
-      const p = (localFrame - 225) / 20;
+      const p = (localFrame - 213) / 11;
       cyanIntensity = 3.2 - p * 1.0 + Math.sin(localFrame * 0.5) * 0.8;
       magIntensity = 2.8 - p * 1.0;
-      rotAngle = (225 + (localFrame - 225) * (1 - p * 0.5)) * 0.04;
+      rotAngle = (213 + (localFrame - 213) * (1 - p * 0.5)) * 0.04;
     } else if (isOperating) {
       cyanIntensity = 3.5 + Math.sin(localFrame * 0.35) * 1.2;
       magIntensity = 3.0 + Math.cos(localFrame * 0.35) * 1.0;
       rotAngle = localFrame * 0.05;
     } else if (isSpooling) {
-      const p = (localFrame - 70) / 30;
+      const p = (localFrame - 63) / 59;
       cyanIntensity = 1.6 + p * 1.8;
       magIntensity = 1.4 + p * 1.4;
       rotAngle = p * p * localFrame * 0.04;
@@ -548,7 +548,7 @@ export const ModuleArmorPylons: ModularPartSpec = {
   id: "press_t4_armor_pylons",
   name: "Aerogel & Dark Titanium Field Containment Armor Pylons",
   assemblyOrder: 2,
-  snapFrame: 40,
+  snapFrame: 30,
   entryDirection: "top",
   travelDistance: 3.5,
   travelDurationFrames: 5,
@@ -556,7 +556,7 @@ export const ModuleArmorPylons: ModularPartSpec = {
   sparkColor: COLOR_TITANIUM_SKY,
   sparkCount: 28,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [-3.2, 5.0, 2.8],
     rotationImpulse: [-1.8, 3.2, 2.5],
@@ -572,10 +572,10 @@ export const ModuleArmorPylons: ModularPartSpec = {
       { x: -0.66, z: 0.46, rotY: -Math.PI / 2 },
     ];
 
-    const isStall = localFrame >= 245 && localFrame < 265;
+    const isStall = localFrame >= 225 && localFrame < 234;
     const warningFlash = isStall
       ? (Math.sin(localFrame * 25) > 0 ? 3.5 : 0.5)
-      : localFrame >= 70 && !isBroken
+      : localFrame >= 63 && !isBroken
       ? 1.5
       : 0.8;
 
@@ -739,7 +739,7 @@ export const ModuleFluxManifolds: ModularPartSpec = {
   id: "press_t4_flux_manifolds",
   name: "Quantum Pinch Flux Coils, Cryo Manifolds & Photonic Waveguides",
   assemblyOrder: 3,
-  snapFrame: 60,
+  snapFrame: 45,
   entryDirection: "top",
   travelDistance: 3.5,
   travelDurationFrames: 5,
@@ -747,7 +747,7 @@ export const ModuleFluxManifolds: ModularPartSpec = {
   sparkColor: COLOR_EMISSIVE_CYAN,
   sparkCount: 22,
   fracture: {
-    breakFrame: 265,
+    breakFrame: 234,
     mode: "fling_parabolic",
     impulse: [1.8, 5.8, -2.5],
     rotationImpulse: [3.5, -2.8, 2.2],
@@ -763,7 +763,7 @@ export const ModuleFluxManifolds: ModularPartSpec = {
       { x: 0.36, z: 0.28, rotY: (-3 * Math.PI) / 4, rotX: -0.28 },
     ];
 
-    const isOperating = isRunning && localFrame >= 70 && !isBroken;
+    const isOperating = isRunning && localFrame >= 63 && !isBroken;
     const vaporPulse = isOperating ? 0.35 + Math.sin(localFrame * 0.2) * 0.12 : 0.15;
     const laserGlow = isOperating ? 3.2 + Math.sin(localFrame * 0.4) * 1.2 : 1.0;
 
@@ -916,66 +916,53 @@ export const ModuleFluxManifolds: ModularPartSpec = {
 // Coaxial alignment: Centerline strictly X = 0, Z = 0!
 // Levitating at Y = 1.050 at TDC at frame 150 (32 cm air gap above specimen top Y = 0.770).
 // ----------------------------------------------------------------------------
-export const ModulePinchDie: ModularPartSpec = {
-  id: "press_t4_pinch_die",
-  name: "Magnetic Levitation Compression Anvil & Emitter Die",
-  assemblyOrder: 4,
-  snapFrame: 75,
-  entryDirection: "bottom",
-  travelDistance: 2.8,
-  travelDurationFrames: 5,
-  targetSocket: [0, 1.050, 0],
-  sparkColor: COLOR_EMISSIVE_CYAN,
-  sparkCount: 30,
-  fracture: {
-    breakFrame: 265,
-    mode: "shear_and_tilt",
-    impulse: [0.5, 1.0, -0.4],
-    rotationImpulse: [0.5, 0.2, -0.4],
-    sparkOrigin: [0, 0.73, 0],
-    sparkColor: COLOR_EMISSIVE_CYAN,
-  },
-  render: ({ localFrame, isRunning, isBroken }: ModularPartRenderProps) => {
-    // ------------------------------------------------------------------------
-    // KINEMATICS & 4-PHASE OVERLOAD CALCULATION
-    // ------------------------------------------------------------------------
-    // Phase 1 (0..69f): Snap assembly (ProceduralAssemblyRig handles entry)
-    // Phase 2 (70..99f): Superconducting spool-up, maglev fields lock, 1mm float breathing
-    // Phase 3 (100..224f): Hyper-frequency relativistic magnetic pinch strokes (TDC 1.050 -> BDC 0.730)
-    // Phase 4A (225..244f): Deceleration: field destabilization, slow pulse
-    // Phase 4B (245..264f): Stall & Shudder: locked at Y = 0.730 with 2mm high-frequency tremor
-    // Phase 4C (265..289f): Fracture! Singularity rupture shockwave, debris settles safely at Y >= 0.630
-    // ------------------------------------------------------------------------
+export interface PressTier4Kinematics {
+  dieY: number;
+  strokeY: number;
+  isImpacting: boolean;
+  flashIntensity: number;
+}
 
-    let dieY = 1.050; // Canonical TDC resting coordinate
-    let isImpacting = false;
-    let flashIntensity = 2.5;
+export function getPressTier4Kinematics(
+  localFrame: number,
+  isRunning: boolean,
+  isBroken: boolean
+): PressTier4Kinematics {
+  let dieY = 1.050; // Canonical TDC resting coordinate
+  let isImpacting = false;
+  let flashIntensity = 2.5;
 
-    if (isBroken || localFrame >= 265) {
-      // Overload fracture: rests securely on crushed specimen atop bolster (Y = 0.735 >= 0.630)
-      dieY = 0.735;
-      flashIntensity = 1.0;
-    } else if (localFrame >= 245) {
-      // Phase 4B: Stall & Shudder (245..264f)
-      // Magnetic pinch locks on dense anomaly at Y = 0.730 with 2mm intense jitter
-      const tremor = Math.sin(localFrame * 42) * 0.002; // exactly 2mm tremor
-      dieY = 0.730 + tremor;
-      flashIntensity = 4.2 + Math.sin(localFrame * 30) * 1.8;
-      isImpacting = true;
-    } else if (localFrame >= 225) {
-      // Phase 4A: Deceleration & Field Destabilization (225..244f)
-      // Starts smoothly at TDC Y = 1.050 at frame 225 (matching frame 224 TDC)
-      const pDecel = (localFrame - 225) / 19;
-      // Smooth descent into contact
-      dieY = 1.050 - (1.050 - 0.730) * Math.min(1, Math.pow(pDecel, 0.85));
-      flashIntensity = 2.8 + Math.sin(localFrame * 0.6) * 1.0;
-    } else if (localFrame >= 100) {
-      // Phase 3: Hyper-Frequency Relativistic Magnetic Pinch Strokes (100..224f)
-      // 10 complete 12-frame strike cycles (100..219), resting safely at TDC on 220..224!
+  if (isBroken || localFrame >= 234) {
+    // Overload fracture: rests securely on crushed specimen atop bolster (Y = 0.735 >= 0.630)
+    dieY = 0.735;
+    flashIntensity = 1.0;
+  } else if (localFrame >= 225) {
+    // Phase 4B: Resonant Stall & Shudder (225..233f)
+    // Magnetic pinch locks on dense anomaly at Y = 0.730 with 2mm intense jitter
+    const tremor = Math.sin(localFrame * 42) * 0.002; // exactly 2mm tremor
+    dieY = 0.730 + tremor;
+    flashIntensity = 4.2 + Math.sin(localFrame * 30) * 1.8;
+    isImpacting = true;
+  } else if (localFrame >= 213) {
+    // Phase 4A: Deceleration & Field Destabilization (213..224f)
+    // Starts smoothly at TDC Y = 1.050 at frame 213 (matching frame 212 TDC)
+    const pDecel = (localFrame - 213) / 11;
+    // Smooth descent into contact
+    dieY = 1.050 - (1.050 - 0.730) * Math.min(1, Math.pow(pDecel, 0.85));
+    flashIntensity = 2.8 + Math.sin(localFrame * 0.6) * 1.0;
+  } else if (localFrame >= 123) {
+    // Phase 3: Hyper-Frequency Relativistic Magnetic Pinch Strokes (123..212f)
+    // 7 complete 12-frame strike cycles (123..206), resting safely at TDC on 207..212!
+    // Strikes at exact frames: [133, 145, 157, 169, 181, 193, 205]
+    const strikeTDC = 1.050;
+    const strikeBDC = 0.730;
+
+    if (localFrame >= 207) {
+      dieY = strikeTDC;
+      flashIntensity = 3.0;
+    } else {
       const cycleLen = 12; // 12-frame strike cycle
-      const cyclePhase = (localFrame - 100) % cycleLen;
-      const strikeTDC = 1.050;
-      const strikeBDC = 0.730;
+      const cyclePhase = (localFrame - 123) % cycleLen;
 
       if (cyclePhase < 8) {
         // 65% of cycle (frames 0..7): Die holds high at TDC Y = 1.050 (32 cm air gap!)
@@ -987,7 +974,7 @@ export const ModulePinchDie: ModularPartSpec = {
         dieY = strikeTDC - (strikeTDC - strikeBDC) * (t * t * t);
         flashIntensity = 3.6;
       } else if (cyclePhase === 10) {
-        // Peak magnetic compression impact slam at Y = 0.730
+        // Peak magnetic compression impact slam at Y = 0.730 (impact frames: 133, 145, 157, 169, 181, 193, 205)
         dieY = strikeBDC;
         isImpacting = true;
         flashIntensity = 6.0; // Spatial distortion flash!
@@ -996,13 +983,45 @@ export const ModulePinchDie: ModularPartSpec = {
         dieY = strikeTDC;
         flashIntensity = 3.2;
       }
-    } else if (localFrame >= 70) {
-      // Phase 2: Superconducting spool-up (70..99f)
-      // Maglev fields lock with subtle micro-float breathing (0.5mm amplitude)
-      const breath = Math.sin(localFrame * 0.16) * 0.0008;
-      dieY = 1.050 + breath;
-      flashIntensity = 2.2 + ((localFrame - 70) / 30) * 1.2;
     }
+  } else if (localFrame >= 63) {
+    // Phase 2: Superconducting spool-up (63..122f)
+    // Maglev fields lock with subtle micro-float breathing (0.5mm amplitude)
+    // Die holds strictly at TDC Y = 1.050 (ZERO collision with specimen!)
+    const breath = Math.sin(localFrame * 0.16) * 0.0008;
+    dieY = 1.050 + breath;
+    flashIntensity = 2.2 + ((localFrame - 63) / 59) * 1.2;
+  }
+
+  const strokeY = dieY - 1.050;
+  return { dieY, strokeY, isImpacting, flashIntensity };
+}
+
+export const ModulePinchDie: ModularPartSpec = {
+  id: "press_t4_pinch_die",
+  name: "Magnetic Levitation Compression Anvil & Emitter Die",
+  assemblyOrder: 4,
+  snapFrame: 60,
+  entryDirection: "bottom",
+  travelDistance: 2.8,
+  travelDurationFrames: 5,
+  targetSocket: [0, 1.050, 0],
+  sparkColor: COLOR_EMISSIVE_CYAN,
+  sparkCount: 30,
+  fracture: {
+    breakFrame: 234,
+    mode: "shear_and_tilt",
+    impulse: [0.5, 1.0, -0.4],
+    rotationImpulse: [0.5, 0.2, -0.4],
+    sparkOrigin: [0, 0.73, 0],
+    sparkColor: COLOR_EMISSIVE_CYAN,
+  },
+  render: ({ localFrame, isRunning, isBroken }: ModularPartRenderProps) => {
+    const { dieY, isImpacting, flashIntensity } = getPressTier4Kinematics(
+      localFrame,
+      isRunning,
+      isBroken
+    );
 
     // Displacement relative to targetSocket [0, 1.050, 0]
     // When dieY == 1.050, displacement is 0.000.
@@ -1150,23 +1169,23 @@ export const ModulePinchDie: ModularPartSpec = {
           </group>
         )}
 
-        {/* 5. CATASTROPHIC FRACTURE: SINGULARITY RUPTURE & DEBRIS (Frame 265..289) */}
+        {/* 5. CATASTROPHIC FRACTURE: SINGULARITY RUPTURE & DEBRIS (Frame 234..319) */}
         {/* All debris settles safely at Y >= 0.630 atop anvil bolster */}
-        {(isBroken || localFrame >= 265) && (
+        {(isBroken || localFrame >= 234) && (
           <group position={[0, 0.02, 0]}>
             {/* Expanding Rupture Shockwave Ring */}
             <mesh rotation={[-Math.PI / 2, 0, 0]}>
               <ringGeometry
                 args={[
                   0.05,
-                  0.32 + Math.min(1.4, (localFrame - 265) * 0.04),
+                  0.32 + Math.min(1.4, (localFrame - 234) * 0.04),
                   40,
                 ]}
               />
               <meshStandardMaterial
                 color={COLOR_EMISSIVE_CYAN}
                 emissive={COLOR_EMISSIVE_CYAN}
-                emissiveIntensity={Math.max(0.4, 4.5 - (localFrame - 265) * 0.16)}
+                emissiveIntensity={Math.max(0.4, 4.5 - (localFrame - 234) * 0.16)}
                 transparent
                 opacity={0.75}
               />
@@ -1207,7 +1226,7 @@ export const PressTier4Spec: MachineAssemblySpec = {
   id: "press_tier4_futuristic",
   name: "Tier 4: $100,000+ Superconducting Quantum Pinch Press",
   tier: 4,
-  strikeFrames: [110, 122, 134, 146, 158, 170, 182, 194, 206, 218],
+  strikeFrames: [133, 145, 157, 169, 181, 193, 205],
   strikeIntensity: 0.065,
   modules: [
     ModuleBase, // Order 0 (0f): Monolithic Carbon Base & Lower Anvil Bolster

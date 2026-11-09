@@ -11,6 +11,7 @@
  */
 
 import React from "react";
+import { TIER_DURATION_FRAMES } from "./StageTimeline";
 
 export type Vector3 = [number, number, number];
 
@@ -29,7 +30,7 @@ export interface MountSocket {
 }
 
 export interface FractureSpec {
-  breakFrame: number; // Local frame in tier (e.g. 250..270)
+  breakFrame: number; // Local frame in tier (canonical: 234)
   mode: "shear_and_tilt" | "fling_parabolic" | "shudder_and_crack" | "meltdown" | "boss_reverse_shatter";
   impulse: Vector3; // Physical displacement vector [dx, dy, dz]
   rotationImpulse: Vector3; // Rotational velocity [rx, ry, rz]
@@ -46,8 +47,8 @@ export interface SpecimenSyncContract {
   name: string;
   materialType: "plastic" | "aluminum" | "steel" | "stone" | "glass" | "quantum" | "invulnerable_boss";
   contactThroatY: number; // Contact plane coordinate along Y axis
-  startTouchFrame: number; // Canonical: 150f (Act 3 start)
-  endDisintegrateFrame: number; // Canonical: 249f (Act 3 end)
+  startTouchFrame: number; // Canonical: 123f (Act 3 start)
+  endDisintegrateFrame: number; // Canonical: 233f (Act 3 end)
   isInvulnerable?: boolean; // For Act 4 boss twists (e.g. Nokia 3310 causing machine destruction)
 }
 
@@ -86,10 +87,12 @@ export interface ModularPartSpec {
 }
 
 export interface ModularPartRenderProps {
-  localFrame: number; // Local tier frame (0..289)
-  isRunning: boolean; // Whether machine has spooled up (Act 2 & 3: 70..249)
+  localFrame: number; // Local tier frame (0..319)
+  isRunning: boolean; // Whether machine has spooled up (Act 2 & 3: 63..212)
   rpm: number; // Current revolutions per minute for rotating parts
-  isBroken: boolean; // Whether fracture has occurred (Act 4: 250..289)
+  isBroken: boolean; // Whether fracture has occurred (Act 4: 234..319)
+  cleanserEffect?: string;
+  cleanserProgress?: number; // 0..1 during cleanser phase (234..307)
 }
 
 export interface MachineAssemblySpec {
@@ -151,14 +154,13 @@ export function getTierImpactShakes(spec: MachineAssemblySpec, tierOffset: numbe
 }
 
 /**
- * Computes the unified 1160-frame camera impact timeline for all 4 progression tiers.
+ * Computes the unified 1280-frame camera impact timeline for all 4 progression tiers.
  * Guarantees that camera impulses are physically bound to machine modules with ZERO manual guesswork.
  */
 export function computeProjectImpacts(tierSpecs: MachineAssemblySpec[]): ImpactShake[] {
-  const tierOffsets = [0, 290, 580, 870];
   const allImpacts: ImpactShake[] = [];
   tierSpecs.forEach((spec, idx) => {
-    allImpacts.push(...getTierImpactShakes(spec, tierOffsets[idx]));
+    allImpacts.push(...getTierImpactShakes(spec, idx * TIER_DURATION_FRAMES));
   });
   return allImpacts.sort((a, b) => a.frame - b.frame);
 }

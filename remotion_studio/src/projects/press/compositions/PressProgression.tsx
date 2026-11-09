@@ -5,6 +5,7 @@ import { DynamicEnvironment } from "@shared/environment/DynamicEnvironment";
 import { ShowroomHUD } from "@shared/components/ShowroomHUD";
 import { RigidShowcaseCamera } from "@shared/components/RigidShowcaseCamera";
 import { CinematicOverlay } from "@shared/components/CinematicOverlay";
+import { TIER_DURATION_FRAMES } from "@shared/contracts/StageTimeline";
 import { PressStage } from "../components/PressStage";
 import { computeProjectImpacts } from "@shared/contracts/AssemblyContract";
 import { PressTier1Spec } from "../components/PressTier1_Manual";
@@ -34,7 +35,7 @@ export const PressProgression: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      {/* 1. Synchronized Procedural ASMR Audio Master (1160 frames @ 30 FPS) */}
+      {/* 1. Synchronized Procedural ASMR Audio Master (1280 frames @ 30 FPS) */}
       <Audio src={staticFile("audio/asmr_press_progression.wav")} />
 
       {/* 2. 3D WebGL Arena with Locked 2.5D 3/4 Isometric Heroic Perspective */}
@@ -51,7 +52,7 @@ export const PressProgression: React.FC = () => {
           basePosition={[1.85, 0.45, 2.90]}
           target={[0, -1.25, 0]}
           enableClimaxPush={true}
-          tierDuration={290}
+          tierDuration={TIER_DURATION_FRAMES}
           impacts={impacts}
         />
         <DynamicEnvironment theme="factory" />
@@ -64,7 +65,7 @@ export const PressProgression: React.FC = () => {
       {/* 4. Single-Island Minimalist Zero-Language HUD (Anti-Desync & Procedural Values) */}
       <ShowroomHUD
         seed="hydraulic_press_progression"
-        contactFrames={[111, 104, 110, 110]}
+        contactFrames={[134, 127, 134, 133]}
       />
     </div>
   );

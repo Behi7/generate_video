@@ -86,8 +86,10 @@ def mix_sample(master_track, sample, at_frame, gain_db=0.0, pan=0.0):
     master_track[start_sample:end_sample] += proc_sample[:mix_len]
 
 class ASMRMixer:
-    def __init__(self):
-        self.master = np.zeros((TOTAL_SAMPLES, 2), dtype=np.float32)
+    def __init__(self, total_frames=TOTAL_FRAMES):
+        self.total_frames = total_frames
+        self.total_samples = int((total_frames / FPS) * SAMPLE_RATE)
+        self.master = np.zeros((self.total_samples, 2), dtype=np.float32)
         self.bom = []
         with open(os.path.join(FOLEY_DIR, "foley_manifest.json"), "r") as f:
             self.manifest = json.load(f)
@@ -173,7 +175,7 @@ class ASMRMixer:
         if bom_json_path:
             with open(bom_json_path, "w") as f:
                 json.dump({
-                    "total_frames": TOTAL_FRAMES,
+                    "total_frames": getattr(self, "total_frames", TOTAL_FRAMES),
                     "sample_rate": SAMPLE_RATE,
                     "event_count": len(self.bom),
                     "events": self.bom

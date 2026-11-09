@@ -32,7 +32,7 @@ if (fs.existsSync(uvcPath)) {
         width: 1080,
         height: 1920,
         fps: 30,
-        durationInFrames: 1160,
+        durationInFrames: TOTAL_DURATION_FRAMES,
       });
     }
   } catch (e) {
@@ -73,6 +73,10 @@ import {
   ImpactShake,
   computeProjectImpacts,
 } from "../src/shared/contracts/AssemblyContract";
+import {
+  TIER_DURATION_FRAMES,
+  TOTAL_DURATION_FRAMES,
+} from "../src/shared/contracts/StageTimeline";
 
 // Import known project tier specs and compositions
 import {
@@ -306,7 +310,7 @@ export function runSyncAudit(compositionInput: string): SyncAuditReport {
   }
 
   const errors: string[] = [];
-  const tierOffsets = [0, 290, 580, 870];
+  const tierOffsets = [0, 1, 2, 3].map((i) => i * TIER_DURATION_FRAMES);
 
   // --------------------------------------------------------------------------
   // AUDIT A: 3D Kinematic Strike Frames in MachineAssemblySpec
@@ -317,7 +321,7 @@ export function runSyncAudit(compositionInput: string): SyncAuditReport {
   for (let i = 0; i < proj.tierSpecs.length; i++) {
     const spec = proj.tierSpecs[i];
     const tier = spec.tier || i + 1;
-    const offset = tierOffsets[tier - 1] ?? (tier - 1) * 290;
+    const offset = tierOffsets[tier - 1] ?? (tier - 1) * TIER_DURATION_FRAMES;
     const strikes = spec.strikeFrames ?? [];
     const intensity =
       spec.strikeIntensity ?? Number((0.038 + tier * 0.007).toFixed(3));
@@ -371,7 +375,7 @@ export function runSyncAudit(compositionInput: string): SyncAuditReport {
   for (let i = 0; i < proj.tierSpecs.length; i++) {
     const spec = proj.tierSpecs[i];
     const tier = spec.tier || i + 1;
-    const offset = tierOffsets[tier - 1] ?? (tier - 1) * 290;
+    const offset = tierOffsets[tier - 1] ?? (tier - 1) * TIER_DURATION_FRAMES;
 
     // 1. Snaps
     for (const mod of spec.modules) {
