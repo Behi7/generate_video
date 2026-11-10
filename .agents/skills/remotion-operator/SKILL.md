@@ -1,6 +1,6 @@
 ---
 name: remotion-operator
-description: Autonomous viral video operator using Remotion, Three.js, React, and Spring physics. Produces high-retention vertical Shorts/Reels (1080×1920 @ 30 FPS, ~38–40s) based on Hyperbolic Mechanical Metaphors, modular collision-free 3D assembly, pure multi-layered ASMR audio, and universal zero-language visual clarity.
+description: Autonomous viral video operator using Remotion, Three.js, React, and Spring physics. Produces high-retention vertical Shorts/Reels (1080×1920 @ 30 FPS, 42.67s / 1280 frames) based on Hyperbolic Mechanical Metaphors, modular collision-free 3D assembly, pure multi-layered ASMR audio, and universal zero-language visual clarity.
 ---
 
 # Remotion Operator Skill: Hyperbolic Mechanical & ASMR Video Engine
@@ -38,8 +38,8 @@ Production MUST run through structured subagent invocations (`invoke_subagent`):
    - **Ruthless Sound Critic (`crew/sound_critic.md`):** Audits `inspect_audio.png` (spectrogram, RMS energy peak alignment, 0 synthetic sines).
    - All 5 gates MUST return `[PASS]` before advancing.
 3. **Phase 3 — The Kinematics & Drama Swarm (4 Motion Animators, `crew/motion_animator.md`):**
-   - 4 parallel Motion Animators author bespoke kinematics, specimen sync (Anti-Ghosting Law: strictly frames 150..249), and dramatic overload plot twists directly inside `src/projects/<project>/components/`.
-   - Strictly enforces the **Anti-Glitch Overload Law** (torque deceleration $\to$ contact stall & micro-shudder $\to$ fracture at peak shudder).
+   - 4 parallel Motion Animators author bespoke kinematics, specimen sync (Anti-Ghosting Law: strictly frames 123..233), and dramatic overload plot twists directly inside `src/projects/<project>/components/`.
+   - Strictly enforces the **Anti-Glitch Overload Law** (torque deceleration $\to$ contact stall & resonant micro-shudder $\to$ fracture at peak shudder at frame 234).
 4. **Phase 4 — Automated Forensic Interceptor Gates (`check-collisions` & `check-sync`):**
    - **Gate 4A: Volumetric Clearance:** `python3 remotion_cli.py check-collisions <project_slug>` across 52 keyframes.
      * Toolhead vs Specimen Overlap: MUST be $\le 10.0\%$ (elastic surface bite only).
@@ -77,34 +77,38 @@ $$\text{Base (0f)} \longrightarrow \text{Internal Core / Crankshaft (20f)} \long
 
 ---
 
-## 3. The Core Conveyor Philosophy (The 38–40s Standard)
+## 3. The Canonical 42.67s 4-Act Formula (1280 Frames @ 30 FPS)
 
-- **Total Timeline:** **1160 frames @ 30 FPS (exactly 38.67 seconds)**.
-- **4 Progression Tiers:** Exactly **290 frames (~9.67 seconds)** per tier:
-  - **Tier 1:** Frames 0 – 289 ($10, 1x)
-  - **Tier 2:** Frames 290 – 579 ($100, 10x)
-  - **Tier 3:** Frames 580 – 869 ($1 000, 100x)
-  - **Tier 4:** Frames 870 – 1159 ($100 000+, 10 000x)
+- **Total Timeline:** **1280 frames @ 30 FPS (strictly 42.6667 seconds)**.
+- **Master Foley ASMR Audio:** Strictly **1,881,600 samples** (44.1 kHz 16-bit PCM stereo WAV), normalized to -14 LUFS, true peak $\le -1.0\text{ dBFS}$.
+- **4 Progression Tiers:** Exactly **320 frames (~10.67 seconds)** per tier:
+  - **Tier 1:** Frames 0 – 319 ($10, 1x)
+  - **Tier 2:** Frames 320 – 639 ($100, 10x)
+  - **Tier 3:** Frames 640 – 959 ($1 000, 100x)
+  - **Tier 4:** Frames 960 – 1279 ($100 000+, 10 000x)
 
 ```
-[Act 1: Modular Assembly] ──> [Act 2: Fast Startup] ──> [Act 3: Peak Operating] ──> [Act 4: Overload Fracture]
-  (2.33s / 70 frames)           (1.00s / 30 frames)          (4.17s / 125 frames)         (2.17s / 65 frames)
+[Act 1: Modular Assembly] ──► [Act 2: Startup Reaction] ──► [Act 3: Hypnotic Operating] ──► [Act 4: Destruction & Cleanser]
+     (0..62f / 2.10s)              (63..122f / 2.00s)              (123..212f / 3.00s)                 (213..319f / 3.57s)
 ```
 
-1. **ACT 1: STAGGERED INSIDE-OUT ASSEMBLY (Frames 0..69 / 70 frames):**
-   - Modules arrive strictly by `assemblyOrder` in 15–20 frame intervals with magnetic spring snapping and `SparkBurst` flashes. Last part docks at frame 75.
-2. **ACT 2: PHYSICAL STARTUP CHAIN REACTION (Frames 70..99 / 30 frames) — ZERO DEAD LULL:**
+1. **ACT 1: STAGGERED INSIDE-OUT ASSEMBLY (Local Frames 0..62 / 63 frames = 2.10s):**
+   - Modules arrive strictly by `assemblyOrder` in staggered intervals: Base (0f) $\to$ Shaft/Core (20f) $\to$ Outer Casing (40f) $\to$ Toolhead (55..60f).
+   - Magnetic spring snapping, zero casing-first collisions, impact sparkles. Last part docks by frame 60.
+2. **ACT 2: PHYSICAL STARTUP CHAIN REACTION (Local Frames 63..122 / 60 frames = 2.00s) — ZERO DEAD LULL:**
    - Visible mechanical cause-and-effect: switch toggle $\to$ belt/sprocket spool-up $\to$ operating RPM.
-   - **Zero Dead Lull Law:** Machine must NEVER sit idle after frame 75! Operating strokes begin strictly at frame 100.
-3. **ACT 3: HYPNOTIC STEADY-STATE CLIMAX (Frames 100..224 / 125 frames):**
+   - **Zero Dead Lull Law:** Machine must NEVER sit idle after frame 60! Operating strokes begin strictly at frame 123.
+3. **ACT 3: HYPNOTIC STEADY-STATE CLIMAX (Local Frames 123..212 / 90 frames = 3.00s exact):**
    - Peak mechanical power, rhythmic deformation strikes, coolant fluid spray, rock/debris fragmentation, crisp balance increment on single-island HUD.
-   - **Zero Teleportation Law:** Coordination across transition frame 224..225 MUST have delta = 0.000000m.
    - **Air Gap & Coaxial Centerline Law:** Clear visual air gap (25–35 cm) between toolhead at TDC and workpiece top surface. Tool strikes surface and recoils; never embeds inside workpiece like a piston sleeve.
-   - **Anti-Ghosting Law:** Specimen lifetime matches cutting/forging frames strictly across 100..249f.
-4. **ACT 4: NEWTONIAN BALLISTIC OVERLOAD & FRACTURE (Frames 225..289 / 65 frames):**
-   - **Phase 4A (225..244f / Deceleration):** Smooth torque bog-down from 100% to 0% RPM.
-   - **Phase 4B (245..264f / Contact Stall & Micro-Shudder):** Machine stalls at contact point with high-frequency micro-shudder (0.5 to 3.0 mm vibration). Zero dead freeze or sudden motionless pause!
-   - **Phase 4C (265..289f / Explosive Ballistic Fracture):** Ruptures catastrophically with physical initial velocity, gravity ($g=9.81\text{ m/s}^2$), tumbling rotation, and damped floor bounces on bed ($Y \ge -2.04$). Parts have mass and weight (no slow melting!). **The machine NEVER sinks below the floor.**
+   - **Anti-Ghosting Law:** Specimen lifetime matches cutting/forging frames strictly across 123..233f.
+4. **ACT 4: 4-STAGE OVERLOAD DESTRUCTION & MODULAR CLEANSER (Local Frames 213..319 / 107 frames = 3.57s):**
+   - **strain (213..224f / 12f = 0.40s):** Torque bog-down from 100% to 0% RPM, mechanical jam, overheating.
+   - **resonance (225..233f / 9f = 0.30s):** Pre-fracture shudder wave (increasing frequency & amplitude), bolt shear, cracks.
+   - **ruptureAndCleanser (234..307f / 74f = 2.47s):**
+     * **Frame 234:** Catastrophic fracture detonation (`breakFrame = 234`). Shockwave, violent fragment ejection with physical gravity and floor bounces.
+     * **Frames 234..307:** Active modular Cleanser Transition (`ash_disintegration`, `laser_scan_cleanser`, `pneumatic_air_blast`, `black_hole_singularity`) sweeps debris off the stage.
+   - **settled (308..319f / 12f = 0.40s):** Pristine empty table, zero debris, 100% clean slate ready for next tier assembly. Continuous floor across all themes (no trapdoors or floor cutouts).
 
 ---
 
@@ -123,10 +127,10 @@ The Critic MUST issue a **`REJECT`** if:
 4. Structural bodies use sharp 90° cubes instead of beveled chamfers (`<RoundedBox>`).
 5. Drill/cutter/ram bit is rotated sideways or strikes off-target (must align along vertical Y-axis).
 6. Toolhead rests inside workpiece without a 25–35 cm air gap, or fails `check-collisions` (> 10% overlap).
-7. Machine dead-freezes at frame 250 instead of smoothly decelerating and shuddering into fracture.
+7. Machine dead-freezes during Act 4 instead of smoothly decelerating (213..224f) and shuddering (225..233f) into fracture rupture at frame 234.
 8. The machine occupies less than 55% of the vertical frame (camera positioned too far).
 9. Numbers ghost or blur due to heavy drop-shadows on HUD.
-10. The machine sinks into the floor instead of fracturing catastrophically on the platform bed.
+10. The machine sinks into the floor or uses floor cutouts instead of continuous floor and modular cleanser transitions (`ash_disintegration`, `laser_scan_cleanser`, `pneumatic_air_blast`, `black_hole_singularity`).
 
 ---
 

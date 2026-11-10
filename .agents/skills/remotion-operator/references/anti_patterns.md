@@ -58,14 +58,14 @@ This reference catalogs strictly forbidden practices and obsolete patterns in `r
 
 ---
 
-## 🚫 7. Obsolete 24-Second / 720-Frame Limit
-* **Legacy Example:** 720 frames (24.0s).
-* **Anti-Pattern:** Compressing 4 progression tiers into rushed, unwatchable 6-second segments with 0.3s teleports.
-* **Rule:** Render at **30 FPS, exactly 1160 frames (38.67s)**. Every tier receives exactly 290 frames (~9.67s) partitioned into 4 human-digestible acts:
-  1. Act 1 (0..69f / 2.33s): Staggered Lego Snap Assembly
-  2. Act 2 (70..149f / 2.67s): Startup Chain Reaction
-  3. Act 3 (150..249f / 3.33s): Hypnotic ASMR Operation
-  4. Act 4 (250..289f / 1.33s): Catastrophic Physical Overload
+## 🚫 7. Obsolete Legacy Frame Limits (720f / 1160f)
+* **Legacy Example:** 720 frames (24.0s) or 1160 frames (38.67s).
+* **Anti-Pattern:** Compressing tiers into rushed segments or truncating Act 3/4 before the full 42.67s cycle completes.
+* **Rule:** Render at **30 FPS, strictly 1280 frames (42.67s)**. Every tier receives exactly 320 frames (~10.67s) partitioned into 4 canonical acts:
+  1. Act 1 (0..62f / 2.10s): Staggered Inside-Out Assembly
+  2. Act 2 (63..122f / 2.00s): Startup Chain Reaction
+  3. Act 3 (123..212f / 3.00s): Hypnotic ASMR Operation & Climax
+  4. Act 4 (213..319f / 3.57s): 4-Stage Destruction (rupture at frame 234) & Modular Cleanser Transition (settled by 308f)
 
 ---
 

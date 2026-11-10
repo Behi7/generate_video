@@ -76,8 +76,8 @@ export function getPressHydraulicStroke(
   isRunning: boolean,
   isBroken: boolean
 ): PressKinematics {
-  const isBlowout = isBroken || localFrame >= 234;
-  const isStall = isRunning && localFrame >= 225 && localFrame < 234;
+  const isBlowout = isBroken;
+  const isStall = (isRunning && localFrame >= 225 && localFrame < 234) || (localFrame >= 234 && !isBroken);
   const isDecel = isRunning && localFrame >= 213 && localFrame < 225;
   const isOperating = isRunning && localFrame >= 123 && localFrame < 213;
   const isSpooling = isRunning && localFrame >= 63 && localFrame < 123;

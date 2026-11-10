@@ -3,7 +3,7 @@
 inspect_audio.py
 Generates a forensic 3-pane visual audit contact sheet (inspect_audio_<Name>.png)
 for the Ruthless Sound Critic:
-- Pane 1: Spectrogram (0..20 kHz) across the 1160 frames (38.67s @ 30 FPS).
+- Pane 1: Spectrogram (0..20 kHz) across the 1280 frames (42.67s @ 30 FPS).
 - Pane 2: RMS Energy Waveform with red keyframe impact markers.
 - Pane 3: Forensic Audio BOM & Material Integrity Audit.
 """
@@ -125,8 +125,13 @@ def inspect_audio(wav_path, bom_path=None, out_png=None):
     for spine in ax1.spines.values():
         spine.set_color("#334155")
 
-    # Add tier boundaries
-    for tier_frame, label in [(0, "Tier 1 ($10)"), (290, "Tier 2 ($100)"), (580, "Tier 3 ($1 000)"), (870, "Tier 4 ($100k+)")]:
+    # Add tier boundaries (dynamically calibrated to 1280f or legacy 1160f)
+    tier_markers = (
+        [(0, "Tier 1 ($10)"), (320, "Tier 2 ($100)"), (640, "Tier 3 ($1 000)"), (960, "Tier 4 ($100k+)")]
+        if total_video_frames >= 1200
+        else [(0, "Tier 1 ($10)"), (290, "Tier 2 ($100)"), (580, "Tier 3 ($1 000)"), (870, "Tier 4 ($100k+)")]
+    )
+    for tier_frame, label in tier_markers:
         ax1.axvline(tier_frame, color="#38BDF8", linestyle="--", alpha=0.6, linewidth=1.5)
         ax1.text(tier_frame + 6, 18500, label, color="#38BDF8", fontsize=10, weight="bold")
 

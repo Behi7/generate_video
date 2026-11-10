@@ -46,7 +46,7 @@ while ($true) {
             Remove-Item $ZipPath -Force
 
             # 2. Render on RTX 4060 GPU
-            Write-Host "  🚀 Rendering 1160 frames on RTX 4060 (--gl=angle, concurrency=$Concurrency)..." -ForegroundColor Cyan
+            Write-Host "  🚀 Rendering 1280 frames on RTX 4060 (--gl=angle, concurrency=$Concurrency)..." -ForegroundColor Cyan
             $Stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
             
             & npx remotion render src/index.ts $Comp $OutFile --concurrency=$Concurrency --gl=angle

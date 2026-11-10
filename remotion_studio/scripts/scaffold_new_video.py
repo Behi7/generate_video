@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Scaffolds a new canonical 38-40s (1160 frames @ 30 FPS) Remotion Studio project.
+Scaffolds a new canonical 42.67s (1280 frames @ 30 FPS) Remotion Studio project.
 Automatically sets up:
 - Modular project structure in src/projects/<slug>/
 - Isolated output directory in output/<slug>/ (with symlink in project dir)
@@ -89,10 +89,10 @@ def scaffold(name):
     audio_rel = f"audio/asmr_{slug}_progression.wav"
     audio_full = os.path.join(STUDIO_DIR, "public", audio_rel)
 
-    print(f"🛠️  Scaffolding modular project '{slug}' -> {pascal_name} (1160 frames @ 30 FPS)...")
+    print(f"🛠️  Scaffolding modular project '{slug}' -> {pascal_name} (1280 frames @ 30 FPS)...")
 
-    # 0. Placeholder audio
-    create_placeholder_wav(audio_full, duration_sec=38.67)
+    # 0. Placeholder audio (1280 frames @ 30 FPS = 42.6667s / 1,881,600 samples)
+    create_placeholder_wav(audio_full, duration_sec=42.6667)
 
     # 1. Project metadata
     project_json_file = os.path.join(project_root, "project.json")
@@ -102,7 +102,7 @@ def scaffold(name):
             "name": f"{theme_base} Progression",
             "compositionId": pascal_name,
             "fps": 30,
-            "durationInFrames": 1160,
+            "durationInFrames": 1280,
             "width": 1080,
             "height": 1920,
             "tiers": [
@@ -134,7 +134,7 @@ export const {theme_base}Stage: React.FC = () => {{
       {{/* Specimen anchored on bed */}}
       <RockSpecimen />
 
-      {{/* Tier 1 ($10, Frames 0..289): Manual / Analog Baseline */}}
+      {{/* Tier 1 ($10, Frames 0..319): Manual / Analog Baseline */}}
       {{tier === 1 && (
         <group>
           <mesh position={[0, 0.44, 0]}>
@@ -144,7 +144,7 @@ export const {theme_base}Stage: React.FC = () => {{
         </group>
       )}}
 
-      {{/* Tier 2 ($100, Frames 290..579): Mechanical / Motor Driven */}}
+      {{/* Tier 2 ($100, Frames 320..639): Mechanical / Motor Driven */}}
       {{tier === 2 && (
         <group>
           <mesh position={[0, 0.44, 0]}>
@@ -154,7 +154,7 @@ export const {theme_base}Stage: React.FC = () => {{
         </group>
       )}}
 
-      {{/* Tier 3 ($1 000, Frames 580..869): Heavy Industrial Hydraulic */}}
+      {{/* Tier 3 ($1 000, Frames 640..959): Heavy Industrial Hydraulic */}}
       {{tier === 3 && (
         <group>
           <mesh position={[0, 0.44, 0]}>
@@ -164,7 +164,7 @@ export const {theme_base}Stage: React.FC = () => {{
         </group>
       )}}
 
-      {{/* Tier 4 ($100 000+, Frames 870..1159): Sci-Fi Quantum / Plasma */}}
+      {{/* Tier 4 ($100 000+, Frames 960..1279): Sci-Fi Quantum / Plasma */}}
       {{tier === 4 && (
         <group>
           <mesh position={[0, 0.44, 0]}>
@@ -226,7 +226,7 @@ export const {pascal_name}: React.FC = () => {{
           target={{[0, -1.25, 0]}}
           impacts={{impacts}}
           enableClimaxPush={{true}}
-          tierDuration={{290}}
+          tierDuration={{320}}
         />
         <DynamicEnvironment theme="factory" />
         <{theme_base}Stage />

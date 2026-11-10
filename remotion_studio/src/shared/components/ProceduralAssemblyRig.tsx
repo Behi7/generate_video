@@ -128,6 +128,149 @@ function computeBallisticTrajectory(
   };
 }
 
+/**
+ * Zero-G Anti-Gravity Hover & Gravitational Vortex Trajectory Simulation
+ * For Black Hole Singularity Cleanser Transition (frames 234..308):
+ * - 234..244 (10f): Explosive outward fracture impulse (stays strictly within camera FOV).
+ * - 245..258 (14f): Anti-gravity zero-g hover in mid-air (weightless harmonic bobbing, no floor drop!).
+ * - 259..296 (38f): Inward orbital spiral suction into black hole singularity with spaghettification.
+ * - 297..308: 100% swallowed (scale = 0).
+ */
+function computeZeroGBlackHolePartTrajectory(
+  targetSocket: [number, number, number],
+  impulse: [number, number, number],
+  rotationImpulse: [number, number, number],
+  localFrame: number,
+  breakFrame: number,
+  partOrder: number
+): {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+} {
+  const [sx, sy, sz] = targetSocket;
+  const elapsed = localFrame - breakFrame;
+
+  // Fallback angle from order if impulse horizontal is 0
+  const angle0 = Math.atan2(
+    impulse[2] !== 0 ? impulse[2] : Math.sin(partOrder * 1.5 + 0.4),
+    impulse[0] !== 0 ? impulse[0] : Math.cos(partOrder * 1.5 + 0.4)
+  );
+  // Keep outward radius strictly within camera frame (0.35m .. 0.65m)
+  const targetDist = 0.35 + (partOrder % 4) * 0.09;
+  // Lift into mid-air: maintain elevation >= 0.75m above table (NO dropping to floor!)
+  const targetElev = Math.max(0.75, sy + (impulse[1] > 0 ? impulse[1] * 0.12 : 0.22));
+
+  // Singularity centroid in stage coordinates (1.35m above stage)
+  const singY = 1.35;
+
+  if (elapsed < 10) {
+    // 1. Explosive Outward Burst (frames 234..244, 10f)
+    const burstT = interpolate(elapsed, [0, 10], [0, 1], {
+      easing: Easing.bezier(0.12, 0.9, 0.15, 1),
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+    const dist = burstT * targetDist;
+    const curX = sx + Math.cos(angle0) * dist;
+    const curZ = sz + Math.sin(angle0) * dist;
+    const curY = sy + (targetElev - sy) * burstT + Math.sin(burstT * Math.PI) * 0.12;
+
+    const curRx = rotationImpulse[0] * burstT * 1.6;
+    const curRy = rotationImpulse[1] * burstT * 1.8;
+    const curRz = rotationImpulse[2] * burstT * 1.6;
+
+    return {
+      position: [curX, curY, curZ],
+      rotation: [curRx, curRy, curRz],
+      scale: 1,
+    };
+  }
+
+  // Pre-calculate hover end state at frame 244 (elapsed = 10)
+  const hoverBaseX = sx + Math.cos(angle0) * targetDist;
+  const hoverBaseZ = sz + Math.sin(angle0) * targetDist;
+  const hoverBaseY = targetElev;
+  const hoverBaseRx = rotationImpulse[0] * 1.6;
+  const hoverBaseRy = rotationImpulse[1] * 1.8;
+  const hoverBaseRz = rotationImpulse[2] * 1.6;
+
+  if (elapsed < 24) {
+    // 2. Anti-Gravity Zero-G Hover (frames 245..258, 14f)
+    const hoverAge = elapsed - 10;
+    const bobY = Math.sin(hoverAge * 0.22 + partOrder * 1.2) * 0.025;
+    const driftX = Math.sin(hoverAge * 0.18 + partOrder) * 0.012;
+    const driftZ = Math.cos(hoverAge * 0.18 + partOrder) * 0.012;
+
+    const curX = hoverBaseX + driftX;
+    const curY = hoverBaseY + bobY;
+    const curZ = hoverBaseZ + driftZ;
+
+    const curRx = hoverBaseRx + hoverAge * 0.012;
+    const curRy = hoverBaseRy + hoverAge * 0.018;
+    const curRz = hoverBaseRz + hoverAge * 0.010;
+
+    return {
+      position: [curX, curY, curZ],
+      rotation: [curRx, curRy, curRz],
+      scale: 1,
+    };
+  }
+
+  // 3. Gravitational Vortex Spiral Suction (frames 259..296, 38f)
+  const stagger = (partOrder % 4) * 2; // 0, 2, 4, 6
+  const suctionStart = 24 + stagger;
+  const suctionEnd = 62; // elapsed = 62 -> frame 296
+
+  if (elapsed < suctionStart) {
+    // Still hovering before suction staggered start
+    const hoverAge = elapsed - 10;
+    const bobY = Math.sin(hoverAge * 0.22 + partOrder * 1.2) * 0.025;
+    const driftX = Math.sin(hoverAge * 0.18 + partOrder) * 0.012;
+    const driftZ = Math.cos(hoverAge * 0.18 + partOrder) * 0.012;
+
+    return {
+      position: [hoverBaseX + driftX, hoverBaseY + bobY, hoverBaseZ + driftZ],
+      rotation: [hoverBaseRx + hoverAge * 0.012, hoverBaseRy + hoverAge * 0.018, hoverBaseRz + hoverAge * 0.010],
+      scale: 1,
+    };
+  }
+
+  if (elapsed >= suctionStart && elapsed < suctionEnd) {
+    const suctionT = interpolate(elapsed, [suctionStart, suctionEnd], [0, 1], {
+      easing: Easing.bezier(0.35, 0.0, 0.15, 1),
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+
+    const r = targetDist * Math.pow(1 - suctionT, 1.6);
+    const spiralAngle = angle0 + Math.pow(suctionT, 2.2) * (Math.PI * 10 + partOrder * 0.8);
+
+    const curX = Math.cos(spiralAngle) * r;
+    const curZ = Math.sin(spiralAngle) * r;
+    const curY = interpolate(suctionT, [0, 1], [hoverBaseY, singY]);
+
+    const curRx = hoverBaseRx + suctionT * 4.5;
+    const curRy = hoverBaseRy + Math.pow(suctionT, 2) * Math.PI * 12;
+    const curRz = hoverBaseRz + suctionT * 3.8;
+
+    const scale = Math.max(0, 1 - Math.pow(suctionT, 1.5));
+
+    return {
+      position: [curX, curY, curZ],
+      rotation: [curRx, curRy, curRz],
+      scale,
+    };
+  }
+
+  // 4. Swallowed completely by frame 296..319
+  return {
+    position: [0, singY, 0],
+    rotation: [0, 0, 0],
+    scale: 0,
+  };
+}
+
 export interface ProceduralAssemblyRigProps {
   spec: MachineAssemblySpec;
   localFrame: number; // 0..319 local tier frame
@@ -299,36 +442,96 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
   }
 
   // Stage 3 (234..307f): Fracture rupture & active Cleanser Transition Effect
-  // Fracture occurs at frame 234
-  const breakFrame = 234;
+  // Fracture occurs at part breakFrame if defined, defaulting to canonical 234
+  const breakFrame = (part.fracture as any)?.breakFrame ?? 234;
+  const isLaserCleanser = cleanserEffect === "laser_scan_cleanser";
 
-  if (isBroken && part.fracture && localFrame >= breakFrame) {
-    const f = part.fracture;
-    const dt = (localFrame - breakFrame) / 30.0;
-
-    if (f.mode === "fling_parabolic" || f.mode === "shear_and_tilt") {
-      const ballistic = computeBallisticTrajectory(
+  if (isLaserCleanser) {
+    // In laser scan cleanser, the machine MUST remain intact and rigidly seated on the bed
+    // so the Three.js planar clipping plane can descend and slice through intact geometry!
+    if (localFrame >= breakFrame) {
+      const laserJitter =
+        localFrame < 244
+          ? Math.sin(localFrame * 35.0) * 0.0015
+          : localFrame <= 300
+          ? Math.sin(localFrame * 48.0) * 0.0010
+          : 0;
+      curX = part.targetSocket[0] + laserJitter;
+      curY = Math.max(0.0, part.targetSocket[1]);
+      curZ = part.targetSocket[2] + laserJitter * 0.5;
+      curRx = 0;
+      curRy = 0;
+      curRz = 0;
+    }
+  } else if (isBroken && localFrame >= breakFrame) {
+    if (cleanserEffect === "black_hole_singularity") {
+      const impulse = part.fracture?.impulse ?? [
+        Math.cos(part.assemblyOrder * 1.5) * 1.8,
+        1.4,
+        Math.sin(part.assemblyOrder * 1.5) * 1.8,
+      ];
+      const rotImpulse = part.fracture?.rotationImpulse ?? [1.5, 2.0, 1.2];
+      const bh = computeZeroGBlackHolePartTrajectory(
         part.targetSocket,
-        f.impulse,
-        f.rotationImpulse,
-        dt,
-        0.0,  // floor bed local Y
-        0.35, // elastic restitution
-        0.65  // ground friction
+        impulse,
+        rotImpulse,
+        localFrame,
+        breakFrame,
+        part.assemblyOrder
       );
-      curX = ballistic.position[0];
-      curY = ballistic.position[1];
-      curZ = ballistic.position[2];
-      curRx = ballistic.rotation[0];
-      curRy = ballistic.rotation[1];
-      curRz = ballistic.rotation[2];
-    } else if (f.mode === "shudder_and_crack") {
+      curX = bh.position[0];
+      curY = bh.position[1];
+      curZ = bh.position[2];
+      curRx = bh.rotation[0];
+      curRy = bh.rotation[1];
+      curRz = bh.rotation[2];
+      scale = bh.scale;
+    } else if (cleanserEffect === "pneumatic_air_blast") {
+      // In pneumatic air blast, the machine is shattered into 32 mechanical fragments inside PneumaticAirBlast
+      // Hide the monolithic modules immediately at breakFrame so only detailed fragments fly
+      scale = 0;
+      return null;
+    } else if (cleanserEffect === "ash_disintegration") {
+      // In ash disintegration, parts remain strictly locked on the bed in their assembled sockets,
+      // undergoing thermal micro-shudder rather than flinging into walls/floor
       const shudder =
-        Math.sin((localFrame - breakFrame) * 6) *
-        0.03 *
-        Math.exp(-(localFrame - breakFrame) * 0.2);
-      curX += shudder;
-      curRz += shudder * 0.6;
+        Math.sin((localFrame - breakFrame) * 14) *
+        0.008 *
+        Math.exp(-(localFrame - breakFrame) * 0.08);
+      curX = part.targetSocket[0] + shudder;
+      curY = Math.max(0.0, part.targetSocket[1]);
+      curZ = part.targetSocket[2];
+      curRx = 0;
+      curRy = 0;
+      curRz = 0;
+    } else if (part.fracture) {
+      const f = part.fracture;
+      const dt = Math.max(0, (localFrame - breakFrame) / 30.0);
+
+      if (f.mode === "fling_parabolic" || f.mode === "shear_and_tilt") {
+        const ballistic = computeBallisticTrajectory(
+          part.targetSocket,
+          f.impulse,
+          f.rotationImpulse,
+          dt,
+          0.0,  // floor bed local Y
+          0.35, // elastic restitution
+          0.65  // ground friction
+        );
+        curX = ballistic.position[0];
+        curY = ballistic.position[1];
+        curZ = ballistic.position[2];
+        curRx = ballistic.rotation[0];
+        curRy = ballistic.rotation[1];
+        curRz = ballistic.rotation[2];
+      } else if (f.mode === "shudder_and_crack") {
+        const shudder =
+          Math.sin((localFrame - breakFrame) * 6) *
+          0.03 *
+          Math.exp(-(localFrame - breakFrame) * 0.2);
+        curX += shudder;
+        curRz += shudder * 0.6;
+      }
     }
   }
 
@@ -336,8 +539,10 @@ const ModularPartInstance: React.FC<ModularPartInstanceProps> = ({
   const isImpactActive = localFrame >= part.snapFrame && localFrame <= part.snapFrame + 4;
   const impactOffset = localFrame - part.snapFrame;
 
-  // Fracture shear spark burst at rupture (275..279f)
+  // Fracture shear spark burst at rupture (suppressed for ash disintegration and laser scan cleanser)
   const isFractureActive = Boolean(
+    !isLaserCleanser &&
+    cleanserEffect !== "ash_disintegration" &&
     part.fracture &&
     localFrame >= breakFrame &&
     localFrame <= breakFrame + 4

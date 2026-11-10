@@ -2,7 +2,7 @@
 
 Autonomous Viral 3D Video Production Engine powered by **Remotion**, **Three.js**, **React**, and **Web Audio / ASMR Foley**.
 
-Produces 30 FPS vertical Shorts/Reels (1080×1920 @ 30 FPS, ~38–40s / 1160 frames) based on **Hyperbolic Mechanical Metaphors**, modular inside-out assembly, synchronized physical overload fractures, and pure multi-layered ASMR audio.
+Produces 30 FPS vertical Shorts/Reels (1080×1920 @ 30 FPS, 42.67s / 1280 frames) based on **Hyperbolic Mechanical Metaphors**, modular inside-out assembly, synchronized physical overload fractures, and pure multi-layered ASMR audio.
 
 ---
 

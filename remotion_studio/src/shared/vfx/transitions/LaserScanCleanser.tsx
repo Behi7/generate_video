@@ -10,8 +10,14 @@ export interface LaserScanCleanserProps {
   localFrame: number;
 
   /**
-   * Frame at which machine fracture occurs (default: 234).
-   * Between breakFrame and sweepStartFrame (234..243), pre-sweep charging & optics calibration occurs.
+   * Frame at which machine overload vibration starts (default: 213).
+   * Machine stays 100% whole on the table, trembling under massive strain.
+   */
+  vibrationStartFrame?: number;
+
+  /**
+   * Frame at which the laser ring ignites above the machine (default: 234).
+   * Blinding neon cyan & ultramarine circular energy ring flashes into existence at Y ≈ 2.0.
    */
   breakFrame?: number;
 
@@ -22,9 +28,9 @@ export interface LaserScanCleanserProps {
   endFrame?: number;
 
   /**
-   * Vertical spatial envelope of the machine being cleansed (in world/stage units).
-   * minY: platform anvil bed height (default: -2.04, standard universal action bay datum).
-   * maxY: top of the machine structure envelope (default: 1.8).
+   * Vertical spatial envelope of the machine being cleansed (in local stage units).
+   * minY: platform anvil bed height (default: 0.0, the surface of the stage).
+   * maxY: top of the machine structure envelope (default: 2.0).
    */
   bounds?: {
     minY?: number;
@@ -32,13 +38,19 @@ export interface LaserScanCleanserProps {
   };
 
   /**
-   * Optional frame when the laser sheet begins descending (default: 244).
+   * Optional manual override for the parent stage's world Y position (default: -2.04).
+   * Automatically synchronizes the Three.js hardware clipping plane to the exact visual laser ring.
+   */
+  stageWorldY?: number;
+
+  /**
+   * Frame when the laser sheet begins descending from top (default: 236).
    */
   sweepStartFrame?: number;
 
   /**
-   * Optional frame when the laser sheet reaches the platform bed (default: 300).
-   * Delivers 56 frames (244..300) of continuous, hypnotic planar laser cutting.
+   * Frame when the laser sheet reaches the platform bed (default: 298).
+   * Delivers 62 frames (236..298, ~2.0 seconds) of continuous, hypnotic planar laser cutting.
    */
   sweepEndFrame?: number;
 
@@ -53,7 +65,7 @@ export interface LaserScanCleanserProps {
   primaryColor?: string;
 
   /**
-   * Secondary laser accent color (default: "#38BDF8" - Electric Sky Blue).
+   * Secondary laser accent color (default: "#38BDF8" - Electric Sky Blue / Ultramarine).
    */
   secondaryColor?: string;
 
@@ -61,6 +73,11 @@ export interface LaserScanCleanserProps {
    * Searing white core color (default: "#FFFFFF").
    */
   coreColor?: string;
+
+  /**
+   * Deep ultramarine / sapphire accent color (default: "#0055FF").
+   */
+  ultramarineColor?: string;
 
   /**
    * Total number of deterministic cutting sparks & micro-arcs (default: 320).
@@ -73,7 +90,7 @@ export interface LaserScanCleanserProps {
   enableClipping?: boolean;
 
   /**
-   * Child 3D elements (the machine mechanism or fractured parts).
+   * Child 3D elements (the whole machine mechanism).
    */
   children?: React.ReactNode;
 }
@@ -104,77 +121,22 @@ function deterministicRandom(seed: number): number {
 
 export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
   localFrame,
+  vibrationStartFrame = 213,
   breakFrame = 234,
   endFrame = 308,
   bounds,
-  sweepStartFrame = 244,
-  sweepEndFrame = 300,
+  stageWorldY: overrideStageWorldY,
+  sweepStartFrame = 236,
+  sweepEndFrame = 298,
   position = [0, 0, 0],
   primaryColor = "#00F0FF",
   secondaryColor = "#38BDF8",
   coreColor = "#FFFFFF",
+  ultramarineColor = "#0055FF",
   sparkCount = 320,
   enableClipping = true,
   children,
 }) => {
-  // 1. UNIVERSAL ACTION BAY DATUM BOUNDS
-  const minY = bounds?.minY ?? -2.04;
-  const maxY = bounds?.maxY ?? 1.8;
-
-  const totalDuration = Math.max(1, endFrame - breakFrame);
-  const sweepStart =
-    sweepStartFrame ??
-    (breakFrame + Math.max(2, Math.round(totalDuration * 0.135))); // 234 + 10 = 244
-  const sweepEnd =
-    sweepEndFrame ??
-    (breakFrame + Math.max(8, Math.round(totalDuration * 0.89))); // 234 + 66 = 300
-
-  // Post-transition: stage is completely sterile and clear (308..319+)
-  if (localFrame >= endFrame) {
-    return null;
-  }
-
-  // Pre-break: render intact machine without any overhead or interference
-  if (localFrame < breakFrame) {
-    return <group position={position}>{children}</group>;
-  }
-
-  // --- SWEEP KINEMATICS & TIMING PHASES (234..308) ---
-  const isPreSweep = localFrame >= breakFrame && localFrame < sweepStart; // 234..243
-  const isSweeping = localFrame >= sweepStart && localFrame <= sweepEnd;  // 244..300 (56 frames)
-  const isPostSweep = localFrame > sweepEnd && localFrame < endFrame;    // 301..307 (Floor impact & sterilizing flash)
-
-  // Normalized sweep progress 0 -> 1 over frames 280..305
-  const sweepProgress = interpolate(localFrame, [sweepStart, sweepEnd], [0, 1], {
-    easing: Easing.bezier(0.2, 0.8, 0.2, 1),
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  // Current Y elevation of the descending horizontal laser sheet
-  const currentLaserY = interpolate(sweepProgress, [0, 1], [maxY, minY]);
-
-  // Pre-sweep charging progression (275..279)
-  const preSweepProgress = interpolate(localFrame, [breakFrame, sweepStart], [0, 1], {
-    easing: Easing.bezier(0.1, 0.8, 0.2, 1),
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  // Pre-sweep structural fracture vibration
-  const preSweepJitter = isPreSweep
-    ? Math.sin((localFrame - breakFrame) * 28.0) * 0.007 * preSweepProgress
-    : 0;
-
-  // Floor sterilizing shockwave progression (305..315)
-  const impactProgress = interpolate(localFrame, [sweepEnd, endFrame], [0, 1], {
-    easing: Easing.bezier(0.12, 0.9, 0.2, 1),
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const impactAlpha = Math.max(0, 1 - Math.pow(impactProgress, 1.25));
-
-  // --- 2. TRUE THREE.JS CLIPPING PLANE FOR GEOMETRY SLICING (NO SQUASHING) ---
   const groupRef = useRef<THREE.Group>(null);
   const { gl } = useThree();
 
@@ -185,12 +147,128 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
     }
   }, [gl]);
 
-  // Three.js clipping plane: normal pointing down (0, -1, 0).
-  // Formula: -y + constant >= 0 => y <= constant.
-  // Points with y <= currentLaserY are kept; points with y > currentLaserY are cleanly sliced away.
+  // Synchronously determine parent stage world Y offset (default: -2.04 in universal testing bay datum)
+  let parentWorldY = overrideStageWorldY ?? -2.04;
+  if (overrideStageWorldY === undefined && groupRef.current && groupRef.current.parent) {
+    const worldVec = new THREE.Vector3();
+    groupRef.current.parent.getWorldPosition(worldVec);
+    parentWorldY = worldVec.y;
+  }
+
+  // 1. BOUNDS RESOLUTION (Local coordinates inside the stage group)
+  // In all stage compositions (PressStage, CrusherStage, DrillStage, etc.), the stage is mounted at Y = -2.04.
+  // The local stanina / bolster table surface is at local Y = 0.0, and the top of the machine envelope is at local Y = 2.0.
+  const rawMinY = bounds?.minY;
+  const rawMaxY = bounds?.maxY ?? 2.0;
+
+  // If a caller passes minY = -2.04 intending the stanina in world coordinates, but the stage is already
+  // offset by -2.04, the local stanina is at Y = 0.0:
+  const isStageOffset = Math.abs(parentWorldY - -2.04) < 0.2;
+  const minY = rawMinY !== undefined ? (rawMinY === -2.04 && isStageOffset ? 0.0 : rawMinY) : 0.0;
+  const maxY = rawMaxY;
+
+  // Exact timing intervals:
+  // 213..233: Overload vibration shudder (machine whole, trembling on table)
+  // 234..235: Blinding laser ring ignites at Y ≈ 2.0 above machine
+  // 236..298: 62 frames of continuous, hypnotic downward laser slicing
+  // 299..304: Laser hits the stanina bed with a brilliant final contact flash
+  // 305..308: Laser ring collapses inward and extinguishes
+  // 308..319: Pristine, clean empty table (returns null)
+  const vibrationStart = vibrationStartFrame;
+  const sweepStart = sweepStartFrame;
+  const sweepEnd = sweepEndFrame;
+
+  // Post-transition: stage is completely sterile and clear (308..319+)
+  if (localFrame >= endFrame) {
+    return null;
+  }
+
+  // Pre-vibration: render intact machine without any overhead or interference
+  if (localFrame < vibrationStart) {
+    return <group position={position}>{children}</group>;
+  }
+
+  // --- KINEMATICS & TIMING PHASES ---
+  const isVibrating = localFrame >= vibrationStart && localFrame < breakFrame; // 213..233
+  const isIgniting = localFrame >= breakFrame && localFrame < sweepStart;      // 234..235
+  const isSweeping = localFrame >= sweepStart && localFrame <= sweepEnd;       // 236..298 (62 frames)
+  const isImpact = localFrame > sweepEnd && localFrame <= 304;                 // 299..304 (Bed contact flash)
+  const isCollapsing = localFrame >= 305 && localFrame < endFrame;             // 305..307 (Ring collapse)
+
+  // 1. Overload vibration tremors (213..233)
+  const vibrationProgress = isVibrating
+    ? interpolate(localFrame, [vibrationStart, breakFrame], [0, 1], {
+        easing: Easing.in(Easing.quad),
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 0;
+
+  const jitterX = isVibrating
+    ? Math.sin(localFrame * 48.0) * 0.007 * vibrationProgress
+    : 0;
+  const jitterY = isVibrating
+    ? Math.cos(localFrame * 56.0) * 0.004 * vibrationProgress
+    : 0;
+  const jitterZ = isVibrating
+    ? Math.sin(localFrame * 42.0 + 1.2) * 0.006 * vibrationProgress
+    : 0;
+
+  // 2. Normalized sweep progress 0 -> 1 over frames 236..298 (62 frames)
+  const sweepProgress = interpolate(localFrame, [sweepStart, sweepEnd], [0, 1], {
+    easing: Easing.bezier(0.25, 0.05, 0.25, 1),
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Current Y elevation of the descending horizontal laser sheet (local space)
+  const currentLaserY = interpolate(sweepProgress, [0, 1], [maxY, minY]);
+
+  // 3. Ring ignition expansion at frame 234..235
+  const ignitionProgress = isIgniting
+    ? interpolate(localFrame, [breakFrame, sweepStart], [0, 1], {
+        easing: Easing.out(Easing.quad),
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 1;
+
+  // 4. Ring collapse at frame 305..308
+  const collapseProgress = isCollapsing
+    ? interpolate(localFrame, [305, endFrame], [0, 1], {
+        easing: Easing.in(Easing.cubic),
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 0;
+
+  const ringScale = isIgniting
+    ? Math.min(1.0, 0.2 + ignitionProgress * 0.8)
+    : isCollapsing
+    ? Math.max(0.001, 1 - collapseProgress)
+    : 1.0;
+
+  const ringAlpha = isCollapsing ? Math.max(0, 1 - collapseProgress * 1.5) : 1.0;
+
+  // 5. Floor impact flash & sterilizing shockwave (299..304)
+  const impactProgress = interpolate(localFrame, [sweepEnd, 305], [0, 1], {
+    easing: Easing.bezier(0.12, 0.9, 0.2, 1),
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const impactAlpha = Math.max(0, 1 - Math.pow(impactProgress, 1.2));
+
+  // --- 2. HARDWARE CLIPPING PLANE SYNCHRONIZATION ---
+  // In Three.js, clipping planes are evaluated in WORLD space!
+  // Normal is [0, -1, 0]: dot([0, -1, 0], worldPoint) + constant >= 0 <=> worldPoint.y <= constant.
+  // Since a mesh inside the stage has worldPoint.y = localPoint.y + parentWorldY:
+  // localPoint.y + parentWorldY <= constant <=> localPoint.y <= constant - parentWorldY.
+  // We want geometry ABOVE the laser to be sliced away (localPoint.y <= currentLaserY).
+  // Therefore: constant = currentLaserY + parentWorldY!
+  const planeWorldConstant = isSweeping ? currentLaserY + parentWorldY : maxY + 10.0;
   const plane = useMemo(
-    () => new THREE.Plane(new THREE.Vector3(0, -1, 0), currentLaserY),
-    [currentLaserY]
+    () => new THREE.Plane(new THREE.Vector3(0, -1, 0), planeWorldConstant),
+    [planeWorldConstant]
   );
 
   // Attach clipping plane to child mesh materials during active sweep
@@ -239,8 +317,8 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
     };
   }, [isSweeping, plane, enableClipping]);
 
-  // Machine geometry is visible up to sweepEnd (frame 305).
-  // Past frame 305, it is completely vaporized.
+  // Machine geometry is visible up to sweepEnd (frame 298).
+  // Past frame 298, it is completely vaporized (0 ghost meshes!).
   const showMachineGeometry = localFrame <= sweepEnd;
 
   // --- 3. DETERMINISTIC CUTTING SPARKS WITH ANCHORED BIRTH & DOWNWARD BALLISTICS ---
@@ -256,14 +334,14 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
       const r5 = deterministicRandom(i * 19 + 5);
       const r6 = deterministicRandom(i * 23 + 6);
 
-      // Stagger birth frame along the downward laser path
+      // Stagger birth frame along the downward laser path (frames 236..298)
       const birthProgress = 0.02 + r1 * 0.96;
       const birthFrame = sweepStart + Math.floor(birthProgress * sweepDur);
 
-      // FIX: Anchor birth elevation permanently to the laser plane elevation at emission moment
+      // Anchor birth elevation permanently to the laser plane elevation at emission moment
       const birthY = interpolate(birthProgress, [0, 1], [maxY, minY]);
 
-      // Cutting perimeter coordinate distribution
+      // Cutting perimeter coordinate distribution (covers press column envelope)
       const angle = r2 * Math.PI * 2;
       const radius = 0.35 + r3 * 0.48;
       const ox = Math.cos(angle) * radius;
@@ -279,16 +357,16 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
       const radialZ = Math.sin(angle);
 
       // High-velocity tangential spray along the kerf (70%) + radial expansion (30%)
-      const speedTangential = 2.2 + r5 * 3.4; // 2.2 .. 5.6 m/s
-      const speedRadial = 0.6 + r3 * 1.2;     // 0.6 .. 1.8 m/s
+      const speedTangential = 2.4 + r5 * 3.6; // 2.4 .. 6.0 m/s
+      const speedRadial = 0.6 + r3 * 1.4;     // 0.6 .. 2.0 m/s
       const vx = tangentX * speedTangential + radialX * speedRadial;
       const vz = tangentZ * speedTangential + radialZ * speedRadial;
 
-      // FIX: Direct velocity downward through the kerf: vy = 0.9 .. 2.8 m/s downward
-      const vy = 0.9 + r6 * 1.9;
+      // Strictly downward velocity through the kerf: vy = 1.0 .. 3.2 m/s downward
+      const vy = 1.0 + r6 * 2.2;
 
-      const lifespan = 7 + Math.floor(r3 * 11); // 7 to 18 frames
-      const baseSize = 0.04 + r4 * 0.045;
+      const lifespan = 7 + Math.floor(r3 * 12); // 7 to 19 frames
+      const baseSize = 0.042 + r4 * 0.048;
 
       // 0: 70% incandescent cutting sparks, 1: 20% electric micro-arcs, 2: 10% plasma puffs
       const sparkType = r5 < 0.7 ? 0 : r5 < 0.9 ? 1 : 2;
@@ -350,12 +428,12 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
         let curX = s.ox + s.vx * dt * 0.042 * drag;
         let curZ = s.oz + s.vz * dt * 0.042 * drag;
 
-        // FIX: Downward parabolic ballistics from anchored birth elevation:
+        // Downward parabolic ballistics from anchored birth elevation:
         // y(t) = birthY - v_y * t - 0.5 * g * t^2 (NO emitter leash!)
         const gravity = 0.0042;
         let curY = s.birthY - s.vy * dt * 0.048 - 0.5 * gravity * dt * dt;
 
-        // Anvil platform floor collision & sliding friction
+        // Anvil platform floor collision & sliding friction at local minY
         if (curY <= minY + 0.008) {
           curY = minY + 0.008;
           curX = s.ox + s.vx * dt * 0.022;
@@ -415,7 +493,7 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
       };
     }, [sparkSeeds, localFrame, sparkCount, minY]);
 
-  // --- 4. HIGH-VOLTAGE ELECTRIC MICRO-ARC FILAMENTS (LineSegments) ---
+  // --- 4. HIGH-VOLTAGE ELECTRIC MICRO-ARCS (LineSegments) ---
   const { arcPositions, arcOpacity } = useMemo(() => {
     if (!isSweeping) {
       return { arcPositions: new Float32Array(0), arcOpacity: 0 };
@@ -428,10 +506,10 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
       const seedA = deterministicRandom(localFrame * 31 + a * 17);
       const seedB = deterministicRandom(localFrame * 43 + a * 19);
       const angle1 = seedA * Math.PI * 2;
-      const r1 = 0.4 + seedB * 0.45;
+      const r1 = 0.4 + seedB * 0.48;
 
       const angle2 = angle1 + 0.32 + (seedB - 0.5) * 0.55;
-      const r2 = 0.4 + seedA * 0.45;
+      const r2 = 0.4 + seedA * 0.48;
 
       const x1 = Math.cos(angle1) * r1;
       const z1 = Math.sin(angle1) * r1;
@@ -455,41 +533,55 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
     return { arcPositions: positions, arcOpacity: flicker };
   }, [localFrame, isSweeping, currentLaserY]);
 
-  // --- 5. DYNAMIC HIGH-INTENSITY PHOTONIC LIGHTING ---
+  // --- 5. DYNAMIC PHOTONIC LIGHTING ---
   const laserLightIntensity = useMemo(() => {
-    if (localFrame < breakFrame) return 0;
+    if (localFrame < vibrationStart) return 0;
 
-    if (isPreSweep) {
-      return preSweepProgress * 4.5;
+    // Overload vibration warning glow
+    if (isVibrating) {
+      return Math.sin(localFrame * 12.0) * 1.5 * vibrationProgress;
     }
 
+    // Laser ring ignition burst at Y ≈ 2.0 (frame 234)
+    if (isIgniting) {
+      return 22.0 * ignitionProgress;
+    }
+
+    // Active continuous slicing hum (236..298)
     if (isSweeping) {
-      // Rapid photonic resonance hum (12.0 .. 15.0)
       const hum = Math.sin(localFrame * 38.0) * 1.8;
-      return 13.5 + hum;
+      return 14.0 + hum;
     }
 
-    if (localFrame === sweepEnd) {
-      // Blinding floor impact spike at frame 305
+    // Blinding floor impact spike at frame 299
+    if (localFrame === sweepEnd + 1) {
       return 24.0;
     }
 
-    if (isPostSweep) {
-      // Exponential decay of contact flash
-      const decayProgress = (localFrame - sweepEnd) / (endFrame - sweepEnd);
+    // Decay of floor impact flash
+    if (isImpact) {
+      const decayProgress = (localFrame - sweepEnd) / (305 - sweepEnd);
       return Math.max(0, 20.0 * Math.pow(1 - decayProgress, 2.2));
+    }
+
+    // Ring collapse glow
+    if (isCollapsing) {
+      return Math.max(0, 4.0 * (1 - collapseProgress));
     }
 
     return 0;
   }, [
     localFrame,
-    breakFrame,
-    isPreSweep,
-    preSweepProgress,
+    vibrationStart,
+    isVibrating,
+    vibrationProgress,
+    isIgniting,
+    ignitionProgress,
     isSweeping,
     sweepEnd,
-    isPostSweep,
-    endFrame,
+    isImpact,
+    isCollapsing,
+    collapseProgress,
   ]);
 
   // Floor uplight intensity growing as laser descends closer to the anvil
@@ -497,11 +589,11 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
     if (isSweeping) {
       return sweepProgress * 6.5;
     }
-    if (isPostSweep) {
-      return impactAlpha * 8.0;
+    if (isImpact) {
+      return impactAlpha * 8.5;
     }
     return 0;
-  }, [isSweeping, sweepProgress, isPostSweep, impactAlpha]);
+  }, [isSweeping, sweepProgress, isImpact, impactAlpha]);
 
   // Tron scanning grid rotation
   const scanRotation = localFrame * 0.085;
@@ -509,14 +601,14 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
   return (
     <group position={position}>
       {/* ========================================================= */}
-      {/* 1. DYNAMIC VOLUMETRIC PHOTONIC LIGHT SOURCES              */}
+      {/* 1. DYNAMIC PHOTONIC LIGHT SOURCES                         */}
       {/* ========================================================= */}
       {laserLightIntensity > 0.05 && (
         <pointLight
-          position={[0, isSweeping ? currentLaserY + 0.06 : minY + 0.12, 0]}
-          color={primaryColor}
+          position={[0, isSweeping ? currentLaserY + 0.06 : isIgniting ? maxY : minY + 0.12, 0]}
+          color={isVibrating ? "#EF4444" : primaryColor}
           intensity={laserLightIntensity}
-          distance={7.5}
+          distance={8.0}
           decay={2}
         />
       )}
@@ -526,107 +618,68 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
           position={[0, minY + 0.08, 0]}
           color={secondaryColor}
           intensity={floorGlowIntensity}
-          distance={5.2}
+          distance={5.5}
           decay={2}
         />
       )}
 
       {/* ========================================================= */}
-      {/* 2. PRE-SWEEP OPTICS & TOP EMITTER GANTRY (Frames 275..305) */}
-      {/* ========================================================= */}
-      {(isPreSweep || isSweeping) && (
-        <group position={[0, maxY + 0.16, 0]}>
-          {/* 4 Precision Anodized Corner Projector Nozzles */}
-          {[
-            [0.85, 0.85],
-            [-0.85, 0.85],
-            [0.85, -0.85],
-            [-0.85, -0.85],
-          ].map(([nx, nz], idx) => {
-            const beamTargetY = isSweeping
-              ? currentLaserY - (maxY + 0.16)
-              : -(maxY + 0.16 - minY);
-            const beamHeight = Math.abs(beamTargetY);
-
-            return (
-              <group key={idx} position={[nx, 0, nz]}>
-                {/* Dark Anodized Emitter Housing */}
-                <mesh>
-                  <cylinderGeometry args={[0.045, 0.055, 0.1, 16]} />
-                  <meshStandardMaterial
-                    color="#0F172A"
-                    roughness={0.25}
-                    metalness={0.9}
-                  />
-                </mesh>
-
-                {/* Blinding Cyan Focal Lens Ring */}
-                <mesh position={[0, -0.051, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                  <ringGeometry args={[0.015, 0.04, 16]} />
-                  <meshBasicMaterial
-                    color={primaryColor}
-                    transparent
-                    opacity={isPreSweep ? preSweepProgress : 0.95}
-                    blending={THREE.AdditiveBlending}
-                  />
-                </mesh>
-
-                {/* Vertical Optical Guide Beam */}
-                <mesh position={[0, beamTargetY * 0.5, 0]}>
-                  <cylinderGeometry args={[0.003, 0.003, beamHeight, 8]} />
-                  <meshBasicMaterial
-                    color={primaryColor}
-                    transparent
-                    opacity={isPreSweep ? preSweepProgress * 0.45 : 0.75}
-                    blending={THREE.AdditiveBlending}
-                    depthWrite={false}
-                  />
-                </mesh>
-              </group>
-            );
-          })}
-        </group>
-      )}
-
-      {/* ========================================================= */}
-      {/* 3. MACHINE GEOMETRY WITH HARDWARE CLIPPING (NO SQUASH)    */}
+      {/* 2. INTACT MACHINE GEOMETRY WITH CLIPPING & VIBRATION     */}
       {/* ========================================================= */}
       {showMachineGeometry && (
         <group
           ref={groupRef}
-          position={[preSweepJitter, 0, preSweepJitter * 0.5]}
+          position={[jitterX, jitterY, jitterZ]}
         >
           {children}
         </group>
       )}
 
       {/* ========================================================= */}
-      {/* 4. DESCENDING HORIZONTAL LASER BLADE & LIGHT SHEET (280..305) */}
+      {/* 3. LASER RING IGNITION & CUTTING BLADE SHEET (234..308)   */}
       {/* ========================================================= */}
-      {isSweeping && (
-        <group position={[0, currentLaserY, 0]}>
-          {/* A. Searing Molten Metal Severance Cap (Cross-section incandescence) */}
-          <mesh
-            position={[0, -0.006, 0]}
-            rotation={[-Math.PI / 2, 0, 0]}
-          >
-            <circleGeometry args={[0.74, 36]} />
-            <meshStandardMaterial
-              color="#FFFFFF"
-              emissive={primaryColor}
-              emissiveIntensity={8.5 + Math.sin(localFrame * 22.0) * 2.0}
-              roughness={0.15}
-              metalness={0.88}
-            />
-          </mesh>
+      {(isIgniting || isSweeping || isCollapsing) && (
+        <group
+          position={[0, isIgniting ? maxY : currentLaserY, 0]}
+          scale={[ringScale, 1, ringScale]}
+        >
+          {/* A. Searing Molten Metal Severance Cap (Additive Translucent Plasma Slice) */}
+          {isSweeping && (
+            <mesh position={[0, -0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+              <circleGeometry args={[0.48, 36]} />
+              <meshBasicMaterial
+                color="#FFFFFF"
+                transparent
+                opacity={0.55 * ringAlpha}
+                blending={THREE.AdditiveBlending}
+                depthWrite={false}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+          )}
+
+          {/* Secondary Molten Cyan Glow Disc */}
+          {isSweeping && (
+            <mesh position={[0, -0.003, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+              <ringGeometry args={[0.45, 0.78, 36]} />
+              <meshBasicMaterial
+                color={primaryColor}
+                transparent
+                opacity={0.32 * ringAlpha}
+                blending={THREE.AdditiveBlending}
+                depthWrite={false}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+          )}
 
           {/* B. Primary Neon Cyan Laser Cutting Edge Ribbon */}
           <mesh rotation={[-Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[0.02, 1.42, 48]} />
+            <ringGeometry args={[0.02, 1.44, 48]} />
             <meshBasicMaterial
               color={primaryColor}
               transparent
-              opacity={0.68}
+              opacity={0.72 * ringAlpha}
               blending={THREE.AdditiveBlending}
               depthWrite={false}
               side={THREE.DoubleSide}
@@ -635,24 +688,24 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
 
           {/* C. Blinding White-Hot Razor Cutting Core Line */}
           <mesh rotation={[-Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[1.36, 1.42, 48]} />
+            <ringGeometry args={[1.38, 1.44, 48]} />
             <meshBasicMaterial
               color={coreColor}
               transparent
-              opacity={0.96}
+              opacity={0.98 * ringAlpha}
               blending={THREE.AdditiveBlending}
               depthWrite={false}
               side={THREE.DoubleSide}
             />
           </mesh>
 
-          {/* D. Electric Blue Outer Blooming Halo */}
+          {/* D. Deep Ultramarine & Electric Blue Blooming Outer Halo */}
           <mesh rotation={[-Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[1.42, 1.58, 48]} />
+            <ringGeometry args={[1.44, 1.64, 48]} />
             <meshBasicMaterial
-              color={secondaryColor}
+              color={ultramarineColor}
               transparent
-              opacity={0.48}
+              opacity={0.52 * ringAlpha}
               blending={THREE.AdditiveBlending}
               depthWrite={false}
               side={THREE.DoubleSide}
@@ -667,7 +720,7 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
               <meshBasicMaterial
                 color={primaryColor}
                 transparent
-                opacity={0.55}
+                opacity={0.55 * ringAlpha}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
@@ -677,7 +730,7 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
               <meshBasicMaterial
                 color={primaryColor}
                 transparent
-                opacity={0.48}
+                opacity={0.48 * ringAlpha}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
@@ -685,21 +738,21 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
 
             {/* Rotating Crosshair Axis Spokes */}
             <mesh rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[2.84, 0.012]} />
+              <planeGeometry args={[2.88, 0.012]} />
               <meshBasicMaterial
                 color={primaryColor}
                 transparent
-                opacity={0.65}
+                opacity={0.65 * ringAlpha}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
             </mesh>
             <mesh rotation={[-Math.PI / 2, 0, 0]}>
-              <planeGeometry args={[0.012, 2.84]} />
+              <planeGeometry args={[0.012, 2.88]} />
               <meshBasicMaterial
                 color={primaryColor}
                 transparent
-                opacity={0.65}
+                opacity={0.65 * ringAlpha}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
               />
@@ -707,22 +760,24 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
           </group>
 
           {/* F. Volumetric Ionization Vapor Plasma Curtain (Trailing Upwards) */}
-          <mesh position={[0, 0.16, 0]}>
-            <cylinderGeometry args={[1.42, 1.45, 0.32, 36, 1, true]} />
-            <meshBasicMaterial
-              color={primaryColor}
-              transparent
-              opacity={0.24 * (1 - sweepProgress * 0.4)}
-              blending={THREE.AdditiveBlending}
-              depthWrite={false}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
+          {isSweeping && (
+            <mesh position={[0, 0.16, 0]}>
+              <cylinderGeometry args={[1.44, 1.48, 0.32, 36, 1, true]} />
+              <meshBasicMaterial
+                color={primaryColor}
+                transparent
+                opacity={0.24 * (1 - sweepProgress * 0.4) * ringAlpha}
+                blending={THREE.AdditiveBlending}
+                depthWrite={false}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+          )}
         </group>
       )}
 
       {/* ========================================================= */}
-      {/* 5. HIGH-VOLTAGE ELECTRIC MICRO-ARCS (LineSegments)        */}
+      {/* 4. HIGH-VOLTAGE ELECTRIC MICRO-ARCS (LineSegments)        */}
       {/* ========================================================= */}
       {arcPositions.length > 0 && (
         <lineSegments>
@@ -745,7 +800,7 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
       )}
 
       {/* ========================================================= */}
-      {/* 6. INCANDESCENT CUTTING SPARKS CASCADE (Points)           */}
+      {/* 5. INCANDESCENT CUTTING SPARKS CASCADE (Points)           */}
       {/* ========================================================= */}
       {activeSparkCount > 0 && (
         <points>
@@ -775,19 +830,16 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
       )}
 
       {/* ========================================================= */}
-      {/* 7. PLATFORM BED IMPACT & STERILIZING SHOCKWAVE (305..315)  */}
+      {/* 6. PLATFORM BED IMPACT & STERILIZING SHOCKWAVE (299..305)  */}
       {/* ========================================================= */}
-      {isPostSweep && (
+      {isImpact && (
         <group position={[0, minY, 0]}>
           {/* A. Primary Fast-Expanding Neon Cyan Shockwave Ring */}
           {(() => {
             const r1 = 0.15 + impactProgress * 2.85;
             const w1 = 0.065 * (1 - impactProgress * 0.4);
             return (
-              <mesh
-                position={[0, 0.006, 0]}
-                rotation={[-Math.PI / 2, 0, 0]}
-              >
+              <mesh position={[0, 0.006, 0]} rotation={[-Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[Math.max(0.01, r1 - w1), r1 + w1, 64]} />
                 <meshBasicMaterial
                   color={primaryColor}
@@ -806,10 +858,7 @@ export const LaserScanCleanser: React.FC<LaserScanCleanserProps> = ({
             const r2 = 0.08 + Math.pow(impactProgress, 0.85) * 2.25;
             const w2 = 0.08 * (1 - impactProgress * 0.5);
             return (
-              <mesh
-                position={[0, 0.005, 0]}
-                rotation={[-Math.PI / 2, 0, 0]}
-              >
+              <mesh position={[0, 0.005, 0]} rotation={[-Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[Math.max(0.01, r2 - w2), r2 + w2, 48]} />
                 <meshBasicMaterial
                   color={secondaryColor}

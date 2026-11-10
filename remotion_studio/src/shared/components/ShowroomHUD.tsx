@@ -107,6 +107,9 @@ export const ShowroomHUD: React.FC<ShowroomHUDProps> = ({
 
   // Live coin counter computation: strictly tied to contact frames (Anti-Desync Law)
   let liveCoins = 0;
+  // Break frame where machine ruptures and stops generating revenue (canonical: 234f)
+  const breakFrame = 234;
+
   if (frame < TIER_DURATION_FRAMES) {
     // Tier 1: strictly holds 0 until physical contact, then climbs to t1Target
     const contact = contactFrames[0];
@@ -114,7 +117,7 @@ export const ShowroomHUD: React.FC<ShowroomHUDProps> = ({
       liveCoins = 0;
     } else {
       liveCoins = Math.floor(
-        interpolate(localFrame, [contact, 240], [0, t1Target], {
+        interpolate(localFrame, [contact, breakFrame], [0, t1Target], {
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
         })
@@ -127,7 +130,7 @@ export const ShowroomHUD: React.FC<ShowroomHUDProps> = ({
       liveCoins = t1Target;
     } else {
       liveCoins = Math.floor(
-        interpolate(localFrame, [contact, 240], [t1Target, t2Target], {
+        interpolate(localFrame, [contact, breakFrame], [t1Target, t2Target], {
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
         })
@@ -140,7 +143,7 @@ export const ShowroomHUD: React.FC<ShowroomHUDProps> = ({
       liveCoins = t2Target;
     } else {
       liveCoins = Math.floor(
-        interpolate(localFrame, [contact, 240], [t2Target, t3Target], {
+        interpolate(localFrame, [contact, breakFrame], [t2Target, t3Target], {
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
         })
@@ -153,7 +156,7 @@ export const ShowroomHUD: React.FC<ShowroomHUDProps> = ({
       liveCoins = t3Target;
     } else {
       liveCoins = Math.floor(
-        interpolate(localFrame, [contact, 280], [t3Target, t4Target], {
+        interpolate(localFrame, [contact, breakFrame], [t3Target, t4Target], {
           easing: Easing.bezier(0.2, 0, 0.1, 1),
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",

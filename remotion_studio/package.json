@@ -6,7 +6,9 @@
     "start": "remotion preview src/index.ts",
     "build": "remotion bundle",
     "render": "remotion render src/index.ts",
-    "preview": "remotion still"
+    "preview": "remotion still",
+    "check:collisions": "tsx scripts/check_collisions.ts",
+    "check:sync": "tsx scripts/check_sync.ts"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",

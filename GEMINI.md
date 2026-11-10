@@ -3,7 +3,7 @@
 This workspace hosts three specialized autonomous video production pipelines:
 
 ## 1. Viral 3D Motion Studio (`remotion_studio/`)
-- **Scope:** 30 FPS vertical Shorts/Reels (1080×1920, 1160 frames, 38.67s), Three.js 3D dark-studio scenes, modular inside-out assembly, ASMR audio, and physical overload fracture.
+- **Scope:** 30 FPS vertical Shorts/Reels (1080×1920, 1280 frames, 42.67s), Three.js 3D dark-studio scenes, modular inside-out assembly, ASMR audio, and physical overload fracture.
 - **Rules:** Follow [`.agents/skills/remotion-operator/SKILL.md`](./.agents/skills/remotion-operator/SKILL.md) and [`remotion_studio/GEMINI.md`](./remotion_studio/GEMINI.md).
 - **Skill:** Uses `remotion-operator` skill (`.agents/skills/remotion-operator/`).
 - **Zero-Code Producer Law:** The root agent in chat is a STRICT DISPATCHER. It is strictly forbidden from writing scene code directly; it MUST invoke specialized subagents from `crew/` (Creators $\to$ Forensic QC Gates $\to$ Kinematics/Drama $\to$ Stage Compositor $\to$ Final QC $\to$ Smart Render).

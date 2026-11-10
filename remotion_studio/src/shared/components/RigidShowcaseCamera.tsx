@@ -106,27 +106,27 @@ export const RigidShowcaseCamera: React.FC<RigidShowcaseCameraProps> = ({
     if (enableClimaxPush) {
       if (tierDuration >= 320) {
         // Canonical 320-frame timeline with fluid 4-stage escalation
-        if (localFrame < 140) {
-          // Acts 1 & 2 (0..139f): Steady dead-locked tripod at current tier baseline
+        if (localFrame < 123) {
+          // Acts 1 & 2 (0..122f): Steady dead-locked tripod at current tier baseline
           pushFactor = currentBaseline;
-        } else if (localFrame >= 140 && localFrame <= 249) {
-          // Act 3 Peak Operating (140..249f): Smooth S-curve push 3.5% closer along line of sight
-          const progress = (localFrame - 140) / (249 - 140);
+        } else if (localFrame >= 123 && localFrame <= 212) {
+          // Act 3 Peak Operating (123..212f): Smooth S-curve push 3.5% closer along line of sight
+          const progress = (localFrame - 123) / (212 - 123);
           const easeInOut = 0.5 * (1 - Math.cos(Math.PI * progress));
           pushFactor = currentBaseline + 0.035 * easeInOut;
-        } else if (localFrame >= 250 && localFrame <= 274) {
-          // Act 4 Strain & Resonance (250..274f): Hold maximum close tension during torque bog-down and pre-fracture shudder
+        } else if (localFrame >= 213 && localFrame <= 233) {
+          // Act 4 Strain & Resonance (213..233f): Hold maximum close tension during torque bog-down and pre-fracture shudder
           pushFactor = currentBaseline + 0.035;
         } else {
-          // Act 4 Fracture & Cleanser Recoil (Frames 275..319): Catastrophic fracture recoil!
+          // Act 4 Fracture & Cleanser Recoil (Frames 234..319): Catastrophic fracture detonation at breakFrame=234!
           // Masked by debris explosion and cleanser sweep, camera recoils backward into next tier's wider baseline.
-          const recoilDiff = localFrame - 275;
+          const recoilDiff = localFrame - 234;
           const startVal = currentBaseline + 0.035;
           const targetVal = nextBaseline;
           const delta = targetVal - startVal; // Negative delta (moving further away)
 
           // Damped elastic spring settling curve (alpha = 0.18, beta = 0.40):
-          // Seamlessly settles into targetVal by frame 310..319
+          // Seamlessly settles into targetVal by frame 308..319
           const decay = Math.exp(-0.18 * recoilDiff);
           const oscCos = Math.cos(0.40 * recoilDiff);
           const oscSin = Math.sin(0.40 * recoilDiff);

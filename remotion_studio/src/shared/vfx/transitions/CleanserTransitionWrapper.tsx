@@ -11,6 +11,8 @@ export interface CleanserTransitionWrapperProps {
   breakFrame?: number; // Default: 234
   endFrame?: number; // Default: 308
   position?: [number, number, number];
+  bounds?: { minY?: number; maxY?: number };
+  seed?: string;
   children?: React.ReactNode;
 }
 
@@ -26,6 +28,8 @@ export const CleanserTransitionWrapper: React.FC<CleanserTransitionWrapperProps>
   breakFrame = 234,
   endFrame = 308,
   position = [0, 0, 0],
+  bounds = { minY: 0.0, maxY: 2.75 },
+  seed,
   children,
 }) => {
   // Post-transition: clean stage guarantee for ash / laser / pneumatic / black hole
@@ -38,6 +42,10 @@ export const CleanserTransitionWrapper: React.FC<CleanserTransitionWrapperProps>
     return <group position={position}>{children}</group>;
   }
 
+  const effectiveMinY = bounds.minY ?? 0.0;
+  const effectiveMaxY = bounds.maxY ?? 2.75;
+  const midHeight = (effectiveMinY + effectiveMaxY) * 0.5;
+
   switch (effect) {
     case "ash_disintegration":
       return (
@@ -46,6 +54,7 @@ export const CleanserTransitionWrapper: React.FC<CleanserTransitionWrapperProps>
           breakFrame={breakFrame}
           endFrame={endFrame}
           position={position}
+          bedY={effectiveMinY}
         >
           {children}
         </AshDisintegration>
@@ -59,6 +68,7 @@ export const CleanserTransitionWrapper: React.FC<CleanserTransitionWrapperProps>
           breakFrame={breakFrame}
           endFrame={endFrame}
           position={position}
+          bounds={bounds}
         >
           {children}
         </LaserScanCleanser>
@@ -71,6 +81,7 @@ export const CleanserTransitionWrapper: React.FC<CleanserTransitionWrapperProps>
           blastFrame={breakFrame}
           endFrame={endFrame}
           origin={position}
+          floorY={effectiveMinY}
         >
           {children}
         </PneumaticAirBlast>
@@ -83,6 +94,7 @@ export const CleanserTransitionWrapper: React.FC<CleanserTransitionWrapperProps>
           breakFrame={breakFrame}
           endFrame={endFrame}
           position={position}
+          singularityHeight={midHeight}
         >
           {children}
         </BlackHoleSingularity>

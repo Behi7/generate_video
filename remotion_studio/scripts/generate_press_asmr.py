@@ -226,175 +226,268 @@ class PressASMRMixer(ASMRMixer):
     # --- DEDICATED 74-FRAME PROCEDURAL CLEANSER TRANSITIONS (Frames 234..308) ---
     # =========================================================================
 
-    def add_ash_disintegration(self, base_frame):
-        """
-        Cleanser: ash_disintegration (Local 234..308f, 74 frames)
-        - 234..265: Sizzling hot slag & incandescent thermal hiss.
-        - 250..300: Granular cooling crackles across bed.
-        - 270..308: Soft wind gust dispersing embers off-stage.
-        """
-        # Sizzling hot slag
-        self.add_continuous_tone("mechanisms/motors", "thruster_fire_001.wav", base_frame + 234, 32,
-                                 semitones=2.0, gain_db=-1.5, fade_in_frames=3, fade_out_frames=8,
-                                 pan=0.0, desc="Cleanser (Ash): Sizzling Hot Slag Steam Hiss")
-        self.add_event("impacts/explosions", base_frame + 235, "explosion_crunch_003.wav",
-                       semitones=3.0, gain_db=-2.0, pan=0.1, desc="Cleanser (Ash): Thermal Slag Crust Pop")
-
-        # Cooling crackles across the bed (250..300)
-        crackle_offsets = [252, 260, 268, 276, 284, 292, 298]
-        for idx, cf in enumerate(crackle_offsets):
-            s_idx = idx % 5
-            pan = 0.22 if idx % 2 == 0 else -0.22
-            decay_gain = -2.5 - (idx * 0.8)
-            self.add_event("materials/stone", base_frame + cf, f"impact_mining_{s_idx:03d}.wav",
-                           semitones=2.5 + (idx % 3), gain_db=decay_gain, pan=pan,
-                           desc=f"Cleanser (Ash): Cooling Specimen Crackle {idx+1}")
-            if idx % 2 == 1:
-                self.add_event("materials/metal", base_frame + cf + 1, f"impact_plate_light_{s_idx:03d}.wav",
-                               semitones=4.0, gain_db=decay_gain - 2.0, pan=-pan * 0.5,
-                               desc=f"Cleanser (Ash): Bed Thermal Contraction Ping {idx+1}")
-
-        # Wind gust dispersing embers off-stage (270..308)
-        self.add_continuous_tone("mechanisms/motors", "space_engine_small_000.wav", base_frame + 270, 38,
-                                 semitones=-2.0, gain_db=-5.0, fade_in_frames=8, fade_out_frames=8,
-                                 pan=0.0, desc="Cleanser (Ash): Wind Gust Dispersing Embers")
-
-    def add_laser_scan_cleanser(self, base_frame):
-        """
-        Cleanser: laser_scan_cleanser (Local 234..308f, 74 frames)
-        - 234..243: High-voltage laser charge hum rising.
-        - 244..300: Planar cutting laser sweep across bed with plasma sizzle.
-        - 298..306: Resonant cooling pings.
-        """
-        # High-voltage laser hum rising
-        self.add_pitch_bend_tone("mechanisms/scifi_laser", "force_field_001.wav", base_frame + 234, 12,
-                                 semi_start=1.0, semi_end=6.5, gain_db=-2.5,
-                                 fade_in_frames=2, fade_out_frames=3, pan=-0.1,
-                                 desc="Cleanser (Laser): High-Voltage Laser Hum Rising")
-
-        # Continuous cutting plasma bed hiss (244..300)
-        self.add_continuous_tone("mechanisms/motors", "thruster_fire_000.wav", base_frame + 244, 56,
-                                 semitones=3.5, gain_db=-3.5, fade_in_frames=4, fade_out_frames=6,
-                                 pan=0.0, desc="Cleanser (Laser): Planar Laser Plasma Bed Hiss")
-
-        # Sharp cutting plasma zap sweep across the bed (stereo motion: -0.4 -> 0.0 -> +0.4)
-        self.add_event("mechanisms/scifi_laser", base_frame + 252, "laser_large_001.wav",
-                       semitones=3.0, gain_db=2.5, pan=-0.35, desc="Cleanser (Laser): Plasma Sweep Entry Zap")
-        self.add_event("mechanisms/scifi_laser", base_frame + 268, "laser_large_002.wav",
-                       semitones=4.0, gain_db=3.0, pan=0.0, desc="Cleanser (Laser): Plasma Sweep Center Cut")
-        self.add_event("mechanisms/scifi_laser", base_frame + 284, "laser_large_003.wav",
-                       semitones=2.5, gain_db=2.0, pan=0.35, desc="Cleanser (Laser): Plasma Sweep Exit Zap")
-        self.add_event("mechanisms/scifi_laser", base_frame + 286, "force_field_003.wav",
-                       semitones=2.0, gain_db=-1.0, pan=0.2, desc="Cleanser (Laser): Plasma Ionization Fizz")
-
-        # Crystalline cooling pings (298..306)
-        self.add_event("materials/glass", base_frame + 298, "impact_glass_light_001.wav",
-                       semitones=4.0, gain_db=0.5, pan=-0.15, desc="Cleanser (Laser): Quartz Bed Cooling Ping 1")
-        self.add_event("materials/metal", base_frame + 304, "impact_plate_light_003.wav",
-                       semitones=5.0, gain_db=-1.0, pan=0.2, desc="Cleanser (Laser): Bolster Cooling Ping 2")
-
     def add_pneumatic_air_blast(self, base_frame):
         """
-        Cleanser: pneumatic_air_blast (Local 234..308f, 74 frames)
-        - 234: Solenoid release valve pop & pilot blast.
-        - 235..295: Long, rushing white-noise air blast jet.
-        - 240..305: Metallic debris clattering off-screen across stereo.
+        Cleanser: pneumatic_air_blast (Tier 1: Local 234..308f, 74 frames)
+        - 234: Сокрушительный 20-барный пневмо-выстрел (pilot valve trigger + explosive gas burst + recoil).
+        - 235..275: Каскад звонких металлических рикошетов мелкой шрапнели (шестерни, болты, осколки пластин отскакивают от стального пола).
+        - 235..275: High-velocity supersonic air jet sweeping bed clear.
+        - 276..308: Air dissipation and settled floor.
+        - 308..319: Pure clean air before Tier 2.
         """
-        # Compressed air release valve pop
+        # --- Local Frame 234: 20-Bar Pneumatic Blast & Mechanical Rupture ---
+        # 1. 20-Bar Air Shot Blast Concussion (sharp pneumatic blast wave)
+        self.add_event("impacts/explosions", base_frame + 234, "explosion_crunch_003.wav",
+                       semitones=2.0, gain_db=4.5, pan=0.0, max_duration_frames=12, fade_out_frames=4,
+                       desc="Pneumatic Air Blast: 20-Bar Pneumatic Release Blast")
+        # 2. Piston recoil & acme thread shear snap
+        self.add_event("materials/metal", base_frame + 234, "impact_metal_heavy_001.wav",
+                       semitones=1.0, gain_db=4.0, pan=-0.1,
+                       desc="Pneumatic Air Blast: Acme Thread Shear Recoil")
+        # 3. Solenoid dump valve snap & pilot click
         self.add_event("mechanisms/switches", base_frame + 234, "switch_004.wav",
-                       gain_db=3.0, pan=-0.2, desc="Cleanser (Air): Solenoid Valve Trigger Snap")
+                       gain_db=3.5, pan=-0.2, desc="Pneumatic Air Blast: High-Flow Solenoid Valve Snap")
         self.add_event("mechanisms/switches", base_frame + 234, "click_005.wav",
-                       gain_db=2.0, pan=-0.2, desc="Cleanser (Air): Pneumatic Pilot Detent")
+                       gain_db=2.5, pan=-0.2, desc="Pneumatic Air Blast: Pneumatic Pilot Detent")
+        # 4. Valve seat elastomeric pop
         self.add_event("materials/soft_plastic", base_frame + 234, "impact_soft_heavy_000.wav",
-                       gain_db=1.0, pan=-0.15, desc="Cleanser (Air): Valve Seat Thump")
+                       gain_db=2.0, pan=-0.15, desc="Pneumatic Air Blast: Valve Seat Seal Pop")
+        # 5. Sheared thread ringing transient
+        self.add_event("materials/metal", base_frame + 234, "impact_plate_light_003.wav",
+                       semitones=3.5, gain_db=2.5, pan=0.2, desc="Pneumatic Air Blast: Sheared Metal Resonant Ring")
 
-        # Sustained high-pressure rushing air jet across anvil bed (235..295, 60 frames)
-        self.add_continuous_tone("mechanisms/motors", "thruster_fire_001.wav", base_frame + 235, 60,
-                                 semitones=4.0, gain_db=-0.5, fade_in_frames=3, fade_out_frames=8,
-                                 pan=0.0, desc="Cleanser (Air): Sustained Rushing Air Jet")
-        self.add_continuous_tone("mechanisms/motors", "space_engine_small_004.wav", base_frame + 236, 55,
-                                 semitones=3.5, gain_db=-3.0, fade_in_frames=2, fade_out_frames=6,
-                                 pan=0.1, desc="Cleanser (Air): High-Velocity Nozzle Hiss")
+        # --- Frames 235..275: Sustained 20-Bar Air Jet ---
+        self.add_continuous_tone("mechanisms/motors", "thruster_fire_001.wav", base_frame + 235, 41,
+                                 semitones=4.0, gain_db=0.0, fade_in_frames=2, fade_out_frames=6,
+                                 pan=0.0, desc="Pneumatic Air Blast: 20-Bar Supersonic Air Jet")
+        self.add_continuous_tone("mechanisms/motors", "space_engine_small_004.wav", base_frame + 236, 38,
+                                 semitones=3.5, gain_db=-2.5, fade_in_frames=2, fade_out_frames=5,
+                                 pan=0.1, desc="Pneumatic Air Blast: Nozzle High-Pressure Air Hiss")
 
-        # Metallic debris clattering off-screen (panning across -0.2 -> 0.85)
-        debris_hits = [
-            (240, "impact_tin_medium_001.wav", 2.0, 1.5, -0.1),
-            (248, "impact_plate_light_001.wav", 3.0, 0.5, 0.20),
-            (258, "impact_metal_light_002.wav", 1.5, -0.5, 0.45),
-            (270, "impact_tin_medium_004.wav", 2.5, -1.0, 0.65),
-            (285, "impact_plate_light_000.wav", 3.5, -2.0, 0.80),
-            (298, "impact_metal_light_003.wav", 4.0, -3.5, 0.90),
+        # --- Frames 235..275: Cascade of Acoustic Metal Shrapnel Ricochets ---
+        shrapnel_ricochets = [
+            (236, "materials/metal", "impact_plate_light_000.wav", 3.0, 2.0, -0.25, "Sheared Bolt Ricochet 1"),
+            (239, "materials/metal", "impact_tin_medium_001.wav", 4.0, 1.8, 0.30, "Gear Tooth Steel Floor Bounce 1"),
+            (243, "materials/metal", "impact_metal_light_002.wav", 2.5, 1.2, -0.35, "Screw Thread Shard Ping"),
+            (247, "materials/metal", "impact_tin_medium_002.wav", 5.0, 0.8, 0.45, "Gear Tooth Steel Floor Bounce 2"),
+            (251, "materials/metal", "impact_plate_light_003.wav", 3.5, 0.5, -0.40, "Bronze Washer Skipping On Bed"),
+            (256, "materials/metal", "impact_metal_light_004.wav", 4.5, 0.0, 0.55, "Bolt Ricochet Off Steel Floor"),
+            (262, "materials/metal", "impact_tin_medium_004.wav", 3.2, -1.0, -0.50, "Metal Stud Skittering"),
+            (268, "materials/metal", "impact_plate_light_004.wav", 5.5, -2.0, 0.70, "Brass Shard Ping Off-Screen"),
+            (274, "materials/metal", "impact_metal_light_001.wav", 4.0, -3.0, 0.85, "Final Fragment Tray Landing"),
         ]
-        for f_off, smp, semi, gain, pan in debris_hits:
-            self.add_event("materials/metal", base_frame + f_off, smp,
+        for f_off, cat, smp, semi, gain, pan, desc in shrapnel_ricochets:
+            self.add_event(cat, base_frame + f_off, smp,
                            semitones=semi, gain_db=gain, pan=pan,
-                           desc=f"Cleanser (Air): Metallic Chip Clattering Off-Screen @ +{f_off}f")
+                           desc=f"Pneumatic Shrapnel: {desc} @ +{f_off}f")
 
     def add_black_hole_singularity(self, base_frame):
         """
-        Cleanser: black_hole_singularity (Local 234..308f, 74 frames)
-        - 234..247f: Gravitational anomaly birth (deep sub-bass velvet rumble & vacuum grip).
-        - 248..300f: Inward debris suction & accretion disk swirl (reverse vacuum whoosh, spiraling matter particles).
-        - 305..308f: Quantum micro-implosion / singularity collapse (instantaneous, dry, crisp vacuum pop).
-        - 308..319f: Pure silent air (pure velvet silence before frame 320 next tier assembly).
+        Cleanser: black_hole_singularity (Tier 2: Local 234..308f, 74 frames)
+        - 234: Резкий треск разлома каркаса (chassis frame shear fracture crack, bolt rupture).
+        - 235..250: Пространственная невесомость (Zero-G shimmer, звон зависших в воздухе обломков).
+        - 252..296: Глубокий инфранизкий рокот растущей чёрной дыры + мощный обратный вакуумный свист (reverse whoosh) затягивания.
+        - 305: Ультра-четкий квантовый щелчок схлопывания (vacuum pop).
+        - 306..319: Pure silent air before Tier 3.
         """
-        # Phase 1 (234..247f): Deep sub-bass gravitational anomaly birth
-        self.add_event("impacts/explosions", base_frame + 234, "low_frequency_explosion_000.wav",
-                       semitones=-4.0, gain_db=3.0, pan=0.0, max_duration_frames=14, fade_out_frames=6,
-                       desc="Cleanser (Black Hole): Gravitational Anomaly Sub-Bass Birth")
-        self.add_continuous_tone("mechanisms/motors", "space_engine_low_001.wav", base_frame + 234, 14,
-                                 semitones=-6.0, gain_db=-2.0, fade_in_frames=4, fade_out_frames=4,
-                                 pan=0.0, desc="Cleanser (Black Hole): Event Horizon Resonant Hum")
-        self.add_event("mechanisms/scifi_laser", base_frame + 235, "force_field_000.wav",
-                       semitones=-3.0, gain_db=1.0, pan=0.0, desc="Cleanser (Black Hole): Gravitational Flux Grip")
+        # --- Frame 234: Sharp Chassis Fracture Snap (Zero explosions!) ---
+        self.add_event("materials/metal", base_frame + 234, "impact_metal_heavy_002.wav",
+                       semitones=1.0, gain_db=5.0, pan=-0.1,
+                       desc="Black Hole: Chassis Frame Structural Fracture Crack")
+        self.add_event("materials/metal", base_frame + 234, "impact_plate_heavy_000.wav",
+                       semitones=2.0, gain_db=3.5, pan=0.1,
+                       desc="Black Hole: Crank Journal Shear Ring")
+        self.add_event("impacts/locks", base_frame + 234, "door_close_001.wav",
+                       gain_db=2.5, pan=0.0, desc="Black Hole: Mechanical Stress Release Clang")
+        self.add_event("mechanisms/switches", base_frame + 234, "click_003.wav",
+                       gain_db=3.0, pan=-0.15, desc="Black Hole: High-Tensile Bolt Rupture Snap")
 
-        # Phase 2 (248..300f): Accretion disk spinning & debris inward suction (52 frames)
-        # 1. Reverse vacuum whoosh (acoustic foley reverse intake)
-        self.add_reverse_tone("mechanisms/motors", "thruster_fire_004.wav", base_frame + 248, 52,
-                              semitones=2.0, gain_db=1.0, fade_in_frames=10, fade_out_frames=2,
-                              pan=0.0, desc="Cleanser (Black Hole): Accretion Disk Reverse Vacuum Suction Whoosh")
-        # 2. Rising gravitational frequency warp
-        self.add_pitch_bend_tone("mechanisms/motors", "space_engine_small_001.wav", base_frame + 250, 50,
-                                 semi_start=-2.0, semi_end=6.0, gain_db=-2.0, fade_in_frames=8, fade_out_frames=2,
-                                 pan=0.0, desc="Cleanser (Black Hole): Relativistic Frequency Inward Warp")
-        # 3. Accretion plasma vortex hum
-        self.add_continuous_tone("mechanisms/motors", "space_engine_001.wav", base_frame + 248, 52,
-                                 semitones=3.0, gain_db=-3.5, fade_in_frames=8, fade_out_frames=3,
-                                 pan=0.0, desc="Cleanser (Black Hole): Accretion Disk Plasma Vortex")
+        # --- Frames 235..250: Spatial Weightlessness (Zero-G Shimmer & Suspended Debris Tinkles) ---
+        self.add_continuous_tone("mechanisms/scifi_laser", "force_field_001.wav", base_frame + 235, 16,
+                                 semitones=3.0, gain_db=-3.5, fade_in_frames=3, fade_out_frames=3,
+                                 pan=0.0, desc="Black Hole: Zero-G Levitation Shimmer Drone")
 
-        # 4. Swirling matter particle stream (stereo spiral inward 250..298)
-        swirl_moments = [
-            (250, "impact_glass_light_000.wav", 1.0, -1.0, -0.35),
-            (256, "impact_plate_light_001.wav", 2.0, 0.0, 0.35),
-            (262, "impact_tin_medium_000.wav", 2.5, -0.5, -0.40),
-            (268, "impact_glass_light_002.wav", 3.0, 0.5, 0.40),
-            (274, "impact_plate_light_002.wav", 3.5, 0.0, -0.30),
-            (280, "impact_tin_medium_002.wav", 4.0, 0.8, 0.30),
-            (286, "impact_glass_light_003.wav", 4.5, 0.5, -0.20),
-            (292, "impact_plate_light_004.wav", 5.0, 1.0, 0.20),
-            (298, "impact_glass_light_004.wav", 5.5, 1.2, 0.0),
+        zero_g_shimmers = [
+            (237, "materials/glass", "impact_glass_light_001.wav", 5.5, 0.5, -0.35, "Floating Glass Shard Tinkle"),
+            (240, "materials/metal", "impact_plate_light_002.wav", 4.5, 0.0, 0.30, "Suspended Washer Metallic Ring"),
+            (244, "materials/metal", "impact_tin_medium_003.wav", 5.0, -0.5, -0.25, "Hovering Gear Fragment Micro-Clink"),
+            (248, "materials/glass", "impact_glass_light_004.wav", 6.5, 0.5, 0.25, "Crystalline Floating Particle Chime"),
         ]
-        for f_off, smp_name, semi, gain, pan in swirl_moments:
-            cat = "materials/glass" if "glass" in smp_name else "materials/metal"
-            self.add_event(cat, base_frame + f_off, smp_name,
+        for f_off, cat, smp, semi, gain, pan, desc in zero_g_shimmers:
+            self.add_event(cat, base_frame + f_off, smp,
+                           semitones=semi, gain_db=gain, pan=pan, max_duration_frames=6, fade_out_frames=3,
+                           desc=f"Black Hole (Zero-G): {desc} @ +{f_off}f")
+
+        # --- Frames 252..296: Infrasonic Rumble & Powerful Reverse Vacuum Whoosh Suction ---
+        self.add_continuous_tone("mechanisms/motors", "space_engine_low_001.wav", base_frame + 252, 45,
+                                 semitones=-6.0, gain_db=-0.5, fade_in_frames=8, fade_out_frames=2,
+                                 pan=0.0, desc="Black Hole: Deep Infrasonic Growing Singularity Rumble")
+        self.add_event("impacts/explosions", base_frame + 252, "low_frequency_explosion_000.wav",
+                       semitones=-4.0, gain_db=2.5, pan=0.0, max_duration_frames=16, fade_out_frames=6,
+                       desc="Black Hole: Gravitational Horizon Sub-Bass Swell")
+
+        self.add_reverse_tone("mechanisms/motors", "thruster_fire_004.wav", base_frame + 252, 45,
+                              semitones=2.0, gain_db=2.0, fade_in_frames=10, fade_out_frames=1,
+                              pan=0.0, desc="Black Hole: Powerful Reverse Vacuum Intake Whoosh")
+        self.add_reverse_tone("mechanisms/motors", "space_engine_small_003.wav", base_frame + 256, 41,
+                              semitones=4.0, gain_db=0.5, fade_in_frames=8, fade_out_frames=1,
+                              pan=0.0, desc="Black Hole: Accretion Disk Air Suction Vortex")
+
+        self.add_pitch_bend_tone("mechanisms/motors", "space_engine_small_001.wav", base_frame + 252, 45,
+                                 semi_start=-3.0, semi_end=5.5, gain_db=-2.0, fade_in_frames=6, fade_out_frames=2,
+                                 pan=0.0, desc="Black Hole: Relativistic Frequency Inward Warp")
+
+        swirl_moments = [
+            (258, "materials/metal", "impact_tin_medium_001.wav", 2.0, 0.5, -0.45, "Inward Swirling Shard 1"),
+            (266, "materials/glass", "impact_glass_light_002.wav", 3.0, 1.0, 0.40, "Inward Swirling Glass 2"),
+            (274, "materials/metal", "impact_plate_light_001.wav", 3.5, 1.2, -0.30, "Inward Swirling Plate 3"),
+            (282, "materials/metal", "impact_tin_medium_002.wav", 4.5, 1.5, 0.25, "Inward Swirling Shard 4"),
+            (290, "materials/glass", "impact_glass_light_003.wav", 5.5, 1.8, -0.15, "Inward Swirling Particle 5"),
+            (295, "materials/metal", "impact_plate_light_004.wav", 6.0, 2.0, 0.05, "Matter Pinch Into Singularity Core"),
+        ]
+        for f_off, cat, smp, semi, gain, pan, desc in swirl_moments:
+            self.add_event(cat, base_frame + f_off, smp,
                            semitones=semi, gain_db=gain, pan=pan, max_duration_frames=4, fade_out_frames=2,
-                           desc=f"Cleanser (Black Hole): Inward Swirling Matter Particle @ +{f_off}f")
+                           desc=f"Black Hole (Accretion): {desc} @ +{f_off}f")
 
-        # Phase 3 (305..308f): Instantaneous Quantum Micro-Implosion Collapse (Vacuum Pop)
-        self.add_event("mechanisms/switches", base_frame + 306, "switch_004.wav",
-                       semitones=3.0, gain_db=3.5, pan=0.0, max_duration_frames=2, fade_out_frames=1,
-                       desc="Cleanser (Black Hole): Singularity Implosion Vacuum Pop")
-        self.add_event("materials/soft_plastic", base_frame + 306, "impact_soft_heavy_001.wav",
-                       semitones=4.0, gain_db=2.5, pan=0.0, max_duration_frames=2, fade_out_frames=1,
-                       desc="Cleanser (Black Hole): Micro-Cavitation Collapse Snap")
-        self.add_event("mechanisms/scifi_laser", base_frame + 306, "force_field_004.wav",
-                       semitones=5.0, gain_db=2.0, pan=0.0, max_duration_frames=2, fade_out_frames=1,
-                       desc="Cleanser (Black Hole): Quantum Horizon Pinch Spark")
-        self.add_event("impacts/explosions", base_frame + 306, "explosion_crunch_002.wav",
-                       semitones=6.0, gain_db=1.0, pan=0.0, max_duration_frames=2, fade_out_frames=1,
-                       desc="Cleanser (Black Hole): High-Energy Annihilation Transient")
+        # --- Frame 305: Ultra-Crisp Quantum Singularity Collapse Vacuum Pop ---
+        self.add_event("mechanisms/switches", base_frame + 305, "switch_004.wav",
+                       semitones=4.0, gain_db=4.5, pan=0.0, max_duration_frames=2, fade_out_frames=1,
+                       desc="Black Hole: Quantum Vacuum Pop Snap")
+        self.add_event("materials/soft_plastic", base_frame + 305, "impact_soft_heavy_001.wav",
+                       semitones=5.0, gain_db=3.5, pan=0.0, max_duration_frames=2, fade_out_frames=1,
+                       desc="Black Hole: Cavitation Micro-Implosion Thump")
+        self.add_event("mechanisms/scifi_laser", base_frame + 305, "force_field_004.wav",
+                       semitones=6.0, gain_db=2.5, pan=0.0, max_duration_frames=2, fade_out_frames=1,
+                       desc="Black Hole: Horizon Pinch Spark")
 
-        # Phase 4 (308..319f): Pure Silent Air (nothing scheduled, clean room anticipation)
+    def add_laser_scan_cleanser(self, base_frame):
+        """
+        Cleanser: laser_scan_cleanser (Tier 3: Local 234..308f, 74 frames)
+        - 234: Вспышка плазменного резака (plasma torch ignition flash, ZERO explosion).
+        - 236..298: Непрерывное сочное шипение лазерной резки металла:
+          * High-voltage arc sizzle
+          * White-hot vaporization hiss
+          * Descending Doppler pitch slicing top-to-bottom
+        - 300: Финальный хлопок контакта со станиной.
+        - 301..306: Resonant cooling pings.
+        - 308..319: Pure clean bed silence before Tier 4.
+        """
+        # --- Frame 234: Plasma Torch Ignition Flash (Zero explosion!) ---
+        self.add_event("mechanisms/scifi_laser", base_frame + 234, "laser_large_001.wav",
+                       semitones=3.0, gain_db=3.5, pan=-0.1,
+                       desc="Laser Cleanser: Plasma Torch Ignition Flash")
+        self.add_event("mechanisms/scifi_laser", base_frame + 234, "force_field_001.wav",
+                       semitones=2.0, gain_db=2.0, pan=0.0,
+                       desc="Laser Cleanser: High-Voltage Ionization Arc Zap")
+        self.add_event("mechanisms/switches", base_frame + 234, "switch_004.wav",
+                       gain_db=2.5, pan=-0.05, desc="Laser Cleanser: Plasma Arc Contactor Snap")
+        self.add_event("materials/metal", base_frame + 234, "impact_plate_light_003.wav",
+                       semitones=4.0, gain_db=1.5, pan=-0.15,
+                       desc="Laser Cleanser: Gantry Top Incision High Ring")
+
+        # --- Frames 236..298: Rich Continuous Sizzle of Metal Laser Slicing (62 frames) ---
+        self.add_continuous_tone("mechanisms/scifi_laser", "force_field_000.wav", base_frame + 236, 62,
+                                 semitones=3.5, gain_db=-2.0, fade_in_frames=3, fade_out_frames=5,
+                                 pan=-0.05, desc="Laser Cleanser: High-Voltage Arc Sizzle")
+        self.add_continuous_tone("mechanisms/motors", "thruster_fire_000.wav", base_frame + 236, 62,
+                                 semitones=3.0, gain_db=-2.5, fade_in_frames=4, fade_out_frames=4,
+                                 pan=0.05, desc="Laser Cleanser: White-Hot Vaporization Hiss")
+        self.add_pitch_bend_tone("mechanisms/motors", "space_engine_small_001.wav", base_frame + 236, 62,
+                                 semi_start=6.5, semi_end=-3.5, gain_db=-1.5, fade_in_frames=4, fade_out_frames=3,
+                                 pan=0.0, desc="Laser Cleanser: Descending Doppler Laser Cut Whine")
+
+        cut_moments = [
+            (244, "materials/metal", "impact_tin_medium_001.wav", 3.0, 1.0, -0.2, "Upper Gantry Beam Severance"),
+            (253, "materials/metal", "impact_plate_light_001.wav", 4.5, 1.5, 0.2, "Hydraulic Cylinder Shell Cut"),
+            (264, "mechanisms/scifi_laser", "laser_large_002.wav", 2.5, 2.0, 0.0, "Main Piston Core Vaporization"),
+            (276, "materials/metal", "impact_plate_medium_001.wav", 3.5, 1.5, -0.15, "Quad Column Slicing"),
+            (288, "mechanisms/scifi_laser", "force_field_003.wav", 2.0, 1.0, 0.15, "Bolster Plate Kerf Sizzle"),
+        ]
+        for f_off, cat, smp, semi, gain, pan, desc in cut_moments:
+            self.add_event(cat, base_frame + f_off, smp,
+                           semitones=semi, gain_db=gain, pan=pan,
+                           desc=f"Laser Cleanser (Kerf): {desc} @ +{f_off}f")
+
+        # --- Frame 300: Final Bed Contact Thud & Beam Cutoff ---
+        self.add_event("materials/metal", base_frame + 300, "impact_plate_heavy_001.wav",
+                       semitones=2.0, gain_db=3.5, pan=0.0,
+                       desc="Laser Cleanser: Final Bed Contact Thud")
+        self.add_event("mechanisms/switches", base_frame + 300, "switch_005.wav",
+                       gain_db=3.0, pan=0.0, desc="Laser Cleanser: Beam Cutoff Interlock Snap")
+        self.add_event("mechanisms/scifi_laser", base_frame + 300, "force_field_004.wav",
+                       semitones=4.0, gain_db=1.5, pan=0.0, desc="Laser Cleanser: Residual Arc Quench Fizz")
+
+        # --- Frames 301..306: Resonant Cooling Pings ---
+        self.add_event("materials/glass", base_frame + 301, "impact_glass_light_002.wav",
+                       semitones=5.0, gain_db=0.5, pan=0.1, desc="Laser Cleanser: Quartz Bed Cooling Ping 1")
+        self.add_event("materials/metal", base_frame + 305, "impact_plate_light_003.wav",
+                       semitones=4.5, gain_db=-1.5, pan=-0.1, desc="Laser Cleanser: Steel Bed Cooling Ping 2")
+
+    def add_ash_disintegration(self, base_frame):
+        """
+        Cleanser: ash_disintegration (Tier 4: Local 234..308f, 74 frames)
+        - 234..255: Гул нарастающего термического жара и треск расширяющегося металла.
+        - 256..290: Осыпание раскаленных углей.
+        - 291..305: Мягкий порыв ветра, уносящий пепел, плавно переходящий в тишину чистого стола.
+        - 306..319: Pure silent air and settled clean table.
+        """
+        # --- Frame 234: Incandescent Thermal Flash Onset ---
+        self.add_event("impacts/explosions", base_frame + 234, "low_frequency_explosion_001.wav",
+                       semitones=0.0, gain_db=3.5, pan=0.0, max_duration_frames=16, fade_out_frames=6,
+                       desc="Thermal Ash: Superheat Thermal Concussion")
+        self.add_event("mechanisms/scifi_laser", base_frame + 234, "laser_large_004.wav",
+                       semitones=1.0, gain_db=3.0, pan=0.0, desc="Thermal Ash: Incandescent Flash Burst")
+        self.add_event("mechanisms/scifi_laser", base_frame + 234, "force_field_003.wav",
+                       semitones=2.0, gain_db=2.0, pan=0.0, desc="Thermal Ash: Thermal Ionization Sizzle")
+
+        # --- Frames 234..255: Growing Thermal Heat Drone & White-Hot Incandescence Hiss ---
+        self.add_continuous_tone("mechanisms/motors", "space_engine_large_000.wav", base_frame + 234, 22,
+                                 semitones=-2.0, gain_db=-1.5, fade_in_frames=3, fade_out_frames=4,
+                                 pan=0.0, desc="Thermal Ash: Growing Thermal Heat Drone")
+        self.add_continuous_tone("mechanisms/motors", "thruster_fire_002.wav", base_frame + 234, 22,
+                                 semitones=3.0, gain_db=-1.0, fade_in_frames=3, fade_out_frames=4,
+                                 pan=0.1, desc="Thermal Ash: White-Hot Metal Incandescence Hiss")
+
+        # --- Frames 236..254: Expanding Metal Thermal Dilatation Cracks & Ticks ---
+        expansion_ticks = [
+            (237, "materials/metal", "impact_metal_light_001.wav", 4.0, 1.2, -0.20, "Thermal Expansion Tick 1"),
+            (241, "materials/metal", "impact_plate_light_002.wav", 3.5, 1.8, 0.25, "Casing Dilatation Ping"),
+            (245, "materials/metal", "impact_tin_medium_000.wav", 5.0, 1.0, -0.15, "Shroud Buckling Tick"),
+            (249, "materials/metal", "impact_metal_light_003.wav", 3.0, 2.2, 0.15, "Stator Ring Stress Fracture"),
+            (253, "materials/metal", "impact_plate_medium_001.wav", 2.0, 1.6, -0.10, "Plinth Heat Stress Cleavage"),
+        ]
+        for f_off, cat, smp, semi, gain, pan, desc in expansion_ticks:
+            self.add_event(cat, base_frame + f_off, smp,
+                           semitones=semi, gain_db=gain, pan=pan,
+                           desc=f"Thermal Ash (Expansion): {desc} @ +{f_off}f")
+
+        # --- Frames 256..290: Shower of Cascading Glowing Embers & Crumbling Slag ---
+        ember_showers = [
+            (256, "materials/stone", "impact_mining_000.wav", 2.5, 1.0, -0.20, "Hot Slag Crust Crumb 1"),
+            (256, "materials/glass", "impact_glass_light_000.wav", 5.0, -0.5, 0.15, "Vitrified Ember Ping 1"),
+            (260, "materials/stone", "impact_mining_001.wav", 3.0, 0.8, 0.25, "Hot Slag Crust Crumb 2"),
+            (264, "materials/metal", "impact_plate_light_003.wav", 4.0, 0.0, -0.15, "Bed Heat Ping"),
+            (268, "materials/stone", "impact_mining_002.wav", 2.0, 0.5, 0.10, "Hot Slag Crust Crumb 3"),
+            (268, "materials/glass", "impact_glass_light_002.wav", 4.5, -1.0, -0.25, "Vitrified Ember Ping 2"),
+            (272, "materials/stone", "impact_mining_003.wav", 3.5, 0.0, -0.20, "Fine Ash Flake Shower 1"),
+            (276, "materials/stone", "impact_mining_004.wav", 2.5, -0.5, 0.20, "Fine Ash Flake Shower 2"),
+            (280, "materials/metal", "impact_tin_medium_003.wav", 4.5, -1.2, -0.10, "Cooling Cinder Drop 1"),
+            (284, "materials/stone", "impact_mining_001.wav", 4.0, -2.0, 0.15, "Fine Ash Flake Shower 3"),
+            (288, "materials/stone", "impact_mining_002.wav", 4.5, -3.0, -0.05, "Final Disintegrating Ember Tumble"),
+        ]
+        for f_off, cat, smp, semi, gain, pan, desc in ember_showers:
+            self.add_event(cat, base_frame + f_off, smp,
+                           semitones=semi, gain_db=gain, pan=pan,
+                           desc=f"Thermal Ash (Embers): {desc} @ +{f_off}f")
+
+        # --- Frames 291..305: Soft Wind Gust Dispersing Embers Into Pure Silence ---
+        self.add_continuous_tone("mechanisms/motors", "space_engine_small_000.wav", base_frame + 291, 15,
+                                 semitones=-3.0, gain_db=-5.0, fade_in_frames=4, fade_out_frames=5,
+                                 pan=0.0, desc="Thermal Ash: Gentle Wind Gust Dispersing Embers")
+        self.add_event("materials/soft_plastic", base_frame + 292, "impact_soft_heavy_000.wav",
+                       semitones=6.0, gain_db=-6.0, pan=0.1, max_duration_frames=8, fade_out_frames=4,
+                       desc="Thermal Ash: Microscopic Ash Powder Dispersal")
 
     def add_cleanser_transition(self, effect_name, base_frame):
         """Dispatches to the appropriate procedural Foley cleanser transition layer."""
@@ -532,19 +625,7 @@ def generate_press_asmr_track(out_wav=None, bom_json=None, cleanser_effects=None
                         semitones=1.0 + ratio * 2.5, gain_db=-2.0 + ratio * 4.0, pan=-0.15 * ((i % 2) * 2 - 1),
                         desc=f"Tier 1 Thread Resonant Chatter {i+1}")
 
-    # Local frame 234: CATASTROPHIC RUPTURE TRANSIENT (Single synchronized shockwave)
-    mixer.add_event("materials/metal", t1_base + 234, "impact_metal_heavy_001.wav", semitones=1.0, gain_db=5.0, pan=0.0,
-                    desc="Tier 1 Acme Thread Violent Shear Snap")
-    mixer.add_event("materials/wood", t1_base + 234, "impact_wood_heavy_003.wav", semitones=2.0, gain_db=4.0, pan=-0.1,
-                    desc="Tier 1 Frame Cleavage Crack")
-    mixer.add_event("impacts/locks", t1_base + 234, "drop_001.wav", gain_db=2.0, pan=0.0,
-                    desc="Tier 1 Deep Sub-Bass Bed Mass Impact Thud")
-    mixer.add_event("materials/metal", t1_base + 234, "impact_plate_light_003.wav", semitones=3.5, gain_db=3.0, pan=0.2,
-                    desc="Tier 1 Sheared Thread Metallic Ring")
-    mixer.add_event("materials/metal", t1_base + 235, "impact_tin_medium_002.wav", semitones=2.0, gain_db=2.5, pan=-0.15,
-                    desc="Tier 1 Bronze Shrapnel Ping")
-
-    # Local frames 234..308: 74-Frame Cleanser Transition (Pneumatic Radial Air Blast)
+    # Local frames 234..308: 74-Frame Cleanser Transition (Pneumatic 20-Bar Air Shot & Shrapnel Cascade)
     mixer.add_cleanser_transition(effects[1], t1_base)
     # Local frames 308..319: Pure silent air before Tier 2 at 320!
 
@@ -642,17 +723,7 @@ def generate_press_asmr_track(out_wav=None, bom_json=None, cleanser_effects=None
                         gain_db=1.5 + ratio * 2.0, pan=-0.15 * ((i % 2) * 2 - 1),
                         desc=f"Tier 2 Crank Pin Chatter Click {i+1}")
 
-    # Local frame 234 (554f global): CATASTROPHIC RUPTURE TRANSIENT
-    mixer.add_event("materials/metal", t2_base + 234, "impact_metal_heavy_002.wav", semitones=1.0, gain_db=5.5, pan=-0.15,
-                    desc="Tier 2 Forged Connecting Rod Buckling Crack")
-    mixer.add_event("impacts/explosions", t2_base + 234, "explosion_crunch_000.wav", semitones=-0.5, gain_db=4.0, pan=0.1,
-                    desc="Tier 2 Crankshaft Jam Explosive Blast")
-    mixer.add_event("impacts/explosions", t2_base + 234, "low_frequency_explosion_000.wav", semitones=0.0, gain_db=3.5, pan=0.0,
-                    desc="Tier 2 Sub-Bass Bed Structural Shock")
-    mixer.add_event("materials/metal", t2_base + 234, "impact_plate_heavy_001.wav", semitones=2.0, gain_db=3.0, pan=0.2,
-                    desc="Tier 2 Flywheel Inertial Snap Shock")
-
-    # Local frames 234..308 (554..628f global): 74-Frame Cleanser Transition (Black Hole Gravitational Singularity)
+    # Local frames 234..308 (554..628f global): 74-Frame Cleanser Transition (Black Hole: chassis crack @ 234, zero-g 235..250, reverse whoosh 252..296, vacuum pop @ 305)
     mixer.add_cleanser_transition(effects[2], t2_base)
     # Local frames 308..319: Pure silent air before Tier 3 at 640!
 
@@ -754,19 +825,7 @@ def generate_press_asmr_track(out_wav=None, bom_json=None, cleanser_effects=None
                         gain_db=1.0 + ratio * 2.0, pan=-0.15 * ((i % 2) * 2 - 1),
                         desc=f"Tier 3 Valve Flutter Click {i+1}")
 
-    # Local frame 234 (874f global): CATASTROPHIC RUPTURE TRANSIENT
-    mixer.add_event("impacts/explosions", t3_base + 234, "explosion_crunch_001.wav", semitones=0.0, gain_db=6.0, pan=0.0,
-                    desc="Tier 3 600-Bar Catastrophic Seal Blowout Blast")
-    mixer.add_event("impacts/explosions", t3_base + 234, "low_frequency_explosion_000.wav", semitones=1.0, gain_db=5.0, pan=-0.1,
-                    desc="Tier 3 Hydraulic Accumulator Sub-Bass Shock")
-    mixer.add_event("materials/metal", t3_base + 234, "impact_metal_heavy_004.wav", semitones=2.0, gain_db=5.0, pan=0.2,
-                    desc="Tier 3 Cylinder Head High-Tensile Bolt Shear Snap")
-    mixer.add_event("materials/metal", t3_base + 234, "impact_plate_light_004.wav", semitones=3.5, gain_db=3.5, pan=0.25,
-                    desc="Tier 3 Sheared Bolt Supersonic Ricochet")
-    mixer.add_event("materials/metal", t3_base + 235, "impact_plate_heavy_002.wav", semitones=1.0, gain_db=3.0, pan=0.15,
-                    desc="Tier 3 Deformed Platen Rebound Slam")
-
-    # Local frames 234..308 (874..948f global): 74-Frame Cleanser Transition (Cryo-Neon Laser Scan Cleanser)
+    # Local frames 234..308 (874..948f global): 74-Frame Cleanser Transition (Laser Slicing: plasma flash @ 234, continuous sizzle & Doppler 236..298, bed contact @ 300)
     mixer.add_cleanser_transition(effects[3], t3_base)
     # Local frames 308..319: Pure silent air before Tier 4 at 960!
 
@@ -878,19 +937,7 @@ def generate_press_asmr_track(out_wav=None, bom_json=None, cleanser_effects=None
                         semitones=2.0 + ratio * 2.0, gain_db=-1.0 + ratio * 3.5, pan=-0.15 * ((i % 2) * 2 - 1),
                         desc=f"Tier 4 Quartz Lattice Chatter {i+1}")
 
-    # Local frame 234 (1194f global): CATASTROPHIC RUPTURE TRANSIENT (Climax Detonation)
-    mixer.add_event("impacts/explosions", t4_base + 234, "low_frequency_explosion_001.wav", semitones=0.0, gain_db=6.5, pan=0.0,
-                    desc="Tier 4 Singularity Collapse Shockwave Detonation")
-    mixer.add_event("impacts/explosions", t4_base + 234, "explosion_crunch_004.wav", semitones=-1.0, gain_db=4.5, pan=-0.1,
-                    desc="Tier 4 Spacetime Pinch Implosion Blast")
-    mixer.add_event("mechanisms/scifi_laser", t4_base + 234, "laser_large_004.wav", semitones=2.0, gain_db=3.5, pan=0.15,
-                    desc="Tier 4 High-Energy Plasma Annihilation Burst")
-    mixer.add_event("materials/glass", t4_base + 234, "impact_glass_heavy_002.wav", semitones=1.5, gain_db=4.5, pan=0.2,
-                    desc="Tier 4 Quartz Containment Viewport Shatter Fracture")
-    mixer.add_event("mechanisms/scifi_laser", t4_base + 234, "force_field_004.wav", semitones=1.0, gain_db=2.5, pan=-0.15,
-                    desc="Tier 4 Singularity Field Collapse Fizz")
-
-    # Local frames 234..308 (1194..1268f global): 74-Frame Cleanser Transition (Thermal Ash Disintegration)
+    # Local frames 234..308 (1194..1268f global): 74-Frame Cleanser Transition (Thermal Ash: thermal heat drone & cracks 234..255, embers 256..290, wind gust 291..305)
     mixer.add_cleanser_transition(effects[4], t4_base)
     # Local frames 308..319: Pure silent air and settled clean table!
 

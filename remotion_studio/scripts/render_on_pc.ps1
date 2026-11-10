@@ -39,7 +39,7 @@ try {
 }
 
 # 2. Render on NVIDIA RTX 4060 using hardware WebGL & ANGLE
-Write-Host "🚀 [2/4] Rendering 1160 frames on NVIDIA RTX 4060 (--gl=angle, concurrency=$Concurrency)..." -ForegroundColor Cyan
+Write-Host "🚀 [2/4] Rendering 1280 frames on NVIDIA RTX 4060 (--gl=angle, concurrency=$Concurrency)..." -ForegroundColor Cyan
 $Stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 & npx remotion render src/index.ts $Composition $OutFile --concurrency=$Concurrency --gl=angle

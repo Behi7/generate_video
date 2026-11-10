@@ -3,7 +3,7 @@
 compose_asmr.py
 Universal 4-Act Procedural Foley ASMR Master Composer for remotion_studio.
 Uses real CC0 WAV foley samples from public/audio/foley/ to assemble a 
-1160-frame (38.6667s @ 30 FPS) 44.1 kHz 16-bit PCM stereo master track.
+1280-frame (42.6667s @ 30 FPS) 44.1 kHz 16-bit PCM stereo master track.
 ZERO synthetic sine waves allowed!
 """
 
@@ -20,8 +20,8 @@ STUDIO_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FOLEY_DIR = os.path.join(STUDIO_DIR, "public", "audio", "foley")
 SAMPLE_RATE = 44100
 FPS = 30
-TOTAL_FRAMES = 1160
-TOTAL_SAMPLES = int((TOTAL_FRAMES / FPS) * SAMPLE_RATE)  # exactly 1,705,200 samples
+TOTAL_FRAMES = 1280
+TOTAL_SAMPLES = int((TOTAL_FRAMES / FPS) * SAMPLE_RATE)  # exactly 1,881,600 samples
 
 def load_wav(rel_path):
     """Loads a WAV file from public/audio/foley/ and returns normalized stereo float32 array [-1.0, 1.0]."""

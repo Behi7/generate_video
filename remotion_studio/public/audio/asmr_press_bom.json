@@ -1,7 +1,7 @@
 {
   "total_frames": 1280,
   "sample_rate": 44100,
-  "event_count": 437,
+  "event_count": 446,
   "events": [
     {
       "frame": 0,
@@ -174,7 +174,7 @@
     {
       "frame": 92,
       "category": "materials/wood",
-      "sample": "materials/wood\\impact_wood_medium_004.wav",
+      "sample": "materials/wood\\impact_wood_heavy_001.wav",
       "gain_db": 0.0,
       "pitch_semitones": 2.0,
       "desc": "Tier 1 Manual Crank Creak @ 92f"
@@ -415,136 +415,128 @@
       "frame": 115,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_medium_003.wav",
-      "gain_db": -2.650819553430207,
-      "pitch_semitones": 0.9047891798954049,
+      "gain_db": -2.6688754436044198,
+      "pitch_semitones": 0.7841851116872744,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
       "frame": 121,
       "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_heavy_001.wav",
-      "gain_db": -0.856585693411966,
-      "pitch_semitones": -1.4544777133209763,
+      "sample": "materials/soft_plastic\\impact_soft_medium_003.wav",
+      "gain_db": -1.9542576588855063,
+      "pitch_semitones": 0.9440709361757778,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
       "frame": 126,
       "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_heavy_001.wav",
-      "gain_db": -1.6795522766486943,
-      "pitch_semitones": -1.395557795773352,
+      "sample": "materials/soft_plastic\\impact_soft_heavy_000.wav",
+      "gain_db": -2.724427563088403,
+      "pitch_semitones": 0.22623541075810216,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
-      "frame": 131,
-      "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_medium_000.wav",
-      "gain_db": -2.9228312787690434,
-      "pitch_semitones": -0.7481926989405415,
-      "desc": "Tier 1 Tactile Copper Flattening ASMR"
-    },
-    {
-      "frame": 136,
-      "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_medium_000.wav",
-      "gain_db": -3.384540141716486,
-      "pitch_semitones": 0.339905359709316,
-      "desc": "Tier 1 Tactile Copper Flattening ASMR"
-    },
-    {
-      "frame": 141,
+      "frame": 132,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_heavy_001.wav",
-      "gain_db": -3.3016814016441645,
-      "pitch_semitones": 0.22534417682489005,
+      "gain_db": -1.6381470785166943,
+      "pitch_semitones": -0.37919600740861537,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
-      "frame": 148,
+      "frame": 139,
+      "category": "materials/soft_plastic",
+      "sample": "materials/soft_plastic\\impact_soft_medium_003.wav",
+      "gain_db": -3.3043982725137506,
+      "pitch_semitones": -1.2286643863037572,
+      "desc": "Tier 1 Tactile Copper Flattening ASMR"
+    },
+    {
+      "frame": 145,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_heavy_004.wav",
-      "gain_db": -1.5320370165896944,
-      "pitch_semitones": 1.2997842725184783,
+      "gain_db": -2.845874694032169,
+      "pitch_semitones": 0.3539053705415671,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
-      "frame": 153,
-      "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_heavy_002.wav",
-      "gain_db": -0.8886213133853729,
-      "pitch_semitones": -0.18321042568226353,
-      "desc": "Tier 1 Tactile Copper Flattening ASMR"
-    },
-    {
-      "frame": 160,
-      "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_heavy_002.wav",
-      "gain_db": -2.375126521963253,
-      "pitch_semitones": 0.47445994973836303,
-      "desc": "Tier 1 Tactile Copper Flattening ASMR"
-    },
-    {
-      "frame": 166,
+      "frame": 152,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_medium_004.wav",
-      "gain_db": -0.5334894430028037,
-      "pitch_semitones": -0.6706328965919299,
+      "gain_db": -1.7665820599078774,
+      "pitch_semitones": -1.221438630757712,
+      "desc": "Tier 1 Tactile Copper Flattening ASMR"
+    },
+    {
+      "frame": 158,
+      "category": "materials/soft_plastic",
+      "sample": "materials/soft_plastic\\impact_soft_medium_002.wav",
+      "gain_db": -2.56174277546848,
+      "pitch_semitones": 0.5823329858080113,
+      "desc": "Tier 1 Tactile Copper Flattening ASMR"
+    },
+    {
+      "frame": 164,
+      "category": "materials/soft_plastic",
+      "sample": "materials/soft_plastic\\impact_soft_heavy_004.wav",
+      "gain_db": -1.4382439906985596,
+      "pitch_semitones": -0.31919871659711996,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
       "frame": 171,
       "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_medium_000.wav",
-      "gain_db": -2.545620261100071,
-      "pitch_semitones": -0.8540201823398919,
+      "sample": "materials/soft_plastic\\impact_soft_heavy_000.wav",
+      "gain_db": -2.2798862238422966,
+      "pitch_semitones": 0.9528825416223516,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
-      "frame": 178,
+      "frame": 177,
+      "category": "materials/soft_plastic",
+      "sample": "materials/soft_plastic\\impact_soft_heavy_000.wav",
+      "gain_db": -1.6336282197297938,
+      "pitch_semitones": -0.033262407395775906,
+      "desc": "Tier 1 Tactile Copper Flattening ASMR"
+    },
+    {
+      "frame": 183,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_medium_000.wav",
-      "gain_db": -2.0901011082553302,
-      "pitch_semitones": -1.12808913213239,
+      "gain_db": -1.1340806516050308,
+      "pitch_semitones": 0.48091802976399256,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
-      "frame": 185,
+      "frame": 190,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_heavy_003.wav",
-      "gain_db": -1.3020072068761084,
-      "pitch_semitones": 0.6478509321995172,
+      "gain_db": -2.320594468112318,
+      "pitch_semitones": 0.4918101026394246,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
-      "frame": 191,
+      "frame": 196,
       "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_medium_004.wav",
-      "gain_db": -1.879410939201915,
-      "pitch_semitones": -0.13876735607717405,
-      "desc": "Tier 1 Tactile Copper Flattening ASMR"
-    },
-    {
-      "frame": 197,
-      "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_medium_003.wav",
-      "gain_db": -2.952741323194343,
-      "pitch_semitones": -0.24261430154915997,
+      "sample": "materials/soft_plastic\\impact_soft_medium_002.wav",
+      "gain_db": -2.7525322684102718,
+      "pitch_semitones": -0.6766773305432473,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
       "frame": 202,
       "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_heavy_003.wav",
-      "gain_db": -1.4679556518548953,
-      "pitch_semitones": -0.04628394050348761,
+      "sample": "materials/soft_plastic\\impact_soft_medium_003.wav",
+      "gain_db": -3.04652346320344,
+      "pitch_semitones": 0.8637080829186816,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
       "frame": 209,
       "category": "materials/soft_plastic",
-      "sample": "materials/soft_plastic\\impact_soft_heavy_004.wav",
-      "gain_db": -0.9787713653340457,
-      "pitch_semitones": -0.2163107759955878,
+      "sample": "materials/soft_plastic\\impact_soft_medium_004.wav",
+      "gain_db": -3.4197165424316402,
+      "pitch_semitones": 1.4230617171107829,
       "desc": "Tier 1 Tactile Copper Flattening ASMR"
     },
     {
@@ -677,131 +669,139 @@
     },
     {
       "frame": 234,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions\\explosion_crunch_003.wav",
+      "gain_db": 4.5,
+      "pitch_semitones": 2.0,
+      "desc": "Pneumatic Air Blast: 20-Bar Pneumatic Release Blast"
+    },
+    {
+      "frame": 234,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_metal_heavy_001.wav",
-      "gain_db": 5.0,
-      "pitch_semitones": 1.0,
-      "desc": "Tier 1 Acme Thread Violent Shear Snap"
-    },
-    {
-      "frame": 234,
-      "category": "materials/wood",
-      "sample": "materials/wood\\impact_wood_heavy_003.wav",
       "gain_db": 4.0,
-      "pitch_semitones": 2.0,
-      "desc": "Tier 1 Frame Cleavage Crack"
-    },
-    {
-      "frame": 234,
-      "category": "impacts/locks",
-      "sample": "impacts/locks\\drop_001.wav",
-      "gain_db": 2.0,
-      "pitch_semitones": 0.0,
-      "desc": "Tier 1 Deep Sub-Bass Bed Mass Impact Thud"
-    },
-    {
-      "frame": 234,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_003.wav",
-      "gain_db": 3.0,
-      "pitch_semitones": 3.5,
-      "desc": "Tier 1 Sheared Thread Metallic Ring"
-    },
-    {
-      "frame": 235,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_tin_medium_002.wav",
-      "gain_db": 2.5,
-      "pitch_semitones": 2.0,
-      "desc": "Tier 1 Bronze Shrapnel Ping"
+      "pitch_semitones": 1.0,
+      "desc": "Pneumatic Air Blast: Acme Thread Shear Recoil"
     },
     {
       "frame": 234,
       "category": "mechanisms/switches",
       "sample": "mechanisms/switches\\switch_004.wav",
-      "gain_db": 3.0,
+      "gain_db": 3.5,
       "pitch_semitones": 0.0,
-      "desc": "Cleanser (Air): Solenoid Valve Trigger Snap"
+      "desc": "Pneumatic Air Blast: High-Flow Solenoid Valve Snap"
     },
     {
       "frame": 234,
       "category": "mechanisms/switches",
       "sample": "mechanisms/switches\\click_005.wav",
-      "gain_db": 2.0,
+      "gain_db": 2.5,
       "pitch_semitones": 0.0,
-      "desc": "Cleanser (Air): Pneumatic Pilot Detent"
+      "desc": "Pneumatic Air Blast: Pneumatic Pilot Detent"
     },
     {
       "frame": 234,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_heavy_000.wav",
-      "gain_db": 1.0,
+      "gain_db": 2.0,
       "pitch_semitones": 0.0,
-      "desc": "Cleanser (Air): Valve Seat Thump"
+      "desc": "Pneumatic Air Blast: Valve Seat Seal Pop"
+    },
+    {
+      "frame": 234,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_003.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 3.5,
+      "desc": "Pneumatic Air Blast: Sheared Metal Resonant Ring"
     },
     {
       "frame": 235,
       "category": "mechanisms/motors",
       "sample": "mechanisms/motors\\thruster_fire_001.wav",
-      "gain_db": -0.5,
+      "gain_db": 0.0,
       "pitch_semitones": 4.0,
-      "desc": "Cleanser (Air): Sustained Rushing Air Jet"
+      "desc": "Pneumatic Air Blast: 20-Bar Supersonic Air Jet"
     },
     {
       "frame": 236,
       "category": "mechanisms/motors",
       "sample": "mechanisms/motors\\space_engine_small_004.wav",
-      "gain_db": -3.0,
+      "gain_db": -2.5,
       "pitch_semitones": 3.5,
-      "desc": "Cleanser (Air): High-Velocity Nozzle Hiss"
+      "desc": "Pneumatic Air Blast: Nozzle High-Pressure Air Hiss"
     },
     {
-      "frame": 240,
+      "frame": 236,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_000.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 3.0,
+      "desc": "Pneumatic Shrapnel: Sheared Bolt Ricochet 1 @ +236f"
+    },
+    {
+      "frame": 239,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_tin_medium_001.wav",
-      "gain_db": 1.5,
-      "pitch_semitones": 2.0,
-      "desc": "Cleanser (Air): Metallic Chip Clattering Off-Screen @ +240f"
+      "gain_db": 1.8,
+      "pitch_semitones": 4.0,
+      "desc": "Pneumatic Shrapnel: Gear Tooth Steel Floor Bounce 1 @ +239f"
     },
     {
-      "frame": 248,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_001.wav",
-      "gain_db": 0.5,
-      "pitch_semitones": 3.0,
-      "desc": "Cleanser (Air): Metallic Chip Clattering Off-Screen @ +248f"
-    },
-    {
-      "frame": 258,
+      "frame": 243,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_metal_light_002.wav",
-      "gain_db": -0.5,
-      "pitch_semitones": 1.5,
-      "desc": "Cleanser (Air): Metallic Chip Clattering Off-Screen @ +258f"
+      "gain_db": 1.2,
+      "pitch_semitones": 2.5,
+      "desc": "Pneumatic Shrapnel: Screw Thread Shard Ping @ +243f"
     },
     {
-      "frame": 270,
+      "frame": 247,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_tin_medium_002.wav",
+      "gain_db": 0.8,
+      "pitch_semitones": 5.0,
+      "desc": "Pneumatic Shrapnel: Gear Tooth Steel Floor Bounce 2 @ +247f"
+    },
+    {
+      "frame": 251,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_003.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 3.5,
+      "desc": "Pneumatic Shrapnel: Bronze Washer Skipping On Bed @ +251f"
+    },
+    {
+      "frame": 256,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_metal_light_004.wav",
+      "gain_db": 0.0,
+      "pitch_semitones": 4.5,
+      "desc": "Pneumatic Shrapnel: Bolt Ricochet Off Steel Floor @ +256f"
+    },
+    {
+      "frame": 262,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_tin_medium_004.wav",
       "gain_db": -1.0,
-      "pitch_semitones": 2.5,
-      "desc": "Cleanser (Air): Metallic Chip Clattering Off-Screen @ +270f"
+      "pitch_semitones": 3.2,
+      "desc": "Pneumatic Shrapnel: Metal Stud Skittering @ +262f"
     },
     {
-      "frame": 285,
+      "frame": 268,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_000.wav",
+      "sample": "materials/metal\\impact_plate_light_004.wav",
       "gain_db": -2.0,
-      "pitch_semitones": 3.5,
-      "desc": "Cleanser (Air): Metallic Chip Clattering Off-Screen @ +285f"
+      "pitch_semitones": 5.5,
+      "desc": "Pneumatic Shrapnel: Brass Shard Ping Off-Screen @ +268f"
     },
     {
-      "frame": 298,
+      "frame": 274,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_metal_light_003.wav",
-      "gain_db": -3.5,
+      "sample": "materials/metal\\impact_metal_light_001.wav",
+      "gain_db": -3.0,
       "pitch_semitones": 4.0,
-      "desc": "Cleanser (Air): Metallic Chip Clattering Off-Screen @ +298f"
+      "desc": "Pneumatic Shrapnel: Final Fragment Tray Landing @ +274f"
     },
     {
       "frame": 320,
@@ -1511,185 +1511,185 @@
       "frame": 554,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_metal_heavy_002.wav",
-      "gain_db": 5.5,
+      "gain_db": 5.0,
       "pitch_semitones": 1.0,
-      "desc": "Tier 2 Forged Connecting Rod Buckling Crack"
-    },
-    {
-      "frame": 554,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\explosion_crunch_000.wav",
-      "gain_db": 4.0,
-      "pitch_semitones": -0.5,
-      "desc": "Tier 2 Crankshaft Jam Explosive Blast"
-    },
-    {
-      "frame": 554,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\low_frequency_explosion_000.wav",
-      "gain_db": 3.5,
-      "pitch_semitones": 0.0,
-      "desc": "Tier 2 Sub-Bass Bed Structural Shock"
+      "desc": "Black Hole: Chassis Frame Structural Fracture Crack"
     },
     {
       "frame": 554,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_heavy_001.wav",
-      "gain_db": 3.0,
+      "sample": "materials/metal\\impact_plate_heavy_000.wav",
+      "gain_db": 3.5,
       "pitch_semitones": 2.0,
-      "desc": "Tier 2 Flywheel Inertial Snap Shock"
+      "desc": "Black Hole: Crank Journal Shear Ring"
     },
     {
       "frame": 554,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\low_frequency_explosion_000.wav",
+      "category": "impacts/locks",
+      "sample": "impacts/locks\\door_close_001.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Black Hole: Mechanical Stress Release Clang"
+    },
+    {
+      "frame": 554,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches\\click_003.wav",
       "gain_db": 3.0,
-      "pitch_semitones": -4.0,
-      "desc": "Cleanser (Black Hole): Gravitational Anomaly Sub-Bass Birth"
-    },
-    {
-      "frame": 554,
-      "category": "mechanisms/motors",
-      "sample": "mechanisms/motors\\space_engine_low_001.wav",
-      "gain_db": -2.0,
-      "pitch_semitones": -6.0,
-      "desc": "Cleanser (Black Hole): Event Horizon Resonant Hum"
+      "pitch_semitones": 0.0,
+      "desc": "Black Hole: High-Tensile Bolt Rupture Snap"
     },
     {
       "frame": 555,
       "category": "mechanisms/scifi_laser",
-      "sample": "mechanisms/scifi_laser\\force_field_000.wav",
-      "gain_db": 1.0,
-      "pitch_semitones": -3.0,
-      "desc": "Cleanser (Black Hole): Gravitational Flux Grip"
-    },
-    {
-      "frame": 568,
-      "category": "mechanisms/motors",
-      "sample": "mechanisms/motors\\thruster_fire_004.wav (reversed)",
-      "gain_db": 1.0,
-      "pitch_semitones": 2.0,
-      "desc": "Cleanser (Black Hole): Accretion Disk Reverse Vacuum Suction Whoosh"
-    },
-    {
-      "frame": 570,
-      "category": "mechanisms/motors",
-      "sample": "mechanisms/motors\\space_engine_small_001.wav",
-      "gain_db": -2.0,
-      "pitch_semitones": "-2.0->6.0",
-      "desc": "Cleanser (Black Hole): Relativistic Frequency Inward Warp"
-    },
-    {
-      "frame": 568,
-      "category": "mechanisms/motors",
-      "sample": "mechanisms/motors\\space_engine_001.wav",
+      "sample": "mechanisms/scifi_laser\\force_field_001.wav",
       "gain_db": -3.5,
       "pitch_semitones": 3.0,
-      "desc": "Cleanser (Black Hole): Accretion Disk Plasma Vortex"
+      "desc": "Black Hole: Zero-G Levitation Shimmer Drone"
     },
     {
-      "frame": 570,
+      "frame": 557,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_000.wav",
-      "gain_db": -1.0,
-      "pitch_semitones": 1.0,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +250f"
+      "sample": "materials/glass\\impact_glass_light_001.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 5.5,
+      "desc": "Black Hole (Zero-G): Floating Glass Shard Tinkle @ +237f"
+    },
+    {
+      "frame": 560,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_002.wav",
+      "gain_db": 0.0,
+      "pitch_semitones": 4.5,
+      "desc": "Black Hole (Zero-G): Suspended Washer Metallic Ring @ +240f"
+    },
+    {
+      "frame": 564,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_tin_medium_003.wav",
+      "gain_db": -0.5,
+      "pitch_semitones": 5.0,
+      "desc": "Black Hole (Zero-G): Hovering Gear Fragment Micro-Clink @ +244f"
+    },
+    {
+      "frame": 568,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_004.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 6.5,
+      "desc": "Black Hole (Zero-G): Crystalline Floating Particle Chime @ +248f"
+    },
+    {
+      "frame": 572,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\space_engine_low_001.wav",
+      "gain_db": -0.5,
+      "pitch_semitones": -6.0,
+      "desc": "Black Hole: Deep Infrasonic Growing Singularity Rumble"
+    },
+    {
+      "frame": 572,
+      "category": "impacts/explosions",
+      "sample": "impacts/explosions\\low_frequency_explosion_000.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": -4.0,
+      "desc": "Black Hole: Gravitational Horizon Sub-Bass Swell"
+    },
+    {
+      "frame": 572,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\thruster_fire_004.wav (reversed)",
+      "gain_db": 2.0,
+      "pitch_semitones": 2.0,
+      "desc": "Black Hole: Powerful Reverse Vacuum Intake Whoosh"
     },
     {
       "frame": 576,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\space_engine_small_003.wav (reversed)",
+      "gain_db": 0.5,
+      "pitch_semitones": 4.0,
+      "desc": "Black Hole: Accretion Disk Air Suction Vortex"
+    },
+    {
+      "frame": 572,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\space_engine_small_001.wav",
+      "gain_db": -2.0,
+      "pitch_semitones": "-3.0->5.5",
+      "desc": "Black Hole: Relativistic Frequency Inward Warp"
+    },
+    {
+      "frame": 578,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_001.wav",
-      "gain_db": 0.0,
+      "sample": "materials/metal\\impact_tin_medium_001.wav",
+      "gain_db": 0.5,
       "pitch_semitones": 2.0,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +256f"
+      "desc": "Black Hole (Accretion): Inward Swirling Shard 1 @ +258f"
     },
     {
-      "frame": 582,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_tin_medium_000.wav",
-      "gain_db": -0.5,
-      "pitch_semitones": 2.5,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +262f"
-    },
-    {
-      "frame": 588,
+      "frame": 586,
       "category": "materials/glass",
       "sample": "materials/glass\\impact_glass_light_002.wav",
-      "gain_db": 0.5,
+      "gain_db": 1.0,
       "pitch_semitones": 3.0,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +268f"
+      "desc": "Black Hole (Accretion): Inward Swirling Glass 2 @ +266f"
     },
     {
       "frame": 594,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_002.wav",
-      "gain_db": 0.0,
+      "sample": "materials/metal\\impact_plate_light_001.wav",
+      "gain_db": 1.2,
       "pitch_semitones": 3.5,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +274f"
+      "desc": "Black Hole (Accretion): Inward Swirling Plate 3 @ +274f"
     },
     {
-      "frame": 600,
+      "frame": 602,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_tin_medium_002.wav",
-      "gain_db": 0.8,
-      "pitch_semitones": 4.0,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +280f"
+      "gain_db": 1.5,
+      "pitch_semitones": 4.5,
+      "desc": "Black Hole (Accretion): Inward Swirling Shard 4 @ +282f"
     },
     {
-      "frame": 606,
+      "frame": 610,
       "category": "materials/glass",
       "sample": "materials/glass\\impact_glass_light_003.wav",
-      "gain_db": 0.5,
-      "pitch_semitones": 4.5,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +286f"
+      "gain_db": 1.8,
+      "pitch_semitones": 5.5,
+      "desc": "Black Hole (Accretion): Inward Swirling Particle 5 @ +290f"
     },
     {
-      "frame": 612,
+      "frame": 615,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_plate_light_004.wav",
-      "gain_db": 1.0,
-      "pitch_semitones": 5.0,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +292f"
+      "gain_db": 2.0,
+      "pitch_semitones": 6.0,
+      "desc": "Black Hole (Accretion): Matter Pinch Into Singularity Core @ +295f"
     },
     {
-      "frame": 618,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_004.wav",
-      "gain_db": 1.2,
-      "pitch_semitones": 5.5,
-      "desc": "Cleanser (Black Hole): Inward Swirling Matter Particle @ +298f"
-    },
-    {
-      "frame": 626,
+      "frame": 625,
       "category": "mechanisms/switches",
       "sample": "mechanisms/switches\\switch_004.wav",
-      "gain_db": 3.5,
-      "pitch_semitones": 3.0,
-      "desc": "Cleanser (Black Hole): Singularity Implosion Vacuum Pop"
+      "gain_db": 4.5,
+      "pitch_semitones": 4.0,
+      "desc": "Black Hole: Quantum Vacuum Pop Snap"
     },
     {
-      "frame": 626,
+      "frame": 625,
       "category": "materials/soft_plastic",
       "sample": "materials/soft_plastic\\impact_soft_heavy_001.wav",
-      "gain_db": 2.5,
-      "pitch_semitones": 4.0,
-      "desc": "Cleanser (Black Hole): Micro-Cavitation Collapse Snap"
+      "gain_db": 3.5,
+      "pitch_semitones": 5.0,
+      "desc": "Black Hole: Cavitation Micro-Implosion Thump"
     },
     {
-      "frame": 626,
+      "frame": 625,
       "category": "mechanisms/scifi_laser",
       "sample": "mechanisms/scifi_laser\\force_field_004.wav",
-      "gain_db": 2.0,
-      "pitch_semitones": 5.0,
-      "desc": "Cleanser (Black Hole): Quantum Horizon Pinch Spark"
-    },
-    {
-      "frame": 626,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\explosion_crunch_002.wav",
-      "gain_db": 1.0,
+      "gain_db": 2.5,
       "pitch_semitones": 6.0,
-      "desc": "Cleanser (Black Hole): High-Energy Annihilation Transient"
+      "desc": "Black Hole: Horizon Pinch Spark"
     },
     {
       "frame": 640,
@@ -2094,177 +2094,177 @@
     {
       "frame": 745,
       "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_004.wav",
-      "gain_db": -3.2316030228578754,
-      "pitch_semitones": 1.1922759823443636,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 751,
-      "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_001.wav",
-      "gain_db": -3.8731633303341275,
-      "pitch_semitones": -1.2714951050956675,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 755,
-      "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_001.wav",
-      "gain_db": -3.78320980925953,
-      "pitch_semitones": 0.7200433038247636,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 759,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_001.wav",
-      "gain_db": -3.5700192565616273,
-      "pitch_semitones": 0.8613768201427248,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 763,
-      "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_004.wav",
-      "gain_db": -1.5976510314418713,
-      "pitch_semitones": -1.319028619017788,
+      "gain_db": -3.61352495698035,
+      "pitch_semitones": 1.2519456790297596,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
-      "frame": 769,
+      "frame": 750,
       "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_003.wav",
-      "gain_db": -1.4162069194904525,
-      "pitch_semitones": -0.6585100409700115,
+      "sample": "materials/stone\\footstep_concrete_000.wav",
+      "gain_db": -3.860342332531879,
+      "pitch_semitones": 1.0186208016541678,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 756,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_000.wav",
+      "gain_db": -2.481826083661365,
+      "pitch_semitones": 0.632730081364393,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 761,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_001.wav",
+      "gain_db": -3.8815303204479146,
+      "pitch_semitones": 0.8554647862486053,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 766,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_002.wav",
+      "gain_db": -1.708081750491992,
+      "pitch_semitones": 0.03600792526092844,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 770,
+      "category": "materials/stone",
+      "sample": "materials/stone\\footstep_concrete_002.wav",
+      "gain_db": -3.3871420884546453,
+      "pitch_semitones": 1.3677274348397064,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
       "frame": 774,
       "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_003.wav",
-      "gain_db": -3.6097748284576294,
-      "pitch_semitones": -1.3654342744891093,
+      "sample": "materials/stone\\impact_mining_000.wav",
+      "gain_db": -2.7772540630852633,
+      "pitch_semitones": -0.47560845601105317,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
       "frame": 779,
       "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_002.wav",
-      "gain_db": -3.3854078321585352,
-      "pitch_semitones": 0.2783169063036759,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 785,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_000.wav",
-      "gain_db": -3.927334248209123,
-      "pitch_semitones": -0.7820232631784285,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 791,
-      "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_002.wav",
-      "gain_db": -1.9203666909348058,
-      "pitch_semitones": -1.3894534175361124,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 796,
-      "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_001.wav",
-      "gain_db": -1.3566125171751748,
-      "pitch_semitones": -1.8063422959309685,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 802,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_002.wav",
-      "gain_db": -3.2910156550482395,
-      "pitch_semitones": -0.09121743407289662,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 808,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_000.wav",
-      "gain_db": -1.0268831107288148,
-      "pitch_semitones": -0.9534626479916053,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 812,
-      "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_001.wav",
-      "gain_db": -1.9492058987821652,
-      "pitch_semitones": 1.9275159485249511,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 816,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_002.wav",
-      "gain_db": -2.6960942075366012,
-      "pitch_semitones": 1.3235480619589195,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 822,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_001.wav",
-      "gain_db": -2.928932668488441,
-      "pitch_semitones": 1.0773505540952288,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 826,
-      "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_000.wav",
-      "gain_db": -1.683189879258462,
-      "pitch_semitones": 0.7861973129013662,
+      "gain_db": -3.3786162308281016,
+      "pitch_semitones": 0.7448122772092014,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
-      "frame": 832,
+      "frame": 783,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_003.wav",
+      "gain_db": -1.5785514427116984,
+      "pitch_semitones": -0.43750855758203144,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 788,
+      "category": "materials/stone",
+      "sample": "materials/stone\\footstep_concrete_004.wav",
+      "gain_db": -2.641190946599563,
+      "pitch_semitones": 1.9995965109924447,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 794,
       "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_004.wav",
-      "gain_db": -2.180696415805753,
-      "pitch_semitones": -0.7501342676640776,
+      "gain_db": -1.6405771869920072,
+      "pitch_semitones": -0.5331401226553569,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 799,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_002.wav",
+      "gain_db": -3.13849822201136,
+      "pitch_semitones": -1.765090830321986,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 805,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_002.wav",
+      "gain_db": -2.15015560866113,
+      "pitch_semitones": -0.8622572699768165,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 809,
+      "category": "materials/stone",
+      "sample": "materials/stone\\footstep_concrete_001.wav",
+      "gain_db": -3.6514332778530343,
+      "pitch_semitones": 1.7265456702697115,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 815,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_000.wav",
+      "gain_db": -1.5706092383466226,
+      "pitch_semitones": 0.9936227792192933,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 819,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_004.wav",
+      "gain_db": -2.8243105502653387,
+      "pitch_semitones": -0.38193554440885036,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 825,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_001.wav",
+      "gain_db": -3.845746519420169,
+      "pitch_semitones": 0.8843375581945248,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 831,
+      "category": "materials/stone",
+      "sample": "materials/stone\\footstep_concrete_000.wav",
+      "gain_db": -1.9050394635973111,
+      "pitch_semitones": 1.3580703498939029,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
       "frame": 836,
       "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_004.wav",
-      "gain_db": -3.173031931762795,
-      "pitch_semitones": -0.7928292961199732,
+      "sample": "materials/stone\\impact_mining_000.wav",
+      "gain_db": -1.2078432711805283,
+      "pitch_semitones": -1.0110223940672687,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
-      "frame": 840,
-      "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_002.wav",
-      "gain_db": -1.3658952760786551,
-      "pitch_semitones": -0.9788258181418841,
-      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
-    },
-    {
-      "frame": 844,
+      "frame": 841,
       "category": "materials/stone",
       "sample": "materials/stone\\footstep_concrete_001.wav",
-      "gain_db": -2.6544393035714493,
-      "pitch_semitones": -1.7771109309886612,
+      "gain_db": -1.5072365948153594,
+      "pitch_semitones": 0.8543502111063752,
+      "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
+    },
+    {
+      "frame": 845,
+      "category": "materials/stone",
+      "sample": "materials/stone\\footstep_concrete_003.wav",
+      "gain_db": -2.2711762441601735,
+      "pitch_semitones": -0.6943041633115068,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
       "frame": 849,
       "category": "materials/stone",
-      "sample": "materials/stone\\footstep_concrete_001.wav",
-      "gain_db": -3.4876480409303654,
-      "pitch_semitones": 1.4046607285160873,
+      "sample": "materials/stone\\impact_mining_000.wav",
+      "gain_db": -1.5942958859080143,
+      "pitch_semitones": 1.4688606390369117,
       "desc": "Tier 3 High-Pressure Aggregate Spall ASMR"
     },
     {
@@ -2397,107 +2397,139 @@
     },
     {
       "frame": 874,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\explosion_crunch_001.wav",
-      "gain_db": 6.0,
-      "pitch_semitones": 0.0,
-      "desc": "Tier 3 600-Bar Catastrophic Seal Blowout Blast"
-    },
-    {
-      "frame": 874,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\low_frequency_explosion_000.wav",
-      "gain_db": 5.0,
-      "pitch_semitones": 1.0,
-      "desc": "Tier 3 Hydraulic Accumulator Sub-Bass Shock"
-    },
-    {
-      "frame": 874,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_metal_heavy_004.wav",
-      "gain_db": 5.0,
-      "pitch_semitones": 2.0,
-      "desc": "Tier 3 Cylinder Head High-Tensile Bolt Shear Snap"
-    },
-    {
-      "frame": 874,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_004.wav",
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser\\laser_large_001.wav",
       "gain_db": 3.5,
-      "pitch_semitones": 3.5,
-      "desc": "Tier 3 Sheared Bolt Supersonic Ricochet"
-    },
-    {
-      "frame": 875,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_heavy_002.wav",
-      "gain_db": 3.0,
-      "pitch_semitones": 1.0,
-      "desc": "Tier 3 Deformed Platen Rebound Slam"
+      "pitch_semitones": 3.0,
+      "desc": "Laser Cleanser: Plasma Torch Ignition Flash"
     },
     {
       "frame": 874,
       "category": "mechanisms/scifi_laser",
       "sample": "mechanisms/scifi_laser\\force_field_001.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 2.0,
+      "desc": "Laser Cleanser: High-Voltage Ionization Arc Zap"
+    },
+    {
+      "frame": 874,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches\\switch_004.wav",
+      "gain_db": 2.5,
+      "pitch_semitones": 0.0,
+      "desc": "Laser Cleanser: Plasma Arc Contactor Snap"
+    },
+    {
+      "frame": 874,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_003.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 4.0,
+      "desc": "Laser Cleanser: Gantry Top Incision High Ring"
+    },
+    {
+      "frame": 876,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser\\force_field_000.wav",
+      "gain_db": -2.0,
+      "pitch_semitones": 3.5,
+      "desc": "Laser Cleanser: High-Voltage Arc Sizzle"
+    },
+    {
+      "frame": 876,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\thruster_fire_000.wav",
       "gain_db": -2.5,
-      "pitch_semitones": "1.0->6.5",
-      "desc": "Cleanser (Laser): High-Voltage Laser Hum Rising"
+      "pitch_semitones": 3.0,
+      "desc": "Laser Cleanser: White-Hot Vaporization Hiss"
+    },
+    {
+      "frame": 876,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\space_engine_small_001.wav",
+      "gain_db": -1.5,
+      "pitch_semitones": "6.5->-3.5",
+      "desc": "Laser Cleanser: Descending Doppler Laser Cut Whine"
     },
     {
       "frame": 884,
-      "category": "mechanisms/motors",
-      "sample": "mechanisms/motors\\thruster_fire_000.wav",
-      "gain_db": -3.5,
-      "pitch_semitones": 3.5,
-      "desc": "Cleanser (Laser): Planar Laser Plasma Bed Hiss"
-    },
-    {
-      "frame": 892,
-      "category": "mechanisms/scifi_laser",
-      "sample": "mechanisms/scifi_laser\\laser_large_001.wav",
-      "gain_db": 2.5,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_tin_medium_001.wav",
+      "gain_db": 1.0,
       "pitch_semitones": 3.0,
-      "desc": "Cleanser (Laser): Plasma Sweep Entry Zap"
+      "desc": "Laser Cleanser (Kerf): Upper Gantry Beam Severance @ +244f"
     },
     {
-      "frame": 908,
+      "frame": 893,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_001.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 4.5,
+      "desc": "Laser Cleanser (Kerf): Hydraulic Cylinder Shell Cut @ +253f"
+    },
+    {
+      "frame": 904,
       "category": "mechanisms/scifi_laser",
       "sample": "mechanisms/scifi_laser\\laser_large_002.wav",
-      "gain_db": 3.0,
-      "pitch_semitones": 4.0,
-      "desc": "Cleanser (Laser): Plasma Sweep Center Cut"
-    },
-    {
-      "frame": 924,
-      "category": "mechanisms/scifi_laser",
-      "sample": "mechanisms/scifi_laser\\laser_large_003.wav",
       "gain_db": 2.0,
       "pitch_semitones": 2.5,
-      "desc": "Cleanser (Laser): Plasma Sweep Exit Zap"
+      "desc": "Laser Cleanser (Kerf): Main Piston Core Vaporization @ +264f"
     },
     {
-      "frame": 926,
+      "frame": 916,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_medium_001.wav",
+      "gain_db": 1.5,
+      "pitch_semitones": 3.5,
+      "desc": "Laser Cleanser (Kerf): Quad Column Slicing @ +276f"
+    },
+    {
+      "frame": 928,
       "category": "mechanisms/scifi_laser",
       "sample": "mechanisms/scifi_laser\\force_field_003.wav",
-      "gain_db": -1.0,
+      "gain_db": 1.0,
       "pitch_semitones": 2.0,
-      "desc": "Cleanser (Laser): Plasma Ionization Fizz"
+      "desc": "Laser Cleanser (Kerf): Bolster Plate Kerf Sizzle @ +288f"
     },
     {
-      "frame": 938,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_001.wav",
-      "gain_db": 0.5,
+      "frame": 940,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_heavy_001.wav",
+      "gain_db": 3.5,
+      "pitch_semitones": 2.0,
+      "desc": "Laser Cleanser: Final Bed Contact Thud"
+    },
+    {
+      "frame": 940,
+      "category": "mechanisms/switches",
+      "sample": "mechanisms/switches\\switch_005.wav",
+      "gain_db": 3.0,
+      "pitch_semitones": 0.0,
+      "desc": "Laser Cleanser: Beam Cutoff Interlock Snap"
+    },
+    {
+      "frame": 940,
+      "category": "mechanisms/scifi_laser",
+      "sample": "mechanisms/scifi_laser\\force_field_004.wav",
+      "gain_db": 1.5,
       "pitch_semitones": 4.0,
-      "desc": "Cleanser (Laser): Quartz Bed Cooling Ping 1"
+      "desc": "Laser Cleanser: Residual Arc Quench Fizz"
     },
     {
-      "frame": 944,
+      "frame": 941,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_002.wav",
+      "gain_db": 0.5,
+      "pitch_semitones": 5.0,
+      "desc": "Laser Cleanser: Quartz Bed Cooling Ping 1"
+    },
+    {
+      "frame": 945,
       "category": "materials/metal",
       "sample": "materials/metal\\impact_plate_light_003.wav",
-      "gain_db": -1.0,
-      "pitch_semitones": 5.0,
-      "desc": "Cleanser (Laser): Bolster Cooling Ping 2"
+      "gain_db": -1.5,
+      "pitch_semitones": 4.5,
+      "desc": "Laser Cleanser: Steel Bed Cooling Ping 2"
     },
     {
       "frame": 960,
@@ -3070,161 +3102,161 @@
     {
       "frame": 1072,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_003.wav",
-      "gain_db": -3.196050840781917,
-      "pitch_semitones": 0.5160936306634474,
+      "sample": "materials/glass\\impact_glass_medium_001.wav",
+      "gain_db": -0.7650034694045189,
+      "pitch_semitones": -0.03395982216386528,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
-      "frame": 1076,
+      "frame": 1077,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_002.wav",
+      "gain_db": -3.1014982547942775,
+      "pitch_semitones": -0.7856927004181344,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1083,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_medium_003.wav",
+      "gain_db": -2.88974640188439,
+      "pitch_semitones": -1.41526975343054,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1088,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_heavy_004.wav",
+      "gain_db": -1.6443847715070132,
+      "pitch_semitones": 0.9291977104873541,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1094,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_medium_000.wav",
+      "gain_db": -1.031656602567181,
+      "pitch_semitones": 1.3217981135952002,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1100,
       "category": "materials/glass",
       "sample": "materials/glass\\impact_glass_medium_001.wav",
-      "gain_db": -1.5902116199965495,
-      "pitch_semitones": -0.16281427800612747,
+      "gain_db": -1.9945715724175317,
+      "pitch_semitones": -1.4994138667722017,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
-      "frame": 1081,
+      "frame": 1104,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_002.wav",
-      "gain_db": -1.4935850729077202,
-      "pitch_semitones": -0.7309266800716417,
+      "sample": "materials/glass\\impact_glass_medium_000.wav",
+      "gain_db": -1.411243235246371,
+      "pitch_semitones": 1.3722862205951127,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
-      "frame": 1086,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_002.wav",
-      "gain_db": -1.8471762924158028,
-      "pitch_semitones": -1.1338315282645066,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1092,
+      "frame": 1110,
       "category": "materials/glass",
       "sample": "materials/glass\\impact_glass_heavy_000.wav",
-      "gain_db": -3.2364821619560273,
-      "pitch_semitones": -0.6461786820158851,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1098,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_001.wav",
-      "gain_db": -1.9423980178052958,
-      "pitch_semitones": -0.8215209907840934,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1103,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_002.wav",
-      "gain_db": -0.7285004010654275,
-      "pitch_semitones": 0.7488715760641269,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1108,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_heavy_000.wav",
-      "gain_db": -1.02610629238304,
-      "pitch_semitones": -1.0624026197097167,
+      "gain_db": -2.2732998032491807,
+      "pitch_semitones": 0.7294208839232992,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
       "frame": 1114,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_001.wav",
-      "gain_db": -1.801693995290467,
-      "pitch_semitones": -1.0928270546449101,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1119,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_001.wav",
-      "gain_db": -3.267308645096062,
-      "pitch_semitones": -1.1583475397166656,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1125,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_heavy_003.wav",
-      "gain_db": -3.3552033371641126,
-      "pitch_semitones": -0.5433684803896167,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1131,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_light_004.wav",
-      "gain_db": -3.078200724502145,
-      "pitch_semitones": 0.40758121651780344,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1135,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_001.wav",
-      "gain_db": -3.278507859211831,
-      "pitch_semitones": -0.23822858499419675,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1140,
-      "category": "materials/glass",
       "sample": "materials/glass\\impact_glass_heavy_002.wav",
-      "gain_db": -1.8194630140309656,
-      "pitch_semitones": 0.7603194553119477,
+      "gain_db": -1.4453485765553449,
+      "pitch_semitones": 1.4456156583960018,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
-      "frame": 1144,
+      "frame": 1120,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_heavy_001.wav",
-      "gain_db": -2.7854112795256594,
-      "pitch_semitones": -0.2642739422537983,
+      "sample": "materials/glass\\impact_glass_light_001.wav",
+      "gain_db": -2.163295608400326,
+      "pitch_semitones": 1.2388498697144117,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
-      "frame": 1149,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_000.wav",
-      "gain_db": -2.554032967502153,
-      "pitch_semitones": 1.0875686067276251,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1155,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_heavy_000.wav",
-      "gain_db": -2.0997974238616677,
-      "pitch_semitones": 0.40754891498960477,
-      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
-    },
-    {
-      "frame": 1159,
+      "frame": 1126,
       "category": "materials/glass",
       "sample": "materials/glass\\impact_glass_light_002.wav",
-      "gain_db": -3.483914669918781,
-      "pitch_semitones": 0.29322399827193424,
+      "gain_db": -2.7304960023046068,
+      "pitch_semitones": 0.2599630242435107,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1132,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_heavy_002.wav",
+      "gain_db": -2.284505393073916,
+      "pitch_semitones": 1.346188593131414,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1138,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_heavy_003.wav",
+      "gain_db": -2.5829821046514407,
+      "pitch_semitones": 0.5587244489096501,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1142,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_002.wav",
+      "gain_db": -1.829537106876593,
+      "pitch_semitones": -0.5299025076681624,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1146,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_001.wav",
+      "gain_db": -2.18435847497374,
+      "pitch_semitones": -0.085514493584534,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1150,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_medium_001.wav",
+      "gain_db": -1.317160287115526,
+      "pitch_semitones": 1.4764841668209616,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1154,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_000.wav",
+      "gain_db": -3.030899686530411,
+      "pitch_semitones": -0.6080495198704835,
+      "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
+    },
+    {
+      "frame": 1158,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_000.wav",
+      "gain_db": -0.6348984798369259,
+      "pitch_semitones": -1.041742516498812,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
       "frame": 1164,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_003.wav",
-      "gain_db": -3.2852798991941374,
-      "pitch_semitones": 0.7221899429160259,
+      "sample": "materials/glass\\impact_glass_light_000.wav",
+      "gain_db": -2.4514559542266436,
+      "pitch_semitones": 1.294400208884365,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
       "frame": 1168,
       "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_medium_003.wav",
-      "gain_db": -1.2942328790016582,
-      "pitch_semitones": -0.5837423446435166,
+      "sample": "materials/glass\\impact_glass_light_003.wav",
+      "gain_db": -3.0705009948213444,
+      "pitch_semitones": -1.1343299062930023,
       "desc": "Tier 4 Crystalline Lattice Micro-Fracture ASMR"
     },
     {
@@ -3359,145 +3391,185 @@
       "frame": 1194,
       "category": "impacts/explosions",
       "sample": "impacts/explosions\\low_frequency_explosion_001.wav",
-      "gain_db": 6.5,
+      "gain_db": 3.5,
       "pitch_semitones": 0.0,
-      "desc": "Tier 4 Singularity Collapse Shockwave Detonation"
-    },
-    {
-      "frame": 1194,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\explosion_crunch_004.wav",
-      "gain_db": 4.5,
-      "pitch_semitones": -1.0,
-      "desc": "Tier 4 Spacetime Pinch Implosion Blast"
+      "desc": "Thermal Ash: Superheat Thermal Concussion"
     },
     {
       "frame": 1194,
       "category": "mechanisms/scifi_laser",
       "sample": "mechanisms/scifi_laser\\laser_large_004.wav",
-      "gain_db": 3.5,
-      "pitch_semitones": 2.0,
-      "desc": "Tier 4 High-Energy Plasma Annihilation Burst"
-    },
-    {
-      "frame": 1194,
-      "category": "materials/glass",
-      "sample": "materials/glass\\impact_glass_heavy_002.wav",
-      "gain_db": 4.5,
-      "pitch_semitones": 1.5,
-      "desc": "Tier 4 Quartz Containment Viewport Shatter Fracture"
+      "gain_db": 3.0,
+      "pitch_semitones": 1.0,
+      "desc": "Thermal Ash: Incandescent Flash Burst"
     },
     {
       "frame": 1194,
       "category": "mechanisms/scifi_laser",
-      "sample": "mechanisms/scifi_laser\\force_field_004.wav",
-      "gain_db": 2.5,
-      "pitch_semitones": 1.0,
-      "desc": "Tier 4 Singularity Field Collapse Fizz"
+      "sample": "mechanisms/scifi_laser\\force_field_003.wav",
+      "gain_db": 2.0,
+      "pitch_semitones": 2.0,
+      "desc": "Thermal Ash: Thermal Ionization Sizzle"
     },
     {
       "frame": 1194,
       "category": "mechanisms/motors",
-      "sample": "mechanisms/motors\\thruster_fire_001.wav",
+      "sample": "mechanisms/motors\\space_engine_large_000.wav",
       "gain_db": -1.5,
-      "pitch_semitones": 2.0,
-      "desc": "Cleanser (Ash): Sizzling Hot Slag Steam Hiss"
+      "pitch_semitones": -2.0,
+      "desc": "Thermal Ash: Growing Thermal Heat Drone"
     },
     {
-      "frame": 1195,
-      "category": "impacts/explosions",
-      "sample": "impacts/explosions\\explosion_crunch_003.wav",
-      "gain_db": -2.0,
+      "frame": 1194,
+      "category": "mechanisms/motors",
+      "sample": "mechanisms/motors\\thruster_fire_002.wav",
+      "gain_db": -1.0,
       "pitch_semitones": 3.0,
-      "desc": "Cleanser (Ash): Thermal Slag Crust Pop"
+      "desc": "Thermal Ash: White-Hot Metal Incandescence Hiss"
     },
     {
-      "frame": 1212,
+      "frame": 1197,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_metal_light_001.wav",
+      "gain_db": 1.2,
+      "pitch_semitones": 4.0,
+      "desc": "Thermal Ash (Expansion): Thermal Expansion Tick 1 @ +237f"
+    },
+    {
+      "frame": 1201,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_light_002.wav",
+      "gain_db": 1.8,
+      "pitch_semitones": 3.5,
+      "desc": "Thermal Ash (Expansion): Casing Dilatation Ping @ +241f"
+    },
+    {
+      "frame": 1205,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_tin_medium_000.wav",
+      "gain_db": 1.0,
+      "pitch_semitones": 5.0,
+      "desc": "Thermal Ash (Expansion): Shroud Buckling Tick @ +245f"
+    },
+    {
+      "frame": 1209,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_metal_light_003.wav",
+      "gain_db": 2.2,
+      "pitch_semitones": 3.0,
+      "desc": "Thermal Ash (Expansion): Stator Ring Stress Fracture @ +249f"
+    },
+    {
+      "frame": 1213,
+      "category": "materials/metal",
+      "sample": "materials/metal\\impact_plate_medium_001.wav",
+      "gain_db": 1.6,
+      "pitch_semitones": 2.0,
+      "desc": "Thermal Ash (Expansion): Plinth Heat Stress Cleavage @ +253f"
+    },
+    {
+      "frame": 1216,
       "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_000.wav",
-      "gain_db": -2.5,
+      "gain_db": 1.0,
       "pitch_semitones": 2.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 1"
+      "desc": "Thermal Ash (Embers): Hot Slag Crust Crumb 1 @ +256f"
+    },
+    {
+      "frame": 1216,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_000.wav",
+      "gain_db": -0.5,
+      "pitch_semitones": 5.0,
+      "desc": "Thermal Ash (Embers): Vitrified Ember Ping 1 @ +256f"
     },
     {
       "frame": 1220,
       "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_001.wav",
-      "gain_db": -3.3,
-      "pitch_semitones": 3.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 2"
+      "gain_db": 0.8,
+      "pitch_semitones": 3.0,
+      "desc": "Thermal Ash (Embers): Hot Slag Crust Crumb 2 @ +260f"
     },
     {
-      "frame": 1221,
+      "frame": 1224,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_001.wav",
-      "gain_db": -5.3,
+      "sample": "materials/metal\\impact_plate_light_003.wav",
+      "gain_db": 0.0,
       "pitch_semitones": 4.0,
-      "desc": "Cleanser (Ash): Bed Thermal Contraction Ping 2"
+      "desc": "Thermal Ash (Embers): Bed Heat Ping @ +264f"
     },
     {
       "frame": 1228,
       "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_002.wav",
-      "gain_db": -4.1,
+      "gain_db": 0.5,
+      "pitch_semitones": 2.0,
+      "desc": "Thermal Ash (Embers): Hot Slag Crust Crumb 3 @ +268f"
+    },
+    {
+      "frame": 1228,
+      "category": "materials/glass",
+      "sample": "materials/glass\\impact_glass_light_002.wav",
+      "gain_db": -1.0,
       "pitch_semitones": 4.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 3"
+      "desc": "Thermal Ash (Embers): Vitrified Ember Ping 2 @ +268f"
+    },
+    {
+      "frame": 1232,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_003.wav",
+      "gain_db": 0.0,
+      "pitch_semitones": 3.5,
+      "desc": "Thermal Ash (Embers): Fine Ash Flake Shower 1 @ +272f"
     },
     {
       "frame": 1236,
       "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_003.wav",
-      "gain_db": -4.9,
+      "sample": "materials/stone\\impact_mining_004.wav",
+      "gain_db": -0.5,
       "pitch_semitones": 2.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 4"
+      "desc": "Thermal Ash (Embers): Fine Ash Flake Shower 2 @ +276f"
     },
     {
-      "frame": 1237,
+      "frame": 1240,
       "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_003.wav",
-      "gain_db": -6.9,
-      "pitch_semitones": 4.0,
-      "desc": "Cleanser (Ash): Bed Thermal Contraction Ping 4"
+      "sample": "materials/metal\\impact_tin_medium_003.wav",
+      "gain_db": -1.2,
+      "pitch_semitones": 4.5,
+      "desc": "Thermal Ash (Embers): Cooling Cinder Drop 1 @ +280f"
     },
     {
       "frame": 1244,
       "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_004.wav",
-      "gain_db": -5.7,
-      "pitch_semitones": 3.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 5"
-    },
-    {
-      "frame": 1252,
-      "category": "materials/stone",
-      "sample": "materials/stone\\impact_mining_000.wav",
-      "gain_db": -6.5,
-      "pitch_semitones": 4.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 6"
-    },
-    {
-      "frame": 1253,
-      "category": "materials/metal",
-      "sample": "materials/metal\\impact_plate_light_000.wav",
-      "gain_db": -8.5,
-      "pitch_semitones": 4.0,
-      "desc": "Cleanser (Ash): Bed Thermal Contraction Ping 6"
-    },
-    {
-      "frame": 1258,
-      "category": "materials/stone",
       "sample": "materials/stone\\impact_mining_001.wav",
-      "gain_db": -7.300000000000001,
-      "pitch_semitones": 2.5,
-      "desc": "Cleanser (Ash): Cooling Specimen Crackle 7"
+      "gain_db": -2.0,
+      "pitch_semitones": 4.0,
+      "desc": "Thermal Ash (Embers): Fine Ash Flake Shower 3 @ +284f"
     },
     {
-      "frame": 1230,
+      "frame": 1248,
+      "category": "materials/stone",
+      "sample": "materials/stone\\impact_mining_002.wav",
+      "gain_db": -3.0,
+      "pitch_semitones": 4.5,
+      "desc": "Thermal Ash (Embers): Final Disintegrating Ember Tumble @ +288f"
+    },
+    {
+      "frame": 1251,
       "category": "mechanisms/motors",
       "sample": "mechanisms/motors\\space_engine_small_000.wav",
       "gain_db": -5.0,
-      "pitch_semitones": -2.0,
-      "desc": "Cleanser (Ash): Wind Gust Dispersing Embers"
+      "pitch_semitones": -3.0,
+      "desc": "Thermal Ash: Gentle Wind Gust Dispersing Embers"
+    },
+    {
+      "frame": 1252,
+      "category": "materials/soft_plastic",
+      "sample": "materials/soft_plastic\\impact_soft_heavy_000.wav",
+      "gain_db": -6.0,
+      "pitch_semitones": 6.0,
+      "desc": "Thermal Ash: Microscopic Ash Powder Dispersal"
     }
   ]
 }

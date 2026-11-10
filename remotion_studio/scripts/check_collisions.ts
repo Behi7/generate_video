@@ -7,7 +7,7 @@
  * - Act 1: Assembly snap frames (10, 25, 45, 65, 75)
  * - Act 3: Operating kinematic frames (160, 180, 200, 220, 240)
  * - Act 4: Overload fracture frames (250, 260, 265)
- * Across all 4 progression tiers (1160 frames total).
+ * Across all 4 progression tiers (1280 frames total).
  *
  * Mathematical Volume Intersection:
  *   Overlap Ratio = V(inter) / min(V_A, V_B) * 100%

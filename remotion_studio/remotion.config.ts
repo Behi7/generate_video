@@ -17,6 +17,7 @@ Config.overrideWebpackConfig((currentConfiguration) => {
       ...currentConfiguration.resolve,
       alias: {
         ...(currentConfiguration.resolve?.alias ?? {}),
+        "~": path.resolve(rootDir, "src"),
         "@shared": path.resolve(rootDir, "src/shared"),
         "@projects": path.resolve(rootDir, "src/projects"),
       },

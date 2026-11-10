@@ -2,7 +2,7 @@
 """
 Remotion Studio CLI: Operator Dispatcher for React + Three.js Viral Video Production.
 Provides fast still frame previews, 8-frame QC contact sets, and 30 FPS master rendering
-for the canonical 1160-frame (38.67s @ 30 FPS) Triple-A architecture.
+for the canonical 1280-frame (42.67s @ 30 FPS) Triple-A architecture.
 
 MODULAR PROJECT ARCHITECTURE:
 All outputs (stills, QC frames, inspect sheets, PC bundles, rendered MP4s) are automatically
@@ -183,14 +183,14 @@ def cmd_still(args):
 
 
 def cmd_qc(args):
-    """Renders an 8-frame forensic audit set across all 4 tiers of the 1160-frame timeline."""
+    """Renders an 8-frame forensic audit set across all 4 tiers of the 1280-frame timeline."""
     composition = resolve_composition_id(args.composition)
-    # Checkpoints across 4 tiers (Assembly, Startup, Operating, Climax)
-    # Tier 1: 50, 200
-    # Tier 2: 330, 480
-    # Tier 3: 620, 770
-    # Tier 4: 950, 1080
-    frames = [50, 200, 330, 480, 620, 770, 950, 1080]
+    # Checkpoints across 4 tiers of 320 frames each:
+    # Tier 1 (0..319): 50, 180
+    # Tier 2 (320..639): 370, 500
+    # Tier 3 (640..959): 690, 820
+    # Tier 4 (960..1279): 1010, 1140
+    frames = [50, 180, 370, 500, 690, 820, 1010, 1140]
     out_paths = []
 
     proj_name, _, _ = resolve_project(composition)
@@ -281,6 +281,52 @@ def get_active_colab_url(explicit_url=None):
     return None
 
 
+def has_local_gpu():
+    """Detects whether an active NVIDIA GPU is present locally."""
+    try:
+        is_win = sys.platform == "win32"
+        res = subprocess.run(["nvidia-smi"], capture_output=True, text=True, shell=is_win)
+        return res.returncode == 0
+    except Exception:
+        return False
+
+
+def cmd_render_gpu_local(args):
+    """Renders locally on dedicated GPU with ANGLE hardware acceleration."""
+    composition = resolve_composition_id(args.composition)
+    proj_name, _, proj_out = resolve_project(composition)
+    out_file = (
+        os.path.abspath(args.output)
+        if args.output
+        else os.path.join(proj_out, f"{composition}_30fps.mp4")
+    )
+    concurrency = min(8, max(4, (os.cpu_count() or 6) // 2))
+
+    cmd = [
+        "npx",
+        "remotion",
+        "render",
+        "src/index.ts",
+        composition,
+        out_file,
+        "--gl=angle",
+        f"--concurrency={concurrency}",
+        "--log=info",
+    ]
+    print(f"⚡ [Smart Render] Dedicated NVIDIA GPU detected! Rendering locally with ANGLE ({concurrency} workers) -> {out_file}...")
+    res = run_command(cmd)
+
+    if res.returncode != 0:
+        print(
+            json.dumps(
+                {"success": False, "error": res.stderr, "stdout": res.stdout}, indent=2
+            )
+        )
+        sys.exit(1)
+
+    print(json.dumps({"success": True, "project": proj_name, "video_path": out_file}, indent=2))
+
+
 def cmd_render_local(args):
     """Renders locally on CPU using Remotion."""
     composition = resolve_composition_id(args.composition)
@@ -301,7 +347,7 @@ def cmd_render_local(args):
         f"--concurrency={CPU_CORES}",
         "--log=info",
     ]
-    print(f"🚀 Rendering master 30 FPS video for {composition} on CPU (1160 frames) -> {out_file}...")
+    print(f"🚀 Rendering master 30 FPS video for {composition} on CPU (1280 frames) -> {out_file}...")
     res = run_command(cmd)
 
     if res.returncode != 0:
@@ -397,12 +443,18 @@ call npx remotion preview src/index.ts
 
 
 def cmd_render(args):
-    """Unified Smart Render: checks Colab GPU -> user PC package -> local CPU only if forced."""
+    """Unified Smart Render: checks local GPU -> Colab GPU -> user PC package -> CPU fallback."""
     if getattr(args, "cpu", False):
-        print("🖥️ [--cpu flag active] Rendering directly on local 2-core CPU...")
+        print("🖥️ [--cpu flag active] Rendering directly on local CPU...")
         cmd_render_local(args)
         return
 
+    # 1. Hardware-Aware Law: Local Dedicated GPU Auto-Detection (e.g. RTX 4060)
+    if has_local_gpu():
+        cmd_render_gpu_local(args)
+        return
+
+    # 2. Remote Google Colab GPU Check
     print("🔍 [Smart Render] Checking for active Colab Tesla T4 GPU...")
     active_gpu_url = get_active_colab_url(getattr(args, "url", None))
 
@@ -410,10 +462,10 @@ def cmd_render(args):
         print(f"⚡ [Smart Render] Active Tesla T4 GPU found at {active_gpu_url}! Routing render to cloud GPU...")
         cmd_render_cloud(args, active_url=active_gpu_url)
     else:
-        print("⚡ [Smart Render] Cloud GPU is offline.")
-        print("📦 2-Core Server CPU render takes ~1-2 hours. Packaging files for instant local PC render instead...")
+        print("⚡ [Smart Render] Cloud GPU is offline and no local dedicated GPU was detected.")
+        print("📦 CPU render would be slow. Packaging files for instant local PC render instead...")
         cmd_export_pc(args)
-        print("\n💡 If you still want to render on this cloud server's CPU in background, run:")
+        print("\n💡 If you still want to render on CPU in background, run:")
         print(f"   python3 remotion_cli.py render {args.composition} --cpu")
 
 
@@ -651,7 +703,8 @@ def cmd_check_collisions(args):
         cmd.append(f"--tier={args.tier}")
 
     print(f"💥 Running 3D Collision Audit for {composition} (Project: '{proj_name}')...")
-    res = subprocess.run(cmd, cwd=STUDIO_DIR)
+    is_win = sys.platform == "win32"
+    res = subprocess.run(cmd, cwd=STUDIO_DIR, shell=is_win)
     sys.exit(res.returncode)
 
 
@@ -670,7 +723,8 @@ def cmd_check_sync(args):
         cmd.append("--json")
 
     print(f"⏱️  Running Camera-Physics-Audio Sync Audit for {composition} (Project: '{proj_name}')...")
-    res = subprocess.run(cmd, cwd=STUDIO_DIR)
+    is_win = sys.platform == "win32"
+    res = subprocess.run(cmd, cwd=STUDIO_DIR, shell=is_win)
     sys.exit(res.returncode)
 
 
@@ -751,7 +805,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # list-projects
-    p_list = subparsers.add_parser("list-projects", help="List all registered modular projects and their output status")
+    p_list = subparsers.add_parser("list-projects", aliases=["list"], help="List all registered modular projects and their output status")
     p_list.add_argument("--json", action="store_true", help="Output JSON format")
 
     # create-project
@@ -806,7 +860,7 @@ def main():
     p_sync.add_argument("--json", action="store_true", help="Output raw structured JSON")
 
     args = parser.parse_args()
-    if args.command == "list-projects":
+    if args.command in ("list-projects", "list"):
         cmd_list_projects(args)
     elif args.command == "create-project":
         cmd_create_project(args)

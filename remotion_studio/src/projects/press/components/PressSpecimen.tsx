@@ -7,6 +7,7 @@ import {
   getCleanserProgress,
   isStageCleansed,
 } from "@shared/contracts/StageTimeline";
+import { TransitionEffectType } from "@shared/vfx/transitions/TransitionRegistry";
 import { SparkBurst } from "@shared/vfx/SparkBurst";
 import { getPressTier1Kinematics } from "./PressTier1_Manual";
 import { getPressTier2Kinematics } from "./PressTier2_Electric";
@@ -15,6 +16,7 @@ import { getPressTier4Kinematics } from "./PressTier4_Futuristic";
 
 export interface PressSpecimenProps {
   localFrame?: number;
+  transitionEffect?: TransitionEffectType | "laser_scan" | "none";
 }
 
 /**
@@ -39,19 +41,28 @@ export interface PressSpecimenProps {
  *    - Tier 3: Red-Hot Titanium Forging Cube (#F97316 glowing thermal orange emissive core with dark scale crust).
  *    - Tier 4: Quantum Singularity Dark Matter Crystal (#8B5CF6 / #06B6D4 iridescent crystalline faceted geometry).
  */
-export const PressSpecimen: React.FC<PressSpecimenProps> = ({ localFrame: overrideLocal }) => {
+export const PressSpecimen: React.FC<PressSpecimenProps> = ({
+  localFrame: overrideLocal,
+  transitionEffect,
+}) => {
   const frame = useCurrentFrame();
   const tier = getCurrentTier(frame);
   const local = overrideLocal !== undefined ? overrideLocal : getTierLocalFrame(frame);
 
-  // Clean stage guarantee: by frame 310..319, table is completely clean
+  // Clean stage guarantee: by frame 308..319, table is completely clean
   if (isStageCleansed(local)) {
     return null;
   }
 
-  // Smooth cleanser dissolve during active cleanser phase (275..309)
+  const isLaserCleanser = transitionEffect === "laser_scan_cleanser";
+
+  // For laser scan cleanser, specimen must NOT pre-dissolve; it stays fully solid
+  // at scale 1 so the descending WebGL clipping plane slices it in real-time.
+  // For other effects, smooth cleanser dissolve during active cleanser phase (234..307)
   const cleanserP = getCleanserProgress(local);
-  const dissolveScale = Math.max(0, 1 - Math.pow(cleanserP, 2));
+  const dissolveScale = isLaserCleanser
+    ? 1.0
+    : Math.max(0, 1 - Math.pow(cleanserP, 2));
 
   return (
     <group name="press_specimens_root" scale={[dissolveScale, dissolveScale, dissolveScale]}>

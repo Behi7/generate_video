@@ -11,6 +11,8 @@ dist/
 # Render outputs & temporary files
 output/
 remotion_studio/output/
+out/
+remotion_studio/out/
 remotion_studio/src/projects/*/output
 renders/
 checkpoints/

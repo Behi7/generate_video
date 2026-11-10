@@ -19,10 +19,17 @@ export const PressStage: React.FC = () => {
   const tier = getCurrentTier(frame);
   const local = getTierLocalFrame(frame);
 
+  const seed = "hydraulic_press_progression";
+  const transitionEffect = getTierTransition(seed, tier);
+  const isLaserCleanser = transitionEffect === "laser_scan_cleanser";
+
   // Machinery runs during Acts 2, 3 and through Act 4 strain/resonance up until fracture rupture at frame 234
   const isRunning = local >= 63 && local < 234;
+
   // Overload fracture occurs at frame 234..319
-  const isBroken = local >= 234;
+  // CRITICAL LASER ISOLATION: For laser cleanser (Tier 3), machine MUST NOT shatter/scatter at frame 234!
+  // It remains intact and vibrating on the workstation bed for planar WebGL laser cutting.
+  const isBroken = !isLaserCleanser && local >= 234;
 
   // Operating base RPM / rate calibrated to tier specifications
   let baseRpm = 60;
@@ -49,9 +56,6 @@ export const PressStage: React.FC = () => {
   // 308..319: stage settled, clean table (isBroken = true, meshes cleansed)
   const rpm = isRunning ? getFluidRpm(baseRpm, local) : 0;
 
-  const seed = "hydraulic_press_progression";
-  const transitionEffect = getTierTransition(seed, tier);
-
   return (
     <group position={[0, -2.04, 0]}>
       {/* Tier Cleanser Transition Wrapper: scrubs fractured parts seamlessly between 234 and 308 */}
@@ -60,11 +64,13 @@ export const PressStage: React.FC = () => {
         localFrame={local}
         breakFrame={234}
         endFrame={308}
+        bounds={{ minY: 0.0, maxY: 2.75 }}
+        seed={seed}
       >
         {/* Tier 1 ($10, Frames 0..319): Manual Flywheel Screw Press */}
         {tier === 1 && (
           <group>
-            <PressSpecimen localFrame={local} />
+            <PressSpecimen localFrame={local} transitionEffect={transitionEffect} />
             <ProceduralAssemblyRig
               key="tier1"
               seed={seed}
@@ -81,7 +87,7 @@ export const PressStage: React.FC = () => {
         {/* Tier 2 ($100, Frames 320..639): Motorized Eccentric Flywheel Punch Press */}
         {tier === 2 && (
           <group>
-            <PressSpecimen localFrame={local} />
+            <PressSpecimen localFrame={local} transitionEffect={transitionEffect} />
             <ProceduralAssemblyRig
               key="tier2"
               seed={seed}
@@ -98,7 +104,7 @@ export const PressStage: React.FC = () => {
         {/* Tier 3 ($1 000, Frames 640..959): Quad-Piston Hydraulic Forging Press */}
         {tier === 3 && (
           <group>
-            <PressSpecimen localFrame={local} />
+            <PressSpecimen localFrame={local} transitionEffect={transitionEffect} />
             <ProceduralAssemblyRig
               key="tier3"
               seed={seed}
@@ -115,7 +121,7 @@ export const PressStage: React.FC = () => {
         {/* Tier 4 ($100 000+, Frames 960..1279): Superconducting Quantum Pinch Press */}
         {tier === 4 && (
           <group>
-            <PressSpecimen localFrame={local} />
+            <PressSpecimen localFrame={local} transitionEffect={transitionEffect} />
             <ProceduralAssemblyRig
               key="tier4"
               seed={seed}

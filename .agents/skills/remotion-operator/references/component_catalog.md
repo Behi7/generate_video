@@ -1,29 +1,30 @@
 # Canonical Component Catalog (Triple-A / Gen 4 Architecture)
 
-All production-grade compositions in `remotion_studio/` rely on this modular suite of components conforming to the 1160-frame (38.67s @ 30 FPS) canonical standard.
+All production-grade compositions in `remotion_studio/` rely on this modular suite of components conforming to the 1280-frame (42.67s @ 30 FPS) canonical standard.
 
 ---
 
 ## 1. Timeline & Core Infrastructure
 
 ### `StageTimeline.ts`
-* **Purpose:** Mathematical foundation for the 1160-frame timeline.
+* **Purpose:** Mathematical foundation for the 1280-frame timeline.
 * **Constants:**
-  * `TIER_DURATION_FRAMES = 290` (~9.67s per tier)
-  * `TOTAL_DURATION_FRAMES = 1160` (38.67s @ 30 FPS)
+  * `TIER_DURATION_FRAMES = 320` (~10.67s per tier)
+  * `TOTAL_DURATION_FRAMES = 1280` (42.67s @ 30 FPS)
 * **Act Ranges:**
-  * `assembly`: `0 .. 69` (70 frames / 2.33s)
-  * `startup`: `70 .. 149` (80 frames / 2.67s)
-  * `operating`: `150 .. 249` (100 frames / 3.33s)
-  * `destruction`: `250 .. 289` (40 frames / 1.33s)
+  * `assembly`: `0 .. 62` (63 frames / 2.10s)
+  * `startup`: `63 .. 122` (60 frames / 2.00s)
+  * `operating`: `123 .. 212` (90 frames / 3.00s exact)
+  * `destruction`: `213 .. 319` (107 frames / 3.57s, rupture at 234f, clean table by 308f)
 
-### `TestingBayEnvironment.tsx`
-* **Purpose:** High-Key industrial cleanroom testing bay eliminating dark-void rendering.
+### `DynamicEnvironment.tsx`
+* **Purpose:** 20-block LEGO environment kit eliminating dark-void rendering and solid continuous floor.
+* **Themes:** `factory`, `garage`, `cyberpunk`, `cleanroom`, `dark_studio`.
 * **Key Features:**
   * Drei `<Environment preset="warehouse" />` for physical metallic IBL reflections.
+  * Continuous solid floors (DiamondPlateSteel, ConcreteFactorySlab, HexNeonGrid, etc.) with zero floor holes or cutouts.
   * `<ContactShadows />` beneath machines with deep ambient occlusion.
-  * 6 vertical LED light-bars on rear slate wall (`#1E293B`) providing depth and rim lighting.
-  * Titanium pedestal with glowing cyan border ring.
+  * Atmospheric dust and modular rim light bars.
 
 ### `RigidShowcaseCamera.tsx`
 * **Purpose:** Dead-locked 2.5D Isometric 3/4 camera rig.
@@ -70,6 +71,16 @@ All production-grade compositions in `remotion_studio/` rely on this modular sui
 ---
 
 ## 3. FX & Modular Nodes
+
+### `ProceduralAssemblyRig.tsx`
+* **Purpose:** Canonical assembly and ballistics rig wiring `MachineAssemblySpec` modules, magnetic snapping, fluid RPM deceleration, ballistic fracture ejection, and cleanser transitions.
+
+### `CleanserTransitionWrapper.tsx`
+* **Purpose:** Floor-agnostic active transition sweeper that cleanses machine debris between frames 234 and 307 across 4 modular effects:
+  * `ash_disintegration`
+  * `laser_scan_cleanser`
+  * `pneumatic_air_blast`
+  * `black_hole_singularity`
 
 ### `SparkBurst.tsx`
 * **Purpose:** High-energy directional spark particle burst for magnetic impacts, lever throws, and ruptures.
